@@ -4,7 +4,8 @@ import { useColorMap } from "@/store/colorMap.ts";
 
 const erddapAxios = axios.create({
   baseURL:
-    import.meta.env.RIDDC_API_BASEURL || "https://api.riddc.brown.edu/erddap",
+    import.meta.env.VITE_RIDDC_API_BASEURL ||
+    "https://api.riddc.brown.edu/erddap",
   headers: {
     common: {
       Accept: "application/json",
@@ -13,11 +14,10 @@ const erddapAxios = axios.create({
   },
 });
 
-const erddapGet = async (path) => {
+const erddapGet = async (path: string) => {
   const response = await erddapAxios.get(path);
   if (response.status !== 200) {
     throw new Error(`Error fetching data from ERDDAP: ${path}`);
-    return;
   }
 
   return response.data;
@@ -51,37 +51,46 @@ export interface Variable {
   units: string | null;
 }
 
-interface BuoyState {
-  data: Data[];
+interface BuoyConfig {
+  name: string;
+  route: string;
+  datasetId: string;
+  lineWidth: number;
+  title: string;
+}
+
+interface BuoyState extends BuoyConfig {
   coordinates: Coordinate[];
   summary: Summary[];
-  variables: Variables[];
-  datasetId: string;
+  variables: Variable[];
   minDate: Date;
   maxDate: Date;
-  downsampled: boolean;
 }
 
 export const initState =
-  (datasetId: string): BuoyState =>
+  (config): BuoyState =>
   () => {
     return {
+      ...config,
       data: [],
       coordinates: [],
       summary: [],
       variables: [],
-      datasetId,
       minDate: new Date(0),
       maxDate: new Date(),
       downsampled: false,
+      initialized: false,
     };
   };
 
 // not a fat arrow function so the `this` will refer to the pinia instance
-export function baseActions(route) {
+export function baseActions(route: string) {
   return {
+    // fetch the summary for the heatmaps
     async fetchSummaryData() {
+      console.log("fetching summary");
       this.summary = await erddapGet(`/${route}/summary`);
+      console.log("got summary");
       let minDate = new Date();
       let maxDate = new Date(0);
       this.summary.map((d) => {
@@ -96,16 +105,20 @@ export function baseActions(route) {
       });
       this.minDate = minDate;
       this.maxDate = maxDate;
+
+      console.log("fetched summary data");
     },
-    async fetchBuoyData({ ids, variables, start, end }) {
+
+    // just fetch data, don't save anything
+    async fetchBuoyData({ ids, variables, start, end }): Promise<Data[]> {
       const startDate = start || this.minDate;
       const endDate = end || this.maxDate;
-      const { data, downsampled } = await erddapGet(
+      return await erddapGet(
         `/${route}/query?ids=${ids}&variables=${variables}&start=${startDate}&end=${endDate}`
       );
-      this.downsampled = downsampled;
-      this.data = data;
     },
+
+    // fetch all of the buoy coordinates
     async fetchBuoyCoordinates() {
       const coordinates = await erddapGet(`/${route}/coordinates`);
       coordinates.forEach((c) => {
@@ -114,21 +127,31 @@ export function baseActions(route) {
       this.coordinates = coordinates;
       const colorMap = useColorMap();
       colorMap.update({ ids: coordinates.map((v) => v.station_name) });
+
+      console.log("fetched coordinate data");
     },
-    async fetchBuoyVariables() {
+
+    // fetch all of the buoy variables
+    async fetchBuoyVariables(): Promise<void> {
       const variables = await erddapGet(`/${route}/variables`);
       variables.sort((a, b) =>
         a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
       );
       this.variables = variables;
+
+      console.log("fetched variables data");
     },
-    async fetchBaseData() {
+
+    // fetch the base data in one call if not already loaded
+    async fetchBaseData(): Promise<void> {
       if (this.coordinates.length === 0) {
         await Promise.all([
           this.fetchSummaryData(),
           this.fetchBuoyCoordinates(),
           this.fetchBuoyVariables(),
         ]);
+
+        this.initialized = true;
       }
     },
   };

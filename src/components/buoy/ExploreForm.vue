@@ -67,7 +67,7 @@ import DatePicker from "vue2-datepicker";
 
 import BaseForm from "@/components/base/BaseForm.vue";
 
-import { Variable } from "@/utils/store.ts";
+import { Variable } from "@/utils/erddap.ts";
 import { formatVariable } from "@/utils/utils.ts";
 
 interface Props {

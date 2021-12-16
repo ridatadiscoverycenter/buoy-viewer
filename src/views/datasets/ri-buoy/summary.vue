@@ -1,8 +1,8 @@
 <template>
   <BuoyDashboard dataset="ri-buoy" :scenarios="scenarios">
     <template #available-data>
-      This dataset spans from {{ buoy.minDate.getUTCFullYear() }} to
-      {{ buoy.maxDate.getUTCFullYear() }}. The heatmap below summarizes the
+      This dataset spans from {{ store.minDate.getUTCFullYear() }} to
+      {{ store.maxDate.getUTCFullYear() }}. The heatmap below summarizes the
       number of observations collected for each month for different variables.
       Use this heatmap to help you decide what data you want to visualize or
       download. When you have an idea, go ahead and select the buoys, variables
@@ -12,7 +12,7 @@
     </template>
 
     <template #heatmap>
-      <StationHeatmap :summary="buoy.summary" :variables="buoy.variables" />
+      <StationHeatmap :summary="store.summary" :variables="store.variables" />
     </template>
 
     <template #learn-more>
@@ -27,13 +27,31 @@
 </template>
 
 <script setup lang="ts">
+import { inject } from "vue";
+
 import StationHeatmap from "@/components/buoy/StationHeatmap.vue";
 import BuoyDashboard from "@/components/buoy/SummaryDashboard.vue";
 
-import { useRIBuoy } from "@/store/ri-buoy.ts";
+const store = inject("store");
 
-const buoy = useRIBuoy();
-
-// TODO: scenario buttons for expore more
-const scenarios = [];
+const scenarios = [
+  {
+    name: "N. Prudence and Conimicut Pt, Water Temperature, 2010-2011",
+    query: {
+      ids: "bid2,bid3",
+      variables: "WaterTempSurface,WaterTempBottom",
+      start: "2010-05-01T04%3A00%3A00.000Z",
+      end: "2011-10-31T04%3A00%3A00.000Z",
+    },
+  },
+  {
+    name: "Greenwich Bay and GSO Dock, Depth, 2008-2009",
+    query: {
+      ids: "bid15,bid17",
+      variables: "depth",
+      start: "2008-05-01T04%3A00%3A00.000Z",
+      end: "2009-10-31T04%3A00%3A00.000Z",
+    },
+  },
+];
 </script>

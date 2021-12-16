@@ -4,7 +4,7 @@ import HomePage from "@/views/HomePage.vue";
 import DatasetPage from "@/views/datasets/index.vue";
 
 // TODO: route nuxt-style paths to new-style
-type Dataset = 'ri-buoy'
+type Dataset = "ri-buoy";
 
 // use relative paths instead of `@` due to https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
 const getDatasetRoutes = (dataset: Dataset, title: string) => {
@@ -26,9 +26,9 @@ const getDatasetRoutes = (dataset: Dataset, title: string) => {
         name: `${title} - Dashboard`,
         component: () => import(`../views/datasets/${dataset}/dashboard.vue`),
       },
-    ]
-  }
-}
+    ],
+  };
+};
 
 const routes = [
   {
@@ -45,7 +45,7 @@ const routes = [
         path: "",
         redirect: "/dataset/ri-buoy/summary",
       },
-      getDatasetRoutes('ri-buoy', 'Historical RI Buoy Data')
+      getDatasetRoutes("ri-buoy", "Historical RI Buoy Data"),
     ],
   },
 ];

@@ -5,15 +5,15 @@
 <script setup lang="ts">
 import { inject, provide } from "vue";
 
-import { useRIBuoy } from "@/store/ri-buoy.ts";
+import { buoyStores } from "@/store/buoy.ts";
 
-const buoy = useRIBuoy();
+const store = buoyStores["ri-buoy"].useStore();
 
-const setLoading = inject('setLoading');
+const setLoading = inject("setLoading");
 setLoading(true);
-buoy.fetchBaseData().then(() => {
+store.fetchBaseData().then(() => {
   setLoading(false);
 });
 
-provide("store", buoy);
+provide("store", store);
 </script>

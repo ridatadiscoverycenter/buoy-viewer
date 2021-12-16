@@ -41,7 +41,7 @@
     <template #buttons>
       <a
         role="button"
-        class="button is-link control-item-button"
+        class="button is-primary control-item-button"
         :href="downloadUrl"
         :disabled="
           downloadBuoys.length === 0 ||
@@ -55,48 +55,25 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref } from "vue";
+import { inject, ref } from "vue";
 
 import Multiselect from "vue-multiselect";
 
 import BaseForm from "@/components/base/BaseForm.vue";
 
 import { formatVariable } from "@/utils/utils.ts";
+import { useErddapDownload } from "@/composables/useErddapDownload.ts";
 
 const store = inject("store");
-
-const FILE_FORMATS = [
-  "htmlTable",
-  "csv",
-  "json",
-  "nc",
-  "geoJson",
-  "mat",
-  "xhtml",
-  "graph",
-  "tsv",
-  "html",
-  "dataTable",
-];
-const ERDDAP_BASE_URL = "https://pricaimcit.services.brown.edu/erddap";
 
 const fileFormat = ref("json");
 const downloadBuoys = ref([]);
 const downloadVariables = ref([]);
 
-const downloadUrl = computed(() => {
-  const bids = store.coordinates
-    .filter((r) => downloadBuoys.value.includes(r.fullName))
-    .map((r) => r.buoyId);
-
-  return `${ERDDAP_BASE_URL}/tabledap/${store.datasetId}.${
-    fileFormat.value
-  }?${downloadVariables.value
-    .map((v) => v.name)
-    .join(
-      ","
-    )},time,latitude,longitude,station_name&station_name=~"(${bids.join(
-    "|"
-  )})"`;
+const { FILE_FORMATS, downloadUrl } = useErddapDownload({
+  datasetId: store.datasetId,
+  variables: downloadVariables,
+  coordinates: downloadBuoys,
+  fileFormat,
 });
 </script>

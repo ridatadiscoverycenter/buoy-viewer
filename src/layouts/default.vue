@@ -33,7 +33,7 @@ import LoadingSpinner from "@/components/base/LoadingSpinner.vue";
 
 // LOADING HANDLING
 const loading = ref(false);
-provide('setLoading', (val) => loading.value = val)
+provide("setLoading", (val) => (loading.value = val));
 const shouldLoad = computed(() => loading.value && !errored.value);
 
 // ERROR HANDLING

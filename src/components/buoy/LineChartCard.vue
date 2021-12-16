@@ -1,10 +1,11 @@
 <template>
-  <ChartContainer width="two-thirds" :height="6">
+  <DashboardCard width="two-thirds" :height="6">
     <template #title> Visualize Data </template>
     <template #subtitle>
-      This plot shows {{ variables.map(formatVariable).join(", ") }} over the
-      period between {{ startDtStr }} and {{ endDtStr }}. You can hover over the
-      lines to see more specific data. Weather data from
+      This plot shows
+      {{ plottableVariables.map(formatVariable).join(", ") }} over the period
+      between {{ query.startDate }} and {{ query.endDate }}. You can hover over
+      the lines to see more specific data. Weather data from
       <a href="https://www.rcc-acis.org/" target="_blank" rel="noreferrer"
         >NOAA</a
       >
@@ -12,10 +13,10 @@
     </template>
     <template #content>
       <div
-        v-if="compareDataset.length > 0 && !loading"
+        v-if="compareDataset.length > 0"
         class="notification is-info is-light mx-4 px-4 py-2"
       >
-        <fa :icon="['fas', 'info-circle']" class="mr-1" />
+        <i class="fas fa-info-circle mr-1" />
         <span class="is-size-6 mr-4">
           <a :href="comparePath" target="_blank">{{ compareName }}</a> data is
           available which matches your query
@@ -26,10 +27,10 @@
       </div>
 
       <div
-        v-if="nonPlottableVariables.length > 0 && !loading"
+        v-if="nonPlottableVariables.length > 0"
         class="notification is-warning is-light mx-4 px-4 py-2"
       >
-        <fa :icon="['fas', 'exclamation-circle']" class="mr-1" />
+        <i class="fas fa-exclamation-circle mr-1" />
         <span class="is-size-6 mr-4">
           The following variables are not plottable, download the data below if
           needed: {{ nonPlottableVariables.map(formatVariable).join(", ") }}
@@ -37,163 +38,127 @@
       </div>
 
       <div
-        v-if="dataset.length === 0 && !loading"
+        v-if="dataset.length === 0"
         class="notification is-danger is-light mx-4 px-4 py-2 has-text-centered"
       >
         <p><strong>No Data Matches the Query</strong></p>
       </div>
 
       <LineChart
-        v-else-if="!loading"
+        v-else
         id="line-chart"
-        :dataset="plottableDataset"
-        :dataset-name="datasetName"
-        :dataset-line-width="datasetLineWidth"
-        :compare-dataset="compare ? compareDataset : []"
-        :compare-name="compareName"
-        :compare-line-width="compareLineWidth"
+        :dataset="dataset"
+        :dataset-name="store.title"
+        :dataset-line-width="store.lineWidth"
+        :compare-dataset="compareDataset"
+        :compare-name="compareStore.title"
+        :compare-line-width="compareStore.lineWidth"
         :variables="plottableVariables"
         :color-domain="colorDomain"
         :color-range="colorRange"
         x="time"
         y="station_name"
-        :enable-darkmode="false"
-        :weather-dataset="weatherData"
+        :weather-dataset="weather"
       />
 
       <p v-if="downsampled">
         <small
-          ><fa :icon="['fas', 'info-circle']" class="mr-1" /><i>Note:</i> Data
-          has been downsampled, select a smaller date range to visualize raw
-          data.</small
+          ><i class="fas fa-info-circle mr-1" /><i>Note:</i> Data has been
+          downsampled, select a smaller date range to visualize raw data.</small
         >
       </p>
     </template>
-  </ChartContainer>
+  </DashboardCard>
 </template>
 
-<script>
-import { mapState } from "vuex";
-import * as aq from "arquero";
+<script setup lang="ts">
+import { computed, inject, ref, watch } from "vue";
 
 import LineChart from "@/components/charts/LineChart.vue";
-import ChartContainer from "@/components/base/ChartContainer.vue";
+import DashboardCard from "@/components/base/DashboardCard.vue";
 
 import { formatVariable } from "@/utils/utils.ts";
 
-export default {
-  components: {
-    LineChart,
-    ChartContainer,
+const props = defineProps({
+  query: {
+    type: Object,
+    required: true,
   },
-  props: {
-    variables: {
-      type: Array,
-      required: true,
-    },
-    startDtStr: {
-      type: String,
-      required: true,
-    },
-    endDtStr: {
-      type: String,
-      required: true,
-    },
-    dataset: {
-      type: Array,
-      required: true,
-    },
-    datasetName: {
-      type: String,
-      required: true,
-    },
-    compareDataset: {
-      type: Array,
-      required: false,
-      default() {
-        return [];
-      },
-    },
-    compareName: {
-      type: String,
-      required: false,
-      default: "Other",
-    },
-    comparePath: {
-      type: String,
-      required: true,
-    },
-    compareLineWidth: {
-      type: Number,
-      required: true,
-    },
-    datasetLineWidth: {
-      type: Number,
-      required: true,
-    },
-    loading: {
-      type: Boolean,
-      rquired: false,
-      default: false,
-    },
-    weatherData: {
-      type: Array,
-      required: true,
-    },
-    downsampled: {
-      type: Boolean,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      compare: false,
-      compareText: "Add To Plot",
-    };
-  },
-  computed: {
-    ...mapState(["colorMap"]),
-    colorDomain() {
-      if (this.dataset.length > 0) {
-        const stations = aq
-          .from(this.dataset)
-          .groupby("station_name")
-          .count()
-          .objects();
-        return stations.map((v) => v.station_name);
-      } else {
-        return [];
-      }
-    },
-    colorRange() {
-      return this.colorDomain.map((v) => this.colorMap[v]);
-    },
-    plottableVariables() {
-      return this.variables.filter(
-        (variable) => !variable.name.includes("Qualifiers")
-      );
-    },
-    nonPlottableVariables() {
-      return this.variables.filter((variable) =>
-        variable.name.includes("Qualifiers")
-      );
-    },
-    plottableDataset() {
-      return this.dataset.filter((row) =>
-        this.plottableVariables.map((v) => v.name).includes(row.variable)
-      );
-    },
-  },
-  methods: {
-    toggleCompare() {
-      this.compare = !this.compare;
-      if (this.compare) {
-        this.compareText = "Remove From Plot";
-      } else {
-        this.compareText = "Add To Plot";
-      }
-    },
-    formatVariable,
-  },
+});
+
+// comparison of other dataset
+const compare = ref(false);
+const compareText = "Add To Plot";
+
+const toggleCompare = () => {
+  compare.value = !compare.value;
+  compareText.value = compare.value ? "Remove From Plot" : "Add to Plot";
 };
+
+// set up color domain and range for vega
+import { useColorMap } from "@/store/colorMap.ts";
+
+const colorMap = useColorMap();
+const colorDomain = computed(() =>
+  props.query.coordinates.map((c) => c.station_name)
+);
+
+const colorRange = computed(() =>
+  colorDomain.value.map((c) => colorMap.colors[c])
+);
+
+// split variables into plottable and non-plottable
+const plottableVariables = computed(() =>
+  props.query.variables.filter((v) => !v.name.endsWith("Qualifiers"))
+);
+const nonPlottableVariables = computed(() =>
+  props.query.variables.filter((v) => v.name.endsWith("Qualifiers"))
+);
+
+// fetch the data
+import { fetchWeather } from "@/utils/weather.ts";
+const setLoading = inject("setLoading");
+
+const compareStore = inject("compareStore");
+const compareDataset = ref([]);
+
+const store = inject("store");
+const dataset = ref([]);
+const downsampled = ref(false);
+
+const weather = ref([]);
+
+const fetchData = async () => {
+  console.log("fetching data");
+  if (!store.initialized) {
+    return;
+  }
+  setLoading(true);
+  const { coordinates, startDate, endDate } = props.query;
+  const query = {
+    ids: coordinates.map((c) => c.buoyId),
+    variables: plottableVariables.value.map((v) => v.name),
+    start: startDate,
+    end: endDate,
+  };
+  const res = await Promise.all([
+    store.fetchBuoyData(query),
+    compareStore.fetchBuoyData(query),
+    fetchWeather({ startDate, endDate }),
+  ]);
+  dataset.value = res[0].data;
+  downsampled.value = res[0].downsampled;
+  compareDataset.value = res[1].data;
+  weather.value = res[2];
+  setLoading(false);
+};
+
+fetchData();
+watch(
+  () => ({ ...props.query }),
+  () => {
+    console.log(props.query);
+    fetchData();
+  }
+);
 </script>

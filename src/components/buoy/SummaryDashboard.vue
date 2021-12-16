@@ -31,13 +31,14 @@
     </template>
     <template #content>
       <div class="is-flex-column">
-        <!-- TODO: fix link -->
-        <!-- <router-link
+        <router-link
           v-for="(scenario, key) in scenarios"
           :key="key"
+          class="button is-primary my-1"
+          :to="generateQuery(scenario.query)"
         >
           {{ scenario.name }}
-        </router-link> -->
+        </router-link>
       </div>
     </template>
   </DashboardCard>
@@ -70,7 +71,7 @@ import DownloadForm from "@/components/buoy/DownloadForm.vue";
 import BuoyLocations from "@/components/buoy/LocationMap.vue";
 
 interface Query {
-  buoyIds: string;
+  ids: string;
   variables: string;
   start: string;
   end: string;
@@ -82,10 +83,17 @@ interface Scenario {
   query: Query;
 }
 
-defineProps<{
+const props = defineProps<{
   dataset: string;
   scenarios: Scenario[];
 }>();
 
 const store = inject("store");
+
+const generateQuery = (query: Query) => {
+  const queryParams = Object.entries(query)
+    .map(([key, val]) => `${key}=${val}`)
+    .join("&");
+  return `/dataset/${props.dataset}/dashboard?${queryParams}`;
+};
 </script>

@@ -22,7 +22,7 @@ import { computed, withDefaults } from "vue";
 
 // import * as aq from "arquero";
 
-import { Coordinate } from "@/utils/store.ts";
+import { Coordinate } from "@/utils/erddap.ts";
 import { useColorMap } from "@/store/colorMap.ts";
 
 import DashboardCard from "@/components/base/DashboardCard.vue";

@@ -1,10 +1,10 @@
 <template>
-  <ChartContainer width="one-third" :height="2">
-    <template #title> Download Selected Data </template>
+  <DashboardCard width="one-third" :height="2">
+    <template #title>Download Selected Data</template>
     <template #subtitle>
       Selected data includes
       {{ variables.map(formatVariable).join(", ") }} from
-      {{ startDtStr.slice(0, 10) }} to {{ endDtStr.slice(0, 10) }}
+      {{ startDate.slice(0, 10) }} to {{ endDate.slice(0, 10) }}
     </template>
     <template #content>
       <BaseForm>
@@ -15,7 +15,7 @@
               id="file-format"
               v-model="fileFormat"
               class="multiselect"
-              :options="fileFormats"
+              :options="FILE_FORMATS"
             />
           </div>
         </template>
@@ -23,72 +23,57 @@
         <template #buttons>
           <a
             role="button"
-            class="button is-link control-item-button mr-2 my-2"
-            :href="downloadUrl()"
+            class="button is-primary control-item-button mr-2 my-2"
+            :href="downloadUrl"
             >Download Data</a
           >
         </template>
       </BaseForm>
     </template>
-  </ChartContainer>
+  </DashboardCard>
 </template>
 
-<script>
-import { mapState } from "vuex";
+<script setup lang="ts">
+import { inject, ref, toRefs } from "vue";
 import Multiselect from "vue-multiselect";
 
-import ChartContainer from "@/components/base/ChartContainer.vue";
+import DashboardCard from "@/components/base/DashboardCard.vue";
 import BaseForm from "@/components/base/BaseForm.vue";
 
 import { formatVariable } from "@/utils/utils.ts";
+import { useErddapDownload } from "@/composables/useErddapDownload.ts";
 
-export default {
-  components: {
-    ChartContainer,
-    BaseForm,
-    Multiselect,
+const store = inject("store");
+
+const props = defineProps({
+  variables: {
+    type: Array,
+    required: true,
   },
-  props: {
-    variables: {
-      type: Array,
-      required: true,
-    },
-    buoyIds: {
-      type: Array,
-      required: true,
-    },
-    startDtStr: {
-      type: String,
-      required: true,
-    },
-    endDtStr: {
-      type: String,
-      required: true,
-    },
-    datasetId: {
-      type: String,
-      required: true,
-    },
+  coordinates: {
+    type: Array,
+    required: true,
   },
-  data() {
-    return {
-      fileFormat: "json",
-    };
+  startDate: {
+    type: String,
+    required: true,
   },
-  computed: {
-    ...mapState("variables", ["baseUrl", "fileFormats"]),
+  endDate: {
+    type: String,
+    required: true,
   },
-  methods: {
-    downloadUrl() {
-      return `${this.baseUrl}/tabledap/${this.datasetId}.${
-        this.fileFormat
-      }?${this.variables.join(
-        ","
-      )},station_name,time,latitude,longitude&time>=${this.startDtStr}&time<=${
-        this.endDtStr
-      }&station_name=~"(${this.buoyIds.join("|")})"`;
-    },
-    formatVariable,
-  },
-};
+});
+
+const { coordinates, variables, startDate, endDate } = toRefs(props);
+
+const fileFormat = ref("json");
+
+const { FILE_FORMATS, downloadUrl } = useErddapDownload({
+  datasetId: store.datasetId,
+  coordinates,
+  variables,
+  startDate,
+  endDate,
+  fileFormat,
+});
 </script>
