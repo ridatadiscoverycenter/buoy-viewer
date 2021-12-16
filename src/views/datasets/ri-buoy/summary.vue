@@ -1,8 +1,8 @@
 <template>
   <BuoyDashboard dataset="ri-buoy" :scenarios="scenarios">
     <template #available-data>
-      This dataset spans from {{ store.minDate.getUTCFullYear() }} to
-      {{ store.maxDate.getUTCFullYear() }}. The heatmap below summarizes the
+      This dataset spans from {{ store.minDate.slice(0. 4) }} to
+      {{ store.maxDate.slice(0, 4) }}. The heatmap below summarizes the
       number of observations collected for each month for different variables.
       Use this heatmap to help you decide what data you want to visualize or
       download. When you have an idea, go ahead and select the buoys, variables

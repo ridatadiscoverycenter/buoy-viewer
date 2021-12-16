@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { useColorMap } from "@/store/colorMap.ts";
+import { localISODate } from "@/utils/utils.ts";
 
 const erddapAxios = axios.create({
   baseURL:
@@ -103,8 +104,8 @@ export function baseActions(route: string) {
         }
         return d;
       });
-      this.minDate = minDate;
-      this.maxDate = maxDate;
+      this.minDate = localISODate(minDate);
+      this.maxDate = localISODate(maxDate);
 
       console.log("fetched summary data");
     },

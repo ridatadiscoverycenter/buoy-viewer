@@ -10,10 +10,10 @@
     </template>
     <template #content>
       <ExploreForm
+        v-if="store.initialized"
         :init-variables="query.variables"
-        :init-buoys="stationNames"
+        :init-buoys="query.coordinates"
         :init-date-range="[query.startDate, query.endDate]"
-        :dataset="store.name"
       />
     </template>
   </DashboardCard>
@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject } from "vue";
+import { inject } from "vue";
 
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import ExploreForm from "@/components/buoy/ExploreForm.vue";
@@ -41,7 +41,7 @@ import BuoyLocations from "@/components/buoy/LocationMap.vue";
 import BuoyLineChart from "@/components/buoy/LineChartCard.vue";
 import BuoyQueryDownload from "@/components/buoy/QueryDownload.vue";
 
-defineProps({
+const props = defineProps({
   query: {
     type: Object,
     required: true,
@@ -49,6 +49,4 @@ defineProps({
 });
 
 const store = inject("store");
-
-const stationNames = computed(() => store.coordinates.map((r) => r.fullName));
 </script>

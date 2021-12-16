@@ -38,7 +38,7 @@
       </div>
 
       <div
-        v-if="dataset.length === 0"
+        v-if="store.initialized && dataset.length === 0"
         class="notification is-danger is-light mx-4 px-4 py-2 has-text-centered"
       >
         <p><strong>No Data Matches the Query</strong></p>
@@ -129,7 +129,6 @@ const downsampled = ref(false);
 const weather = ref([]);
 
 const fetchData = async () => {
-  console.log("fetching data");
   if (!store.initialized) {
     return;
   }
@@ -157,7 +156,6 @@ fetchData();
 watch(
   () => ({ ...props.query }),
   () => {
-    console.log(props.query);
     fetchData();
   }
 );

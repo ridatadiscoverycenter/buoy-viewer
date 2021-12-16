@@ -19,7 +19,7 @@
       Use the heatmap above to check what data are available.
     </template>
     <template #content>
-      <ExploreForm :dataset="dataset" />
+      <ExploreForm />
     </template>
   </DashboardCard>
 
