@@ -40,8 +40,8 @@ const scenarios = [
     query: {
       ids: "bid2,bid3",
       variables: "WaterTempSurface,WaterTempBottom",
-      start: "2010-05-01T04%3A00%3A00.000Z",
-      end: "2011-10-31T04%3A00%3A00.000Z",
+      start: "2010-05-01",
+      end: "2011-10-31T",
     },
   },
   {
@@ -49,8 +49,8 @@ const scenarios = [
     query: {
       ids: "bid15,bid17",
       variables: "depth",
-      start: "2008-05-01T04%3A00%3A00.000Z",
-      end: "2009-10-31T04%3A00%3A00.000Z",
+      start: "2008-05-01",
+      end: "2009-10-31",
     },
   },
 ];

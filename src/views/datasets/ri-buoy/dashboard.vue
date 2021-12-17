@@ -22,16 +22,6 @@ const route = useRoute();
 updateQuery(route.query);
 watch(() => route.query, updateQuery);
 
-// if data finishes loading, update
-watch(
-  () => store.initialized,
-  (val) => {
-    if (val) {
-      updateQuery(route.query);
-    }
-  }
-);
-
 // set up the comparison dataset
 import { buoyStores } from "@/store/buoy.ts";
 const compareName = "osom";

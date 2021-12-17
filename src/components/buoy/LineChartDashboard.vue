@@ -1,5 +1,11 @@
 <template>
-  <BuoyLineChart :query="query" />
+  <Suspense>
+    <BuoyLineChart :query="query" />
+
+    <template #fallback>
+      <LoadingSpinner :loading="true" />
+    </template>
+  </Suspense>
 
   <BuoyLocations :coordinates="query.coordinates" :height="3" />
 
@@ -10,7 +16,6 @@
     </template>
     <template #content>
       <ExploreForm
-        v-if="store.initialized"
         :init-variables="query.variables"
         :init-buoys="query.coordinates"
         :init-date-range="[query.startDate, query.endDate]"
@@ -40,6 +45,7 @@ import ExploreForm from "@/components/buoy/ExploreForm.vue";
 import BuoyLocations from "@/components/buoy/LocationMap.vue";
 import BuoyLineChart from "@/components/buoy/LineChartCard.vue";
 import BuoyQueryDownload from "@/components/buoy/QueryDownload.vue";
+import LoadingSpinner from "@/components/base/LoadingSpinner.vue";
 
 const props = defineProps({
   query: {

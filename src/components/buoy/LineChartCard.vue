@@ -38,7 +38,7 @@
       </div>
 
       <div
-        v-if="store.initialized && dataset.length === 0"
+        v-if="dataset.length === 0"
         class="notification is-danger is-light mx-4 px-4 py-2 has-text-centered"
       >
         <p><strong>No Data Matches the Query</strong></p>
@@ -129,10 +129,6 @@ const downsampled = ref(false);
 const weather = ref([]);
 
 const fetchData = async () => {
-  if (!store.initialized) {
-    return;
-  }
-  setLoading(true);
   const { coordinates, startDate, endDate } = props.query;
   const query = {
     ids: coordinates.map((c) => c.buoyId),
@@ -149,10 +145,9 @@ const fetchData = async () => {
   downsampled.value = res[0].downsampled;
   compareDataset.value = res[1].data;
   weather.value = res[2];
-  setLoading(false);
 };
 
-fetchData();
+await fetchData();
 watch(
   () => ({ ...props.query }),
   () => {

@@ -80,7 +80,6 @@ export const initState =
       minDate: new Date(0),
       maxDate: new Date(),
       downsampled: false,
-      initialized: false,
     };
   };
 
@@ -151,8 +150,6 @@ export function baseActions(route: string) {
           this.fetchBuoyCoordinates(),
           this.fetchBuoyVariables(),
         ]);
-
-        this.initialized = true;
       }
     },
   };
