@@ -42,8 +42,6 @@
 
     <template #buttons>
       <router-link
-        class="button is-link"
-        :disabled="disabled"
         :to="{
           path: datasetPath,
           query: {
@@ -53,7 +51,9 @@
           },
         }"
       >
-        Visualize
+        <button class="button is-primary" :disabled="disabled">
+          Visualize
+        </button>
       </router-link>
     </template>
   </BaseForm>
