@@ -7,7 +7,7 @@
           id="buoy-select"
           v-model="selectedBuoys"
           class="multiselect"
-          :options="store.buoys"
+          :options="store.coordinates"
           :custom-label="formatCoordinate"
           :multiple="true"
         />
@@ -115,7 +115,6 @@ const selectedBuoysString = computed(() => {
 const datasetPath = computed(() => `/dataset/${store.name}/dashboard`);
 
 const disabledDate = (date) => {
-  console.log(date);
   const utcDate = localISODate(date);
   return utcDate < store.minDate || utcDate > store.maxDate;
 };
