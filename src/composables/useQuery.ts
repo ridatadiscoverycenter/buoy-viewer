@@ -3,7 +3,7 @@ import hash from "object-hash";
 
 export function useQuery(store, routePath) {
   const query = reactive({});
-  const path = routePath
+  const path = routePath;
 
   const updateQuery = (routeQuery, routePath) => {
     if (path !== routePath) return;

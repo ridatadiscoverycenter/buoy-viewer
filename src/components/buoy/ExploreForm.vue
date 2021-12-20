@@ -34,7 +34,10 @@
           id="date-select"
           v-model="dateRange"
           :disabled-date="disabledDate"
-          :default-value="[localISODateToUTC(store.minDate), localISODateToUTC(store.maxDate)]"
+          :default-value="[
+            localISODateToUTC(store.minDate),
+            localISODateToUTC(store.maxDate),
+          ]"
           range
         />
       </div>
@@ -68,7 +71,12 @@ import DatePicker from "vue2-datepicker";
 import BaseForm from "@/components/base/BaseForm.vue";
 
 import { Coordinate, Variable } from "@/utils/erddap.ts";
-import { formatCoordinate, formatVariable, localISODate, localISODateToUTC } from "@/utils/utils.ts";
+import {
+  formatCoordinate,
+  formatVariable,
+  localISODate,
+  localISODateToUTC,
+} from "@/utils/utils.ts";
 
 interface Props {
   initVariables?: Variable[];
@@ -92,10 +100,13 @@ const dateRange = ref(
   })
 );
 
-const disabled = computed(() => selectedVariables.value.length > 4 ||
+const disabled = computed(
+  () =>
+    selectedVariables.value.length > 4 ||
     selectedVariables.value.length === 0 ||
     dateRange.value.length !== 2 ||
-    selectedBuoys.value.length === 0)
+    selectedBuoys.value.length === 0
+);
 
 const selectedDates = computed(() => {
   try {
@@ -104,13 +115,15 @@ const selectedDates = computed(() => {
   } catch (e) {
     return null;
   }
-})
+});
 
-const selectedVariablesString = computed(() => selectedVariables.value.map((v) => v.name).join(','));
+const selectedVariablesString = computed(() =>
+  selectedVariables.value.map((v) => v.name).join(",")
+);
 
 const selectedBuoysString = computed(() => {
-  return selectedBuoys.value.map((r) => r.buoyId).join(',');
-})
+  return selectedBuoys.value.map((r) => r.buoyId).join(",");
+});
 
 const datasetPath = computed(() => `/dataset/${store.name}/dashboard`);
 

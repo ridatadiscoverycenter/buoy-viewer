@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, provide, ref, onErrorCaptured } from "vue";
+import { ref, onErrorCaptured } from "vue";
 
 import BaseLogo from "@/components/base/BaseLogo.vue";
 
@@ -35,7 +35,7 @@ const errorMessage = ref("");
 const goBack = () => console.log("GO BACK"); // TODO: go somewhere
 
 onErrorCaptured((err: Error) => {
-  console.log(err);
+  console.log("in error handler");
   errored.value = true;
   errorMessage.value = err.message;
 });

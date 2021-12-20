@@ -38,8 +38,6 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from "vue";
-
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import ExploreForm from "@/components/buoy/ExploreForm.vue";
 import BuoyLocations from "@/components/buoy/LocationMap.vue";
@@ -47,12 +45,10 @@ import BuoyLineChart from "@/components/buoy/LineChartCard.vue";
 import BuoyQueryDownload from "@/components/buoy/QueryDownload.vue";
 import LoadingSpinner from "@/components/base/LoadingSpinner.vue";
 
-const props = defineProps({
+defineProps({
   query: {
     type: Object,
     required: true,
   },
 });
-
-const store = inject("store");
 </script>

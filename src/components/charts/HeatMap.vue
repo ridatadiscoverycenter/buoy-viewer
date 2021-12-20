@@ -46,6 +46,7 @@ const props = defineProps({
   },
 });
 
+// TODO: should this be pushed down to the spec within useVega?
 import { cloneDeep } from "lodash/lang";
 const vegaDataset = computed(() => cloneDeep(props.dataset));
 
@@ -155,6 +156,6 @@ useVega({
   el,
   // minHeight: props.height,
   maxWidth: ref(1280),
-  includeActions: ref(true),
+  includeActions: ref(false),
 });
 </script>

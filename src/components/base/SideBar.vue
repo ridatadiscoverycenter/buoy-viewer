@@ -14,7 +14,7 @@
       <ul class="menu-list">
         <li>
           <router-link to="/">
-            <i class="fas fa-home" />
+            <i class="fas fa-home mr-1" />
             <span v-if="!collapsed">Home</span>
           </router-link>
         </li>
@@ -36,23 +36,20 @@
       </p>
       <ul class="menu-list">
         <li v-for="item in DATASETS" :key="item.route">
-          <div v-if="item.available">{ item}</div>
-          <!-- <router-link
+          <router-link
             v-if="item.available"
-            :class="{ 'is-active': route === item.route }"
+            :class="{ 'is-active': activeRoute === item.route }"
             :aria-disabled="!item.available"
-            :to="{
-              name: item.route,
-            }"
+            :to="'/dataset/' + item.route"
           >
             <span v-if="!collapsed">{{ item.name }}</span>
             <span v-else
               ><abbr :title="item.name" class="collapsed-flex-item">
-                <fa :icon="['fas', 'poll']" class="mr-1" />
+                <i class="fas fa-poll mr-1" />
                 <span>{{ initials(item.name) }}</span>
               </abbr></span
             >
-          </router-link> -->
+          </router-link>
           <a
             v-else
             disabled
@@ -77,38 +74,19 @@
         <abbr title="Resources">Src</abbr>
       </p>
       <ul class="menu-list">
-        <li>
-          <a href="https://pricaimcit.services.brown.edu/erddap/index.html">
+        <li v-for="(item, i) in RESOURCES" :key="i">
+          <a :href="item.link">
             <span v-if="!collapsed">
-              <i class="fas fa-database mr-1" />
-              ERDDAP Server</span
-            >
+              <i class="fas mr-1" :class="item.icon" />
+              {{ item.title }}
+            </span>
             <span v-else>
-              <abbr title="ERDDAP Server" class="collapsed-flex-item">
-                <i class="fas fa-database mr-1" />
-                <span> {{ initials("ERDDAP Server") }}</span>
-              </abbr></span
-            >
+              <abbr :title="item.title" class="collapsed-flex-item">
+                <i class="fas mr-1" :class="item.icon" />
+                {{ item.initials }}
+              </abbr>
+            </span>
           </a>
-        </li>
-        <li>
-          <a href="https://ridatadiscovery.org">
-            <span v-if="!collapsed"
-              ><abbr title="Rhode Island Data Discovery Center"
-                ><i class="fas fa-water mr-1" />RIDDC</abbr
-              >
-              Home</span
-            >
-            <span v-else>
-              <abbr
-                title="Rhode Island Data Discovery Center Home"
-                class="collapsed-flex-item"
-              >
-                <i class="fas fa-water mr-1" />
-                <span> {{ initials("RIDDC Home") }}</span>
-              </abbr></span
-            ></a
-          >
         </li>
       </ul>
     </div>
@@ -116,7 +94,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const emit = defineEmits(["toggle"]);
 
@@ -132,33 +110,48 @@ const collapsed = ref(false);
 const DATASETS = [
   {
     name: "RI Buoy Data",
-    route: "datasets-historical-buoy-data",
+    route: "ri-buoy",
     available: true,
   },
   {
     name: "MA Buoy Data",
-    route: "datasets-ma-buoy-data",
-    available: true,
+    route: "ma-buoy",
+    available: false,
   },
   {
     name: "Ocean State Ocean Model",
-    route: "datasets-osom-data",
-    available: true,
+    route: "osom",
+    available: false,
   },
   {
     name: "Plankton Time Series",
-    route: "datasets-plankton",
-    available: true,
+    route: "plankton",
+    available: false,
   },
   {
     name: "Domoic Acid",
-    route: "datasets-domoic-acid",
-    available: true,
+    route: "domoic-acid",
+    available: false,
   },
   {
     name: "Fish Trawl Survey",
-    route: "datasets-fish",
-    available: true,
+    route: "fish",
+    available: false,
+  },
+];
+
+const RESOURCES = [
+  {
+    title: "Rhode Island Data Discovery Center Home",
+    abbreviation: "RIDDC",
+    link: "https://ridatadiscovery.org",
+    icon: "fa-water",
+  },
+  {
+    title: "ERDDAP Server",
+    abbreviation: "ES",
+    link: "https://pricaimcit.services.brown.edu/erddap/index.html",
+    icon: "fa-database",
   },
 ];
 
@@ -166,6 +159,17 @@ const toggle = () => {
   collapsed.value = !collapsed.value;
   return emit("toggle", collapsed.value);
 };
+
+import { useRoute } from "vue-router";
+const route = useRoute();
+const activeRoute = computed(() => {
+  const paths = route.path.split("/").filter((p) => p);
+  if (paths.length > 1) {
+    return paths[1];
+  } else {
+    return "";
+  }
+});
 
 // export default {
 //   // to determine the active route
