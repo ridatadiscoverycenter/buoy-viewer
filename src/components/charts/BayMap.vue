@@ -52,6 +52,9 @@ const legendSpec = computed(() =>
     : []
 );
 
+import { cloneDeep } from "lodash/lang";
+const vegaDataset = computed(() => cloneDeep(props.dataset));
+
 const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega/v5.json",
@@ -69,7 +72,7 @@ const spec = computed(() => {
       },
       {
         name: "points",
-        values: props.dataset,
+        values: vegaDataset.value,
         format: { type: "json", parse: "auto" },
         transform: [
           {

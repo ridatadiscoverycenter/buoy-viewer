@@ -1,8 +1,11 @@
 $body-size: 1rem;
 $primary: rgb(89, 81, 139);
 $link: hsl(194deg 50% 50%);
+$primary-color: $link;
 
 @import "../../../node_modules/bulma/bulma.sass";
+@import '../../../node_modules/vue2-datepicker/scss/index.scss';
+
 
 .disabled {
   background-color: #efefef !important;
@@ -43,4 +46,17 @@ $link: hsl(194deg 50% 50%);
   white-space: normal !important;
   overflow-wrap: break-word !important;
   height: revert;
+}
+
+// make vue-multiselect colors match theme
+.multiselect__tag {
+  background: $link;
+}
+
+.multiselect__option--highlight {
+  background: $link;
+}
+
+.multiselect__option--highlight::after {
+  background: $link;
 }

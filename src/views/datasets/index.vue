@@ -1,12 +1,14 @@
 <template>
   <DashboardLayout>
-    <Suspense>
-      <router-view />
+    <router-view v-slot="{ Component }">
+      <Suspense>
+        <component :is="Component"></component>
 
-      <template #fallback>
-        <LoadingSpinner :loading="true" />
-      </template>
-    </Suspense>
+        <template #fallback>
+          <LoadingSpinner :loading="true" />
+        </template>
+      </Suspense>
+    </router-view>
   </DashboardLayout>
 </template>
 

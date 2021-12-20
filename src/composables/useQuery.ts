@@ -1,9 +1,12 @@
 import { reactive } from "vue";
+import hash from "object-hash";
 
-export function useQuery(store) {
+export function useQuery(store, routePath) {
   const query = reactive({});
+  const path = routePath
 
-  const updateQuery = (routeQuery) => {
+  const updateQuery = (routeQuery, routePath) => {
+    if (path !== routePath) return;
     const copyQuery = { ...routeQuery };
     const vars = ["variables", "start", "end", "ids"];
     vars.forEach((v) => {
@@ -25,6 +28,9 @@ export function useQuery(store) {
 
     query.startDate = new Date(copyQuery.start).toLocaleDateString("sv");
     query.endDate = new Date(copyQuery.end).toLocaleDateString("sv");
+
+    // TODO: is this really needed? is that key doing anything?
+    query.hash = hash(copyQuery);
 
     console.log(query);
   };

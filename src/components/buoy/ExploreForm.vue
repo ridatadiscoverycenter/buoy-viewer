@@ -112,7 +112,7 @@ const selectedBuoysString = computed(() => {
   return selectedBuoys.value.map((r) => r.buoyId).join(',');
 })
 
-const datasetPath = computed(() => `/datasets/${store.name}/dashboard`);
+const datasetPath = computed(() => `/dataset/${store.name}/dashboard`);
 
 const disabledDate = (date) => {
   console.log(date);

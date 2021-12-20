@@ -21,15 +21,15 @@ const props = defineProps<{
 
 const links = computed(() => {
   const pathParts = props.path.split("/").filter((p) => p);
-  const dataset = pathParts[0];
+  const dataset = pathParts[1];
   const pageType = pathParts.pop();
   const links = [
     { path: "/", name: "Home" },
-    { path: `/${dataset}`, name: "Summary" },
+    { path: `/dataset/${dataset}`, name: "Summary" },
   ];
 
   if (pageType === "dashboard") {
-    links.push({ path: `/${dataset}/dashboard`, name: "Explore" });
+    links.push({ path: `/dataset/${dataset}/dashboard`, name: "Explore" });
   }
 
   return links;

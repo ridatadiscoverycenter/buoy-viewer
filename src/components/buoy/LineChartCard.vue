@@ -117,7 +117,6 @@ const nonPlottableVariables = computed(() =>
 
 // fetch the data
 import { fetchWeather } from "@/utils/weather.ts";
-const setLoading = inject("setLoading");
 
 const compareStore = inject("compareStore");
 const compareDataset = ref([]);
@@ -129,6 +128,7 @@ const downsampled = ref(false);
 const weather = ref([]);
 
 const fetchData = async () => {
+  console.log("fetching data");
   const { coordinates, startDate, endDate } = props.query;
   const query = {
     ids: coordinates.map((c) => c.buoyId),

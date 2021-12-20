@@ -46,6 +46,9 @@ const props = defineProps({
   },
 });
 
+import { cloneDeep } from "lodash/lang";
+const vegaDataset = computed(() => cloneDeep(props.dataset));
+
 const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega/v5.json",
@@ -53,7 +56,7 @@ const spec = computed(() => {
     data: [
       {
         name: "rawData",
-        values: props.dataset,
+        values: vegaDataset.value,
         transform: [
           {
             type: "formula",
@@ -152,6 +155,6 @@ useVega({
   el,
   // minHeight: props.height,
   maxWidth: ref(1280),
-  includeActions: ref(false),
+  includeActions: ref(true),
 });
 </script>

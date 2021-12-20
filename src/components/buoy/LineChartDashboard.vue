@@ -1,5 +1,5 @@
 <template>
-  <Suspense>
+  <Suspense :key="query.hash">
     <BuoyLineChart :query="query" />
 
     <template #fallback>

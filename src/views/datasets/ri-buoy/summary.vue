@@ -41,7 +41,7 @@ const scenarios = [
       ids: "bid2,bid3",
       variables: "WaterTempSurface,WaterTempBottom",
       start: "2010-05-01",
-      end: "2011-10-31T",
+      end: "2011-10-31",
     },
   },
   {

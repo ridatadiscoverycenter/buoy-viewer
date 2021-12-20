@@ -1,9 +1,15 @@
 <template>
-  <LineChartDashboard :query="query">
-    <template #summary-heatmap>
-      <StationHeatmap :summary="store.summary" :variables="store.variables" />
+  <Suspense>
+    <LineChartDashboard :query="query">
+      <template #summary-heatmap>
+        <StationHeatmap :summary="store.summary" :variables="store.variables" />
+      </template>
+    </LineChartDashboard>
+
+    <template #fallback>
+      <LoadingSpinner :loading="true" />
     </template>
-  </LineChartDashboard>
+  </Suspense>
 </template>
 
 <script setup lang="ts">
@@ -12,19 +18,18 @@ import { useRoute } from "vue-router";
 
 import LineChartDashboard from "@/components/buoy/LineChartDashboard.vue";
 import StationHeatmap from "@/components/buoy/StationHeatmap.vue";
+import LoadingSpinner from "@/components/base/LoadingSpinner.vue";
 
 const store = inject("store");
-import { useQuery } from "@/composables/useQuery.ts";
-const { query, updateQuery } = useQuery(store);
-
 const route = useRoute();
+import { useQuery } from "@/composables/useQuery.ts";
+const { query, updateQuery } = useQuery(store, route.path);
 
-updateQuery(route.query);
-watch(() => route.query, updateQuery);
+updateQuery(route.query, route.path);
+watch(() => route.query, (val) => updateQuery(val, route.path));
 
 // set up the comparison dataset
 import { buoyStores } from "@/store/buoy.ts";
-const compareName = "osom";
-const compareStore = buoyStores[compareName].useStore();
+const compareStore = buoyStores["osom"].useStore();
 provide("compareStore", compareStore);
 </script>

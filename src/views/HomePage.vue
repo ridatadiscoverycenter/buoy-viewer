@@ -11,7 +11,7 @@
           <!-- TODO: make this go to historical buoy data again -->
           <router-link
             class="button is-large has-text-light is-link"
-            to="/datasets/"
+            to="/dataset/"
           >
             <span class="is-size-3">Start Exploring</span>
             <i class="ml-3 is-size-3 fas fa-compass" />

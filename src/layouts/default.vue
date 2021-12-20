@@ -35,6 +35,7 @@ const errorMessage = ref("");
 const goBack = () => console.log("GO BACK"); // TODO: go somewhere
 
 onErrorCaptured((err: Error) => {
+  console.log(err);
   errored.value = true;
   errorMessage.value = err.message;
 });
