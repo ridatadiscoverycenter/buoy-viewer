@@ -131,7 +131,7 @@ const DATASETS = [
   {
     name: "Fish Trawl Survey",
     route: "fish",
-    available: false,
+    available: true,
   },
 ];
 

@@ -44,12 +44,12 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import { useModel } from "@/store/model.ts";
+import { buoyStores } from "@/store/buoy.ts";
 import { useColorMap } from "@/store/colorMap.ts";
 
 import BayMap from "@/components/charts/BayMap.vue";
 
-const model = useModel();
+const model = buoyStores["osom"].useStore();
 const colorMap = useColorMap();
 
 const colorDomain = computed(() =>

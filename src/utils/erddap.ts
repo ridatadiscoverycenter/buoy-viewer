@@ -15,7 +15,7 @@ const erddapAxios = axios.create({
   },
 });
 
-const erddapGet = async (path: string) => {
+export const erddapGet = async (path: string) => {
   const response = await erddapAxios.get(path);
   if (response.status !== 200) {
     throw new Error(`Error fetching data from ERDDAP: ${path}`);
@@ -73,13 +73,11 @@ export const initState =
   () => {
     return {
       ...config,
-      data: [],
       coordinates: [],
       summary: [],
       variables: [],
       minDate: new Date(0),
       maxDate: new Date(),
-      downsampled: false,
     };
   };
 
