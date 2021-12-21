@@ -26,8 +26,8 @@ export function useQuery(store, routePath) {
       copyQuery.ids.includes(c.buoyId)
     );
 
-    query.startDate = new Date(copyQuery.start).toLocaleDateString("sv");
-    query.endDate = new Date(copyQuery.end).toLocaleDateString("sv");
+    query.startDate = copyQuery.start;
+    query.endDate = copyQuery.end;
 
     // TODO: is this really needed? is that key doing anything?
     query.hash = hash(copyQuery);
