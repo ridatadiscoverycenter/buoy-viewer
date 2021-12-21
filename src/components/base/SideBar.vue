@@ -121,7 +121,7 @@ const DATASETS = [
   {
     name: "Ocean State Ocean Model",
     route: "osom",
-    available: false,
+    available: true,
   },
   {
     name: "Plankton Time Series",
@@ -170,15 +170,6 @@ const activeRoute = computed(() => {
     return "";
   }
 });
-
-// export default {
-//   // to determine the active route
-//   computed: {
-//     route() {
-//       return this.$route.name.replace('-dashboard', '');
-//     },
-//   },
-// };
 </script>
 
 <style lang="scss" scoped>

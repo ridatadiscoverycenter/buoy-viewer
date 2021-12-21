@@ -3,8 +3,10 @@ $primary: rgb(89, 81, 139);
 $link: hsl(194deg 50% 50%);
 $primary-color: $link;
 
+// TODO: change info color to something better going with the purple/teal
+
 @import "../../../node_modules/bulma/bulma.sass";
-@import '../../../node_modules/vue2-datepicker/scss/index.scss';
+@import '../../../node_modules/vue-datepicker-next/scss/index.scss';
 
 
 .disabled {

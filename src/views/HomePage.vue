@@ -8,9 +8,8 @@
             Explore historical data collected from multiple buoys in the
             Narragansett Bay
           </h2>
-          <!-- TODO: make this go to historical buoy data again -->
           <router-link
-            class="button is-large has-text-light is-link"
+            class="button is-large has-text-light is-primary"
             to="/dataset/"
           >
             <span class="is-size-3">Start Exploring</span>

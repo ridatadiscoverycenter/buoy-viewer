@@ -16,7 +16,8 @@
       <i class="fas fa-arrow-left mr-2" />
       Back
     </a>
-    <router-link to="/">
+    <!-- TODO: is this error clearning working? -->
+    <router-link to="/" @click="errored = false">
       <i class="fas fa-home mr-2" />
       Home
     </router-link>
@@ -62,8 +63,11 @@ onErrorCaptured((err: Error) => {
 }
 .error-container {
   padding: 3rem;
-  margin-top: 5rem;
   height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: white;
 }
 .error-content {
   font-size: 3rem;

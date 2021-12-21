@@ -1,7 +1,7 @@
 <template>
   <DashboardLayout>
     <router-view v-slot="{ Component }">
-      <Suspense>
+      <Suspense :key="$route.path">
         <component :is="Component"></component>
 
         <template #fallback>

@@ -89,11 +89,12 @@ export function baseActions(route: string) {
     // fetch the summary for the heatmaps
     async fetchSummaryData() {
       console.log("fetching summary");
-      this.summary = await erddapGet(`/${route}/summary`);
+      // assign to intermediate variable for performance while updating date/time data
+      const summary = await erddapGet(`/${route}/summary`);
       console.log("got summary");
       let minDate = new Date();
       let maxDate = new Date(0);
-      this.summary.map((d) => {
+      summary.map((d) => {
         d.date = new Date(d.time);
         if (d.date < minDate) {
           minDate = d.date;
@@ -103,6 +104,7 @@ export function baseActions(route: string) {
         }
         return d;
       });
+      this.summary = summary;
       this.minDate = localISODate(minDate);
       this.maxDate = localISODate(maxDate);
 

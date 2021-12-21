@@ -14,14 +14,14 @@
     "bulma": "^0.9.3",
     "lodash": "^4.17.21",
     "object-hash": "^2.2.0",
-    "pinia": "^2.0.6",
+    "pinia": "^2.0.8",
     "vega": "^5.21.0",
     "vega-embed": "^6.20.5",
     "vega-lite": "^5.2.0",
     "vue": "^3.2.26",
+    "vue-datepicker-next": "^1.0.2",
     "vue-multiselect": "^3.0.0-alpha.2",
-    "vue-router": "^4.0.12",
-    "vue2-datepicker": "^4.0.0-beta.2"
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.7.0",
@@ -34,7 +34,7 @@
     "prettier": "^2.5.1",
     "sass": "^1.45.0",
     "typescript": "^4.5.4",
-    "vite": "^2.7.3",
+    "vite": "^2.7.4",
     "vite-plugin-checker": "^0.3.4",
     "vue-tsc": "^0.29.8"
   }

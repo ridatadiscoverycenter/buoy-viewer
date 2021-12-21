@@ -83,8 +83,7 @@ interface Scenario {
   query: Query;
 }
 
-const props = defineProps<{
-  dataset: string;
+defineProps<{
   scenarios: Scenario[];
 }>();
 
@@ -94,6 +93,6 @@ const generateQuery = (query: Query) => {
   const queryParams = Object.entries(query)
     .map(([key, val]) => `${key}=${val}`)
     .join("&");
-  return `/dataset/${props.dataset}/dashboard?${queryParams}`;
+  return `/dataset/${store.name}/dashboard?${queryParams}`;
 };
 </script>

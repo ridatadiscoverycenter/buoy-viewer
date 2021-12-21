@@ -11,7 +11,7 @@ const config = [
     route: "buoy",
     datasetId: "combined_e784_bee5_492e",
     lineWidth: MEASUREMENT_LINEWIDTH,
-    title: "Historial",
+    title: "Historical",
   },
   {
     name: "osom",
@@ -25,7 +25,7 @@ const config = [
     route: "mabuoy",
     datasetId: "ma_buoy_data_a6c9_12eb_1ec5",
     lineWidth: MEASUREMENT_LINEWIDTH,
-    title: "Historial",
+    title: "Historical",
   },
   {
     name: "plankton",

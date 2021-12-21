@@ -1,5 +1,5 @@
 <template>
-  <BuoyDashboard dataset="ri-buoy" :scenarios="scenarios">
+  <BuoyDashboard :scenarios="scenarios">
     <template #available-data>
       This dataset spans from {{ store.minDate.slice(0, 4) }} to
       {{ store.maxDate.slice(0, 4) }}. The heatmap below summarizes the number

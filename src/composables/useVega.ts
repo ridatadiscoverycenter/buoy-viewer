@@ -3,6 +3,8 @@ import embed from "vega-embed";
 import { View } from "vega";
 import { cloneDeep } from "lodash/lang";
 
+// TODO: have this use suspense so we get loading on the plot updates?
+
 export function useVega({
   spec,
   minWidth = ref(180),

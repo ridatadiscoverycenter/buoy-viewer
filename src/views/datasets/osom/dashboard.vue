@@ -1,0 +1,61 @@
+<template>
+  <Suspense>
+    <LineChartDashboard :query="query">
+      <template #summary-heatmap>
+        <VariableHeatmap
+          :summary="store.summary"
+          :variables="store.variables"
+          x-title="Year"
+          x-unit="year"
+        />
+      </template>
+    </LineChartDashboard>
+
+    <template #fallback>
+      <LoadingSpinner :loading="true" />
+    </template>
+  </Suspense>
+</template>
+
+<script setup lang="ts">
+import { inject, provide, watch } from "vue";
+import { useRoute } from "vue-router";
+
+import LineChartDashboard from "@/components/buoy/LineChartDashboard.vue";
+import VariableHeatmap from "@/components/buoy/VariableHeatmap.vue";
+import LoadingSpinner from "@/components/base/LoadingSpinner.vue";
+
+const store = inject("store");
+const route = useRoute();
+import { useQuery } from "@/composables/useQuery.ts";
+const { query, updateQuery } = useQuery(store, route.path);
+
+updateQuery(route.query, route.path);
+watch(
+  () => route.query,
+  (val) => updateQuery(val, route.path)
+);
+
+// set up the comparison dataset - create combined store with keys that are used
+import { buoyStores } from "@/store/buoy.ts";
+const riStore = buoyStores["ri-buoy"].useStore();
+const maStore = buoyStores["ma-buoy"].useStore();
+const compareStore = {
+  title: "Historical",
+  name: riStore.name,
+  lineWidth: riStore.lineWidth,
+  fetchBuoyData: async (query) => {
+    const res = await Promise.all([
+      riStore.fetchBuoyData(query),
+      maStore.fetchBuoyData(query),
+    ]);
+
+    console.log(res);
+    return res.reduce((acc, cur) => ({
+      data: [...acc.data, ...cur.data],
+      downsampled: acc.downsampled || cur.downsampled,
+    }));
+  },
+};
+provide("compareStore", compareStore);
+</script>

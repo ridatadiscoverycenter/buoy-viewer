@@ -18,8 +18,10 @@
       >
         <i class="fas fa-info-circle mr-1" />
         <span class="is-size-6 mr-4">
-          <a :href="comparePath" target="_blank">{{ compareName }}</a> data is
-          available which matches your query
+          <a :href="`/dataset/${compareStore.name}`" target="_blank">{{
+            compareStore.title
+          }}</a>
+          data is available which matches your query
         </span>
         <button class="button is-info is-small" @click="toggleCompare">
           {{ compareText }}
@@ -50,7 +52,7 @@
         :dataset="dataset"
         :dataset-name="store.title"
         :dataset-line-width="store.lineWidth"
-        :compare-dataset="compareDataset"
+        :compare-dataset="compare ? compareDataset : []"
         :compare-name="compareStore.title"
         :compare-line-width="compareStore.lineWidth"
         :variables="plottableVariables"
@@ -88,7 +90,7 @@ const props = defineProps({
 
 // comparison of other dataset
 const compare = ref(false);
-const compareText = "Add To Plot";
+const compareText = ref("Add To Plot");
 
 const toggleCompare = () => {
   compare.value = !compare.value;

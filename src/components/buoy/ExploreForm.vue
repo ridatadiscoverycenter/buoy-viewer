@@ -32,7 +32,7 @@
         <label for="date-select" class="label">Select Date Range</label>
         <date-picker
           id="date-select"
-          v-model="dateRange"
+          v-model:value="dateRange"
           :disabled-date="disabledDate"
           :default-value="[
             localISODateToUTC(store.minDate),
@@ -66,7 +66,7 @@
 import { computed, inject, ref, withDefaults } from "vue";
 
 import Multiselect from "vue-multiselect";
-import DatePicker from "vue2-datepicker";
+import DatePicker from "vue-datepicker-next";
 
 import BaseForm from "@/components/base/BaseForm.vue";
 
