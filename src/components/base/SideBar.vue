@@ -116,7 +116,7 @@ const DATASETS = [
   {
     name: "MA Buoy Data",
     route: "ma-buoy",
-    available: false,
+    available: true,
   },
   {
     name: "Ocean State Ocean Model",
@@ -126,7 +126,7 @@ const DATASETS = [
   {
     name: "Plankton Time Series",
     route: "plankton",
-    available: false,
+    available: true,
   },
   {
     name: "Domoic Acid",
