@@ -43,7 +43,7 @@
     </template>
   </DashboardCard>
 
-  <DashboardCard width="half">
+  <DashboardCard width="half align-self-start">
     <template #title> Download </template>
     <template #subtitle>
       If you prefer, we provide the raw data for you to download in various file
@@ -98,3 +98,9 @@ const generateQuery = (query: Query) => {
   return `/dataset/${store.name}/dashboard?${queryParams}`;
 };
 </script>
+
+<style lang="scss" scoped>
+.align-self-start {
+  align-self: start;
+}
+</style>
