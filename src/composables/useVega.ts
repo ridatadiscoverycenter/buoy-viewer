@@ -58,7 +58,7 @@ export function useVega({
   });
 
   const updatePlot = () => {
-    console.log("in update plot")
+    console.log("in update plot");
     if (view.value) {
       view.value.finalize();
     }
@@ -90,7 +90,6 @@ export function useVega({
       });
   };
 
-  let finalized = false;
   const finalize = () => {
     console.log("in vega finalizer");
     if (view.value) {

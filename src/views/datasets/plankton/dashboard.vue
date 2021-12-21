@@ -2,7 +2,10 @@
   <Suspense>
     <LineChartDashboard :query="query">
       <template #summary-heatmap>
-        <VariableHeatmap :summary="store.summary" :variables="store.variables" />
+        <VariableHeatmap
+          :summary="store.summary"
+          :variables="store.variables"
+        />
       </template>
     </LineChartDashboard>
 

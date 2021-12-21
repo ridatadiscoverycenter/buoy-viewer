@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import HomePage from "@/views/HomePage.vue";
+import AboutPage from "@/views/AboutPage.vue";
 import DatasetPage from "@/views/datasets/index.vue";
 
 // TODO: route nuxt-style paths to new-style
@@ -35,6 +36,11 @@ const routes = [
     path: "/",
     name: "Home",
     component: HomePage,
+  },
+  {
+    path: "/about",
+    name: "About",
+    component: AboutPage,
   },
   {
     path: "/dataset",

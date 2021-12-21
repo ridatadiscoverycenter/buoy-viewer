@@ -57,7 +57,9 @@
   <DashboardCard width="half" :height="1">
     <template #title> Learn More </template>
     <template #subtitle>
-      <slot name="learn-more" />
+      <div class="content">
+        <slot name="learn-more" />
+      </div>
     </template>
   </DashboardCard>
 </template>

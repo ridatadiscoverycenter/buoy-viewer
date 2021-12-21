@@ -18,17 +18,12 @@
             <span v-if="!collapsed">Home</span>
           </router-link>
         </li>
-        <!-- TODO: about page -->
-        <!-- <li>
-          <nuxt-link
-            :to="{
-              name: 'about',
-            }"
-          >
-            <i class="fas fa-info-circle" />
-            <span v-if="!collapsed">About</span></nuxt-link
-          >
-        </li> -->
+        <li>
+          <router-link to="/about">
+            <i class="fas fa-info-circle mr-1" />
+            <span v-if="!collapsed">About</span>
+          </router-link>
+        </li>
       </ul>
       <p v-if="!collapsed" class="menu-label">Exploration Datasets</p>
       <p v-else class="menu-label">
