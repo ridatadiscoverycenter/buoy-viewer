@@ -46,10 +46,6 @@ const props = defineProps({
   },
 });
 
-// TODO: should this be pushed down to the spec within useVega?
-import { cloneDeep } from "lodash/lang";
-const vegaDataset = computed(() => cloneDeep(props.dataset));
-
 const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega/v5.json",
@@ -57,7 +53,7 @@ const spec = computed(() => {
     data: [
       {
         name: "rawData",
-        values: vegaDataset.value,
+        values: props.dataset,
         transform: [
           {
             type: "formula",

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="has-text-right">
-      <button type="button" class="button bars" @click="toggle">
+      <button type="button" class="button bars px-0" @click="toggle">
         <i v-if="!collapsed" class="fas fa-times" />
         <i v-else class="fas fa-bars" />
       </button>

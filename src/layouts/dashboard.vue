@@ -42,6 +42,7 @@ const collapsed = ref(false);
   @extend .py-4;
   overflow: hidden;
   background-color: whitesmoke;
+  min-height: 90vh;
 }
 main {
   grid-area: main;

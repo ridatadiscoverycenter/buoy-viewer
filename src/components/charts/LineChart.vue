@@ -66,11 +66,6 @@ const props = defineProps({
   },
 });
 
-import { cloneDeep } from "lodash/lang";
-const vegaDataset = computed(() => cloneDeep(props.dataset));
-const vegaWeatherDataset = computed(() => cloneDeep(props.weatherDataset));
-const vegaCompareDataset = computed(() => cloneDeep(props.compareDataset));
-
 const DASHES = [
   [1, 0],
   [1, 1],
@@ -93,7 +88,7 @@ const legends = computed(() => {
       orient: "top",
     },
   ];
-  if (vegaCompareDataset.value.length > 0) {
+  if (props.compareDataset.length > 0) {
     legend.push({
       title: "Datasets",
       strokeWidth: "lineWidth",
@@ -125,14 +120,14 @@ const spec = computed(() => {
     data: [
       {
         name: "buoy",
-        values: vegaDataset.value,
+        values: props.dataset,
         transform: [
           { type: "formula", as: "dataset", expr: `'${props.datasetName}'` },
         ],
       },
       {
         name: "compare",
-        values: vegaCompareDataset.value,
+        values: props.compareDataset,
         transform: [
           { type: "formula", as: "dataset", expr: `'${props.compareName}'` },
         ],
@@ -165,7 +160,7 @@ const spec = computed(() => {
       },
       {
         name: "weather",
-        values: vegaWeatherDataset.value,
+        values: props.weatherDataset,
       },
     ],
 

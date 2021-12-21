@@ -1,6 +1,7 @@
 import { ref, Ref, computed, onMounted, onUnmounted, watch } from "vue";
 import embed from "vega-embed";
 import { View } from "vega";
+import { cloneDeep } from "lodash/lang";
 
 export function useVega({
   spec,
@@ -66,7 +67,7 @@ export function useVega({
     // no element to render into yet
     if (!el.value) return;
 
-    embed(el.value, spec.value, {
+    embed(el.value, cloneDeep(spec.value), {
       actions: includeActions.value,
       theme: "vox",
       renderer: "svg",
