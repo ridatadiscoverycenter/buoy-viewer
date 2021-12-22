@@ -14,7 +14,7 @@
     <template #buttons>
       <router-link
         class="button is-primary"
-        :to="`/dataset/fish/${selectedSpecies}`"
+        :to="`/dataset/fish/dashboard?species=${selectedSpecies}`"
         >Explore</router-link
       >
     </template>

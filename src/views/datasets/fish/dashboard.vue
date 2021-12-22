@@ -1,38 +1,35 @@
 <template>
-  <Suspense>
-    <LineChartDashboard :query="query">
-      <template #summary-heatmap>
-        <StationHeatmap :summary="store.summary" :variables="store.variables" />
-      </template>
-    </LineChartDashboard>
+  <Suspense :key="species">
+    <FishChartCard :species="species" />
 
     <template #fallback>
       <LoadingSpinner :loading="true" />
     </template>
   </Suspense>
+
+  <BuoyLocations :coordinates="store.coordinates" location-type="Survey" />
+
+  <DashboardCard width="one-third" :height="2">
+    <template #title>Keep Exploring</template>
+    <template #subtitle>Pick another species to learn more about!</template>
+    <template #content>
+      <FishExploreForm />
+    </template>
+  </DashboardCard>
 </template>
 
 <script setup lang="ts">
-import { inject, provide, watch } from "vue";
+import { computed, inject } from "vue";
 import { useRoute } from "vue-router";
 
-import LineChartDashboard from "@/components/buoy/LineChartDashboard.vue";
-import StationHeatmap from "@/components/buoy/StationHeatmap.vue";
+import DashboardCard from "@/components/base/DashboardCard.vue";
+import BuoyLocations from "@/components/buoy/LocationMap.vue";
+import FishExploreForm from "@/components/fish/FishExploreForm.vue";
+import FishChartCard from "@/components/fish/FishChartCard.vue";
 import LoadingSpinner from "@/components/base/LoadingSpinner.vue";
 
 const store = inject("store");
 const route = useRoute();
-import { useQuery } from "@/composables/useQuery.ts";
-const { query, updateQuery } = useQuery(store, route.path);
 
-updateQuery(route.query, route.path);
-watch(
-  () => route.query,
-  (val) => updateQuery(val, route.path)
-);
-
-// set up the comparison dataset
-import { buoyStores } from "@/store/buoy.ts";
-const compareStore = buoyStores["osom"].useStore();
-provide("compareStore", compareStore);
+const species = computed(() => route.query.species);
 </script>

@@ -30,21 +30,12 @@ interface Temperature {
   delta: number;
 }
 
-interface FishInfo {
-  name?: string;
-  sciName?: string;
-  href?: string;
-  photoUrl?: string;
-  sectionData?: any;
-}
-
 interface State {
   name: string;
   route: string;
   coordinates: Coordinate[];
   samples: Sample[];
   temps: Temperature[];
-  info: FishInfo;
 }
 
 export const useFishStore = defineStore("fish", {
@@ -55,7 +46,6 @@ export const useFishStore = defineStore("fish", {
       coordinates: [],
       samples: [],
       temps: [],
-      info: {},
     };
   },
   actions: {
@@ -86,7 +76,7 @@ export const useFishStore = defineStore("fish", {
       this.temps = await erddapGet("/fish/temps");
     },
     async fetchInfo(species: string) {
-      this.info = await erddapGet(`/fish/info/${species}`);
+      return await erddapGet(`/fish/info/${species}`);
     },
     async fetchBaseData(): Promise<void> {
       if (this.coordinates.length === 0) {
@@ -100,7 +90,7 @@ export const useFishStore = defineStore("fish", {
   },
   getters: {
     stations(): string[] {
-      return this.samples.map(({ title }) => title).sort();
+      return this.coordinates.map(({ station_name }) => station_name).sort();
     },
     species(): string[] {
       // unique species in alphabetical order

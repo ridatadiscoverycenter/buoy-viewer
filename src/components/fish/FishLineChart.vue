@@ -12,8 +12,12 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-  station: {
-    type: String,
+  colorRange: {
+    type: Array,
+    required: true,
+  },
+  stations: {
+    type: Array,
     required: true,
   },
 });
@@ -21,63 +25,43 @@ const props = defineProps({
 const spec = computed(() => {
   return {
     $schema: "https://vega.github.io/schema/vega/v5.json",
-    height: 430,
+    description:
+      "Fish trawl survey line chart, with value labels shown upon mouse hover.",
+    height: 400,
+    padding: 5,
+
     data: [
       {
-        name: "rawData",
+        name: "fish",
         values: props.dataset,
-      },
-      {
-        name: "data",
-        source: "rawData",
         transform: [
-          {
-            type: "filter",
-            expr: `datum.station == "${props.station}"`,
-          },
-        ],
-      },
-      {
-        name: "dataNoZeros",
-        source: "data",
-        transform: [
-          {
-            type: "filter",
-            expr: "datum.abun > 0",
-          },
+          { type: "formula", as: "time", expr: "utc(datum.year, 0)" },
         ],
       },
     ],
+
     scales: [
       {
-        name: "x",
-        type: "band",
-        domain: { data: "data", field: "year", sort: true },
+        name: "xscale",
+        type: "utc",
+        domain: { data: "fish", field: "time" },
         range: "width",
+        padding: 0.05,
+        round: true,
       },
       {
-        name: "y",
-        type: "band",
-        domain: { data: "data", field: "title", sort: true },
-        range: "height",
-        padding: 0.02,
+        name: "yfish",
+        type: "linear",
+        domain: { data: "fish", field: "abun" },
+        nice: true,
+        zero: true,
+        range: [{ signal: "height" }, 0],
       },
       {
         name: "color",
-        type: "log",
-        range: { scheme: "tealblues" },
-        domain: { data: "dataNoZeros", field: "abun" },
-        reverse: false,
-        zero: false,
-        nice: true,
-        clamp: true,
-      },
-      {
-        name: "size",
-        type: "log",
-        domain: { data: "dataNoZeros", field: "abun" },
-        range: [0.15, 1],
-        clamp: true,
+        type: "ordinal",
+        range: props.colorRange,
+        domain: props.stations,
       },
       {
         name: "shape",
@@ -92,71 +76,131 @@ const spec = computed(() => {
         ],
       },
     ],
-    axes: [
-      {
-        orient: "bottom",
-        scale: "x",
-        domain: false,
-        title: "Year",
-        labelOverlap: "parity",
-        ticks: false,
-        bandPosition: 0.5,
-        labelAlign: "center",
-      },
-      {
-        orient: "left",
-        scale: "y",
-        domain: false,
-        title: "Species",
-        ticks: false,
-      },
-    ],
-    legends: [
-      {
-        title: ["Abundance", "of Species"],
-        fill: "color",
-        type: "gradient",
-        gradientLength: { signal: "height - 20" },
-      },
-    ],
+
     marks: [
       {
-        type: "symbol",
-        from: { data: "data" },
+        type: "group",
+        desctiption: "Fish Abundance",
+        name: "fishplot",
+
         encode: {
           enter: {
-            tooltip: {
-              signal:
-                "{'Year': datum.year, 'Species': datum.title, 'Abundance': format(datum.abun, ',.3f')}",
-            },
-          },
-          update: {
-            y: {
-              signal: "scale('y', datum.title) + bandwidth('y') / 2",
-            },
-            x: {
-              signal: "scale('x', datum.year) + bandwidth('x') / 2",
-            },
-            fill: [
-              { test: "datum.abun === 0", value: "transparent" },
-              { scale: "color", field: "abun" },
-            ],
-            stroke: { scale: "color", field: "abun" },
-            strokeWidth: [
-              { test: "datum.abun === 0", value: 0.3 },
-              { value: 0 },
-            ],
-            shape: { scale: "shape", field: "animal" },
-            width: { signal: "bandwidth('x') * scale('size', datum.abun)" },
-            height: {
-              signal: "bandwidth('y') * scale('size', datum.abun)",
-            },
-            size: {
-              signal:
-                "scale('size', datum.abun) * bandwidth('x') * bandwidth('y')",
-            },
+            y: { value: 0 },
+            width: { signal: "width" },
+            height: { signal: "height" },
           },
         },
+
+        signals: [
+          {
+            name: "hovered",
+            value: null,
+            on: [
+              { events: "@voronoi:mouseover", update: "datum" },
+              { events: "mouseout", update: "null" },
+            ],
+          },
+        ],
+
+        axes: [
+          {
+            orient: "bottom",
+            scale: "xscale",
+            labelOverlap: true,
+            title: "Year",
+          },
+          {
+            orient: "left",
+            scale: "yfish",
+            title: "Abundance",
+            grid: false,
+          },
+        ],
+
+        legends: [
+          {
+            type: "symbol",
+            orient: "top-right",
+            fill: "color",
+          },
+        ],
+
+        marks: [
+          {
+            type: "symbol",
+            name: "fish_symbols",
+            from: { data: "fish" },
+            zindex: 1,
+            encode: {
+              enter: {
+                fill: { scale: "color", field: "station" },
+                shape: { scale: "shape", field: "animal" },
+                x: { scale: "xscale", field: "time" },
+                y: { scale: "yfish", field: "abun" },
+              },
+              update: {
+                size: [
+                  {
+                    test: "hovered && hovered.datum === datum",
+                    value: 250,
+                  },
+                  { value: 100 },
+                ],
+              },
+            },
+          },
+
+          {
+            type: "path",
+            name: "voronoi",
+            zindex: 2,
+            from: { data: "fish_symbols" },
+            encode: {
+              enter: {
+                stroke: { value: "transparent" },
+                fill: { value: "transparent" },
+                tooltip: {
+                  signal:
+                    "{ 'Abundance': format(datum.datum.abun, ',.3f'), 'Year': datum.datum.year, 'Station': datum.datum.station }",
+                },
+              },
+            },
+            transform: [
+              {
+                type: "voronoi",
+                x: "datum.x",
+                y: "datum.y",
+                size: [{ signal: "width" }, { signal: "height" }],
+              },
+            ],
+          },
+
+          {
+            type: "group",
+            from: {
+              facet: {
+                name: "series",
+                data: "fish",
+                groupby: ["station"],
+              },
+            },
+            marks: [
+              {
+                type: "line",
+                from: { data: "series" },
+                encode: {
+                  enter: {
+                    x: { scale: "xscale", field: "time" },
+                    y: { scale: "yfish", field: "abun" },
+                    stroke: { scale: "color", field: "station" },
+                    opacity: { value: 0.3 },
+                    interactive: false,
+                  },
+                },
+              },
+            ],
+          },
+        ],
       },
     ],
   };
@@ -166,6 +210,7 @@ const el = ref<HTMLDivElement>(null);
 useVega({
   spec,
   el,
+  // minHeight: props.height,
   maxWidth: ref(1280),
   includeActions: ref(false),
 });
