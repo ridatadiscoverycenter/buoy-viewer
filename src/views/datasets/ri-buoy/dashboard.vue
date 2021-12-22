@@ -1,15 +1,9 @@
 <template>
-  <Suspense>
-    <LineChartDashboard :query="query">
-      <template #summary-heatmap>
-        <StationHeatmap :summary="store.summary" :variables="store.variables" />
-      </template>
-    </LineChartDashboard>
-
-    <template #fallback>
-      <LoadingSpinner :loading="true" />
+  <LineChartDashboard :query="query">
+    <template #summary-heatmap>
+      <StationHeatmap :summary="store.summary" :variables="store.variables" />
     </template>
-  </Suspense>
+  </LineChartDashboard>
 </template>
 
 <script setup lang="ts">
@@ -18,7 +12,6 @@ import { useRoute } from "vue-router";
 
 import LineChartDashboard from "@/components/buoy/LineChartDashboard.vue";
 import StationHeatmap from "@/components/buoy/StationHeatmap.vue";
-import LoadingSpinner from "@/components/base/LoadingSpinner.vue";
 
 const store = inject("store");
 const route = useRoute();

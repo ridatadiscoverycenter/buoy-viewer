@@ -74,7 +74,6 @@ const data = computed(() =>
 const info = ref({});
 
 const fetchInfo = async () => {
-  console.log("fetching fish info");
   info.value = await store.fetchInfo(props.species);
 };
 

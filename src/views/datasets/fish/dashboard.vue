@@ -1,11 +1,7 @@
 <template>
-  <Suspense :key="species">
+  <SuspenseComponent :key="species">
     <FishChartCard :species="species" />
-
-    <template #fallback>
-      <LoadingSpinner :loading="true" />
-    </template>
-  </Suspense>
+  </SuspenseComponent>
 
   <BuoyLocations :coordinates="store.coordinates" location-type="Survey" />
 
@@ -26,7 +22,7 @@ import DashboardCard from "@/components/base/DashboardCard.vue";
 import BuoyLocations from "@/components/buoy/LocationMap.vue";
 import FishExploreForm from "@/components/fish/FishExploreForm.vue";
 import FishChartCard from "@/components/fish/FishChartCard.vue";
-import LoadingSpinner from "@/components/base/LoadingSpinner.vue";
+import SuspenseComponent from "@/components/base/SuspenseComponent.vue";
 
 const store = inject("store");
 const route = useRoute();

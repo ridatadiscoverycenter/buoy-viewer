@@ -31,8 +31,6 @@ export function useQuery(store, routePath) {
 
     // TODO: is this really needed? is that key doing anything?
     query.hash = hash(copyQuery);
-
-    console.log(query);
   };
 
   return {

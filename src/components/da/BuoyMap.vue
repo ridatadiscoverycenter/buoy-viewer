@@ -68,7 +68,6 @@ onMounted(() => {
     map.value.resize();
     map.value.addImage("buoy-marker", imageEl.value);
 
-    console.log(store.geoJSON);
     map.value.addSource("points", geoJSON);
 
     map.value.addLayer({
@@ -94,7 +93,6 @@ const updateMarkers = () => {
   });
   markers = [];
 
-  console.log(store.selectedSamples);
   store.selectedSamples.forEach(({ color, size, station_name }) => {
     // create circle elements to display
     const elementSize = `${100 * size}px`;
@@ -113,8 +111,6 @@ const updateMarkers = () => {
         .addTo(map.value)
     );
   });
-
-  console.log(markers);
 };
 
 watch(() => store.selectedDate, updateMarkers);

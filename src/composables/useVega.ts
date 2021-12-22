@@ -58,12 +58,9 @@ export function useVega({
   });
 
   const updatePlot = () => {
-    console.log("in update plot");
     if (view.value) {
       view.value.finalize();
     }
-
-    console.log(spec.value);
 
     // don't try to render if we don't have data yet
     if (!hasData.value) return;
@@ -91,7 +88,6 @@ export function useVega({
   };
 
   const finalize = () => {
-    console.log("in vega finalizer");
     if (view.value) {
       view.value.finalize();
     }

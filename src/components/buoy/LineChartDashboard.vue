@@ -1,11 +1,7 @@
 <template>
-  <Suspense :key="query.hash">
+  <SuspenseComponent :key="query.hash">
     <BuoyLineChart :query="query" />
-
-    <template #fallback>
-      <LoadingSpinner :loading="true" />
-    </template>
-  </Suspense>
+  </SuspenseComponent>
 
   <BuoyLocations :coordinates="query.coordinates" :height="3" />
 
@@ -43,7 +39,7 @@ import ExploreForm from "@/components/buoy/ExploreForm.vue";
 import BuoyLocations from "@/components/buoy/LocationMap.vue";
 import BuoyLineChart from "@/components/buoy/LineChartCard.vue";
 import BuoyQueryDownload from "@/components/buoy/QueryDownload.vue";
-import LoadingSpinner from "@/components/base/LoadingSpinner.vue";
+import SuspenseComponent from "@/components/base/SuspenseComponent.vue";
 
 defineProps({
   query: {

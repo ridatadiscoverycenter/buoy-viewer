@@ -86,10 +86,8 @@ export function baseActions(route: string) {
   return {
     // fetch the summary for the heatmaps
     async fetchSummaryData() {
-      console.log("fetching summary");
       // assign to intermediate variable for performance while updating date/time data
       const summary = await erddapGet(`/${route}/summary`);
-      console.log("got summary");
       let minDate = new Date();
       let maxDate = new Date(0);
       summary.map((d) => {
@@ -105,8 +103,6 @@ export function baseActions(route: string) {
       this.summary = summary;
       this.minDate = localISODate(minDate);
       this.maxDate = localISODate(maxDate);
-
-      console.log("fetched summary data");
     },
 
     // just fetch data, don't save anything
@@ -127,8 +123,6 @@ export function baseActions(route: string) {
       this.coordinates = coordinates;
       const colorMap = useColorMap();
       colorMap.update({ ids: coordinates.map((v) => v.station_name) });
-
-      console.log("fetched coordinate data");
     },
 
     // fetch all of the buoy variables
@@ -138,8 +132,6 @@ export function baseActions(route: string) {
         a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
       );
       this.variables = variables;
-
-      console.log("fetched variables data");
     },
 
     // fetch the base data in one call if not already loaded

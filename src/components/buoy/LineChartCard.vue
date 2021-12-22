@@ -130,7 +130,6 @@ const downsampled = ref(false);
 const weather = ref([]);
 
 const fetchData = async () => {
-  console.log("fetching data");
   const { coordinates, startDate, endDate } = props.query;
   const query = {
     ids: coordinates.map((c) => c.buoyId),

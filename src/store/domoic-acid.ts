@@ -37,7 +37,7 @@ export const useDAStore = defineStore("domoic-acid", {
   },
   actions: {
     async fetchCoordinates() {
-      this.coordinates = (await erddapGet("/da/coordinates")) as Coordinate[];
+      this.coordinates = (await erddapGet("/das/coordinates")) as Coordinate[];
     },
     async fetchSamples() {
       const samples = await erddapGet("/da/samples");
