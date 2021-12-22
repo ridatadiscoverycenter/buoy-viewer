@@ -7,8 +7,8 @@ import { computed, ref } from "vue";
 
 import { useVega } from "../../composables/useVega";
 
-import * as coastlines from "../../assets/geojson/ri_coast.json";
-import * as ripoly from "../../assets/geojson/ri.json";
+import { default as coastlines } from "../../assets/geojson/ri_coast.json";
+import { default as ripoly } from "../../assets/geojson/ri.json";
 
 const props = defineProps({
   legend: {
