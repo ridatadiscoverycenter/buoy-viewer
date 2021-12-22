@@ -21,7 +21,7 @@ import { scaleTime } from "d3-scale";
 import { select } from "d3-selection";
 import { axisBottom } from "d3-axis";
 
-import { useDAStore } from "@/store/domoic-acid.ts";
+import { useDAStore } from "../../store/domoic-acid";
 const store = useDAStore();
 
 const value = ref(0);

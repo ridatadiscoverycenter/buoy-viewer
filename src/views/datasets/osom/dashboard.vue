@@ -18,9 +18,10 @@ import { useRoute } from "vue-router";
 import LineChartDashboard from "@/components/buoy/LineChartDashboard.vue";
 import VariableHeatmap from "@/components/buoy/VariableHeatmap.vue";
 
-const store = inject("store");
+import { BuoyStore } from "../../../store/buoy";
+const store = inject("store") as BuoyStore;
 const route = useRoute();
-import { useQuery } from "@/composables/useQuery.ts";
+import { useQuery } from "../../../composables/useQuery";
 const { query, updateQuery } = useQuery(store, route.path);
 
 updateQuery(route.query, route.path);
@@ -30,7 +31,7 @@ watch(
 );
 
 // set up the comparison dataset - create combined store with keys that are used
-import { buoyStores } from "@/store/buoy.ts";
+import { buoyStores } from "../../../store/buoy";
 const riStore = buoyStores["ri-buoy"].useStore();
 const maStore = buoyStores["ma-buoy"].useStore();
 const compareStore = {

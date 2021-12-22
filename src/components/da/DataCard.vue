@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { useDAStore } from "@/store/domoic-acid.ts";
+import { useDAStore } from "../../store/domoic-acid";
 const store = useDAStore();
 
 const sampleText = (site) => {

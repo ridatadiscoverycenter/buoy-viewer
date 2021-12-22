@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 import HomePage from "@/views/HomePage.vue";
 import AboutPage from "@/views/AboutPage.vue";
@@ -8,7 +8,7 @@ import DatasetPage from "@/views/datasets/index.vue";
 type Dataset = "fish" | "ma-buoy" | "osom" | "plankton" | "ri-buoy";
 
 // use relative paths instead of `@` due to https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
-const getDatasetRoutes = (dataset: Dataset, title: string) => {
+const getDatasetRoutes = (dataset: Dataset, title: string): RouteRecordRaw => {
   return {
     path: dataset,
     component: () => import(`./views/datasets/${dataset}/index.vue`),

@@ -1,11 +1,21 @@
 import { reactive } from "vue";
 import hash from "object-hash";
 
-export function useQuery(store, routePath) {
-  const query = reactive({});
+import { Coordinate, Variable } from "../utils/erddap";
+
+interface Query {
+  variables: Variable[];
+  coordinates: Coordinate[];
+  startDate: string;
+  endDate: string;
+  hash: string;
+}
+
+export function useQuery(store, routePath: string) {
+  const query = reactive({}) as Query;
   const path = routePath;
 
-  const updateQuery = (routeQuery, routePath) => {
+  const updateQuery = (routeQuery, routePath: string) => {
     if (path !== routePath) return;
     const copyQuery = { ...routeQuery };
     const vars = ["variables", "start", "end", "ids"];

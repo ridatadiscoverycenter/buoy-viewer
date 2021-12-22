@@ -66,27 +66,23 @@ const props = defineProps({
   },
 });
 
-const store = inject("store");
+import { FishStore, Info } from "../../store/fish";
+const store = inject("store") as FishStore;
 
 const data = computed(() =>
   store.samples.filter(({ title }) => title === props.species)
 );
-const info = ref({});
+const info = ref<Info>({});
 
 const fetchInfo = async () => {
   info.value = await store.fetchInfo(props.species);
 };
 
 await fetchInfo();
-watch(
-  () => props.species,
-  () => {
-    info.value = fetchInfo();
-  }
-);
+watch(() => props.species, fetchInfo);
 
 // set up color range
-import { useColorMap } from "@/store/colorMap.ts";
+import { useColorMap } from "../../store/colorMap";
 
 const colorMap = useColorMap();
 

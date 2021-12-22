@@ -5,10 +5,10 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 
-import { useVega } from "@/composables/useVega.ts";
+import { useVega } from "../../composables/useVega";
 
-import coastlines from "@/assets/geojson/ri_coast.json";
-import ripoly from "@/assets/geojson/ri.json";
+import * as coastlines from "../../assets/geojson/ri_coast.json";
+import * as ripoly from "../../assets/geojson/ri.json";
 
 const props = defineProps({
   legend: {

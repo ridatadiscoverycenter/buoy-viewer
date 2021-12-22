@@ -20,6 +20,7 @@ const errored = ref(false);
 const errorMessage = ref("");
 
 onErrorCaptured((err: Error) => {
+  console.warn(err);
   errored.value = true;
   errorMessage.value = err.message;
 

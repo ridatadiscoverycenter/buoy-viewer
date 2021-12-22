@@ -1,4 +1,12 @@
-import { ref, Ref, computed, onMounted, onUnmounted, watch } from "vue";
+import {
+  ref,
+  Ref,
+  computed,
+  ComputedRef,
+  onMounted,
+  onUnmounted,
+  watch,
+} from "vue";
 import embed from "vega-embed";
 import { View } from "vega";
 import { cloneDeep } from "lodash/lang";
@@ -14,11 +22,11 @@ export function useVega({
   hasData = ref(true),
   el,
 }: {
-  spec: Ref<object>;
-  minWidth: Ref<number>;
-  maxWidth: Ref<number>;
-  includeActions: Ref<boolean>;
-  hasData: Ref<boolean>;
+  spec: Ref | ComputedRef;
+  minWidth?: Ref<number>;
+  maxWidth?: Ref<number>;
+  includeActions?: Ref<boolean>;
+  hasData?: Ref<boolean>;
   el: Ref<HTMLDivElement | null>;
 }) {
   const actionsWidth = computed(() => (includeActions.value ? 38 : 0));

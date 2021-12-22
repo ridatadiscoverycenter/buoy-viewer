@@ -44,8 +44,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import { buoyStores } from "@/store/buoy.ts";
-import { useColorMap } from "@/store/colorMap.ts";
+import { buoyStores } from "../store/buoy";
+import { useColorMap } from "../store/colorMap";
 
 import BayMap from "@/components/charts/BayMap.vue";
 

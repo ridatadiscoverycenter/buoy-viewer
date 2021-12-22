@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { scaleSqrt, scaleDiverging } from "d3-scale";
 import { interpolateTurbo } from "d3-scale-chromatic";
 
-import { erddapGet } from "@/utils/erddap.ts";
+import { erddapGet } from "../utils/erddap";
 
 interface Coordinate {
   station_name: string;
@@ -37,14 +37,13 @@ export const useDAStore = defineStore("domoic-acid", {
   },
   actions: {
     async fetchCoordinates() {
-      this.coordinates = (await erddapGet("/das/coordinates")) as Coordinate[];
+      this.coordinates = (await erddapGet("/da/coordinates")) as Coordinate[];
     },
     async fetchSamples() {
       const samples = await erddapGet("/da/samples");
-      samples.forEach((s) => {
-        s.date = new Date(s.date);
-      });
-      this.samples = samples;
+      this.samples = samples.map((s) => {
+        return { ...s, date: new Date(s.date) };
+      }) as Sample[];
       this.selectedDate = this.dates[0];
     },
     async fetchBaseData(): Promise<void> {
@@ -55,9 +54,11 @@ export const useDAStore = defineStore("domoic-acid", {
   },
   getters: {
     dates(): Date[] {
-      return [...new Set(this.samples.map(({ date }) => date))].sort(
-        (f, s) => f.valueOf() - s.valueOf()
-      );
+      // unique sorted dates
+      return this.samples
+        .map(({ date }) => date)
+        .filter((v, i, a) => a.indexOf(v) === i)
+        .sort((f, s) => f.valueOf() - s.valueOf());
     },
     siteCoordinates() {
       return function (site: string) {

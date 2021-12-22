@@ -70,13 +70,13 @@ import DatePicker from "vue-datepicker-next";
 
 import BaseForm from "@/components/base/BaseForm.vue";
 
-import { Coordinate, Variable } from "@/utils/erddap.ts";
+import { Coordinate, Variable } from "../../utils/erddap";
 import {
   formatCoordinate,
   formatVariable,
   localISODate,
   localISODateToUTC,
-} from "@/utils/utils.ts";
+} from "../../utils/utils";
 
 interface Props {
   initVariables?: Variable[];
@@ -90,7 +90,8 @@ const props = withDefaults(defineProps<Props>(), {
   initDateRange: () => [],
 });
 
-const store = inject("store");
+import { BuoyStore } from "../../store/buoy";
+const store = inject("store") as BuoyStore;
 
 const selectedBuoys = ref([...props.initBuoys]);
 const selectedVariables = ref([...props.initVariables]);

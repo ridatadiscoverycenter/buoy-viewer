@@ -86,7 +86,8 @@ import BuoyLocations from "@/components/buoy/LocationMap.vue";
 import FishHeatMap from "@/components/fish/FishHeatMap.vue";
 import FishExploreForm from "@/components/fish/FishExploreForm.vue";
 
-const store = inject("store");
+import { FishStore } from "../../../store/fish";
+const store = inject("store") as FishStore;
 
 const station = ref(store.stations[0]);
 </script>

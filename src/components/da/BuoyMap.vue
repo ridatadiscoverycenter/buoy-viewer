@@ -29,7 +29,7 @@ import mapboxgl from "mapbox-gl";
 
 import BuoyMarker from "@/assets/illustrations/buoy-marker.svg";
 
-import { useDAStore } from "@/store/domoic-acid.ts";
+import { useDAStore } from "../../store/domoic-acid";
 const store = useDAStore();
 
 const el = ref<HTMLDivElement>(null);

@@ -1,9 +1,9 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 
-import App from "@/App.vue";
+import App from "./App.vue";
 
-import router from "@/router.ts";
+import router from "./router";
 
 // general styling
 import "../node_modules/vue-multiselect/dist/vue-multiselect.css";

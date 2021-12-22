@@ -89,7 +89,8 @@ defineProps<{
   scenarios: Scenario[];
 }>();
 
-const store = inject("store");
+import { BuoyStore } from "../../store/buoy";
+const store = inject("store") as BuoyStore;
 
 const generateQuery = (query: Query) => {
   const queryParams = Object.entries(query)

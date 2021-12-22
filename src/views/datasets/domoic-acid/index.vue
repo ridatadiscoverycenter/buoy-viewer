@@ -141,7 +141,7 @@ import DataCard from "@/components/da/DataCard.vue";
 import DateSlider from "@/components/da/DateSlider.vue";
 import BuoyMap from "@/components/da/BuoyMap.vue";
 
-import { useDAStore } from "@/store/domoic-acid.ts";
+import { useDAStore } from "../../../store/domoic-acid";
 const store = useDAStore();
 await store.fetchBaseData();
 </script>

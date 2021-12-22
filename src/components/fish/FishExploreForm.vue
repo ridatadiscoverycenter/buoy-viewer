@@ -29,5 +29,6 @@ import BaseForm from "@/components/base/BaseForm.vue";
 
 const selectedSpecies = ref("");
 
-const store = inject("store");
+import { FishStore } from "../../store/fish";
+const store = inject("store") as FishStore;
 </script>

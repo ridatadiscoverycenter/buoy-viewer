@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
-import { erddapGet } from "@/utils/erddap.ts";
-import { useColorMap } from "@/store/colorMap.ts";
+import { erddapGet } from "../utils/erddap";
+import { useColorMap } from "./colorMap";
 
 type StationName = "Fox Island" | "Whale Rock";
 
@@ -28,6 +28,19 @@ interface Temperature {
   mean_temp: number;
   monthly_mean: number;
   delta: number;
+}
+
+export interface Info {
+  href?: string;
+  name?: string;
+  sciName?: string;
+  photoUrl?: string;
+  sectionData?: {
+    Classification?: {
+      Classification?: string;
+    };
+    IUCN?: string;
+  };
 }
 
 interface State {
@@ -76,7 +89,7 @@ export const useFishStore = defineStore("fish", {
       this.temps = await erddapGet("/fish/temps");
     },
     async fetchInfo(species: string) {
-      return await erddapGet(`/fish/info/${species}`);
+      return (await erddapGet(`/fish/info/${species}`)) as Info;
     },
     async fetchBaseData(): Promise<void> {
       if (this.coordinates.length === 0) {
@@ -101,3 +114,5 @@ export const useFishStore = defineStore("fish", {
     },
   },
 });
+
+export type FishStore = ReturnType<typeof useFishStore>;

@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 
-import { useVega } from "@/composables/useVega.ts";
+import { useVega } from "../../composables/useVega";
 
 const props = defineProps({
   variable: {

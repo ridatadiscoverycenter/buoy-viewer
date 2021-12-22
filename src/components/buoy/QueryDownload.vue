@@ -40,29 +40,38 @@ import Multiselect from "vue-multiselect";
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import BaseForm from "@/components/base/BaseForm.vue";
 
-import { formatVariable } from "@/utils/utils.ts";
-import { useErddapDownload } from "@/composables/useErddapDownload.ts";
+import { formatVariable } from "../../utils/utils";
+import { Variable, Coordinate } from "../../utils/erddap";
+import { useErddapDownload } from "../../composables/useErddapDownload";
 
-const store = inject("store");
+import { BuoyStore } from "../../store/buoy";
+const store = inject("store") as BuoyStore;
 
-const props = defineProps({
-  variables: {
-    type: Array,
-    required: true,
-  },
-  coordinates: {
-    type: Array,
-    required: true,
-  },
-  startDate: {
-    type: String,
-    required: true,
-  },
-  endDate: {
-    type: String,
-    required: true,
-  },
-});
+const props = defineProps<{
+  variables: Variable[];
+  coordinates: Coordinate[];
+  startDate: string;
+  endDate: string;
+}>();
+
+// {
+//   variables: {
+//     type: Array<Variable>,
+//     required: true,
+//   },
+//   coordinates: {
+//     type: Array<Coordinate>,
+//     required: true,
+//   },
+//   startDate: {
+//     type: String,
+//     required: true,
+//   },
+//   endDate: {
+//     type: String,
+//     required: true,
+//   },
+// }
 
 const { coordinates, variables, startDate, endDate } = toRefs(props);
 

@@ -24,7 +24,8 @@ import FishExploreForm from "@/components/fish/FishExploreForm.vue";
 import FishChartCard from "@/components/fish/FishChartCard.vue";
 import SuspenseComponent from "@/components/base/SuspenseComponent.vue";
 
-const store = inject("store");
+import { FishStore } from "../../../store/fish";
+const store = inject("store") as FishStore;
 const route = useRoute();
 
 const species = computed(() => route.query.species);

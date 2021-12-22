@@ -61,10 +61,11 @@ import Multiselect from "vue-multiselect";
 
 import BaseForm from "@/components/base/BaseForm.vue";
 
-import { formatVariable } from "@/utils/utils.ts";
-import { useErddapDownload } from "@/composables/useErddapDownload.ts";
+import { formatVariable } from "../../utils/utils";
+import { useErddapDownload } from "../../composables/useErddapDownload";
+import { BuoyStore } from "../../store/buoy";
 
-const store = inject("store");
+const store = inject("store") as BuoyStore;
 
 const fileFormat = ref("json");
 const downloadBuoys = ref([]);

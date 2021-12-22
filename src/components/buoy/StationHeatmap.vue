@@ -30,8 +30,8 @@ import Multiselect from "vue-multiselect";
 
 import HeatMap from "@/components/charts/HeatMap.vue";
 
-import { formatVariable } from "@/utils/utils.ts";
-import { Summary, Variable } from "@/utils/erddap.ts";
+import { formatVariable } from "../../utils/utils";
+import { Summary, Variable } from "../../utils/erddap";
 
 // interface Props {
 //   summary: Summary[];

@@ -138,13 +138,13 @@ const DATASETS = [
 const RESOURCES = [
   {
     title: "Rhode Island Data Discovery Center Home",
-    abbreviation: "RIDDC",
+    initials: "RIDDC",
     link: "https://ridatadiscovery.org",
     icon: "fa-water",
   },
   {
     title: "ERDDAP Server",
-    abbreviation: "ES",
+    initials: "ES",
     link: "https://pricaimcit.services.brown.edu/erddap/index.html",
     icon: "fa-database",
   },

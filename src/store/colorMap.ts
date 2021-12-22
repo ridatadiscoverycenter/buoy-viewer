@@ -12,7 +12,7 @@ export const useColorMap = defineStore("colorMap", {
     };
   },
   actions: {
-    update({ ids, unique = true }: { ids: string[]; unique: boolean }) {
+    update({ ids, unique = true }: { ids: string[]; unique?: boolean }) {
       const curKeys = Object.keys(this.colors);
       let nextColorInd = unique ? COLORS.findIndex((c) => !c.assigned) : 0;
       ids.forEach((id) => {
