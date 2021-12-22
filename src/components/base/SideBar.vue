@@ -126,7 +126,7 @@ const DATASETS = [
   {
     name: "Domoic Acid",
     route: "domoic-acid",
-    available: false,
+    available: true,
   },
   {
     name: "Fish Trawl Survey",

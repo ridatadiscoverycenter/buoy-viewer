@@ -56,6 +56,11 @@ const routes = [
       getDatasetRoutes("osom", "Ocean State Ocean Model"),
       getDatasetRoutes("plankton", "Plankton Time Series"),
       getDatasetRoutes("ri-buoy", "Historical RI Buoy Data"),
+      {
+        path: "domoic-acid",
+        name: "Domoic Acid",
+        component: () => import("../views/datasets/domoic-acid/index.vue"),
+      },
     ],
   },
 ];
