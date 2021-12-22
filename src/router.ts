@@ -11,7 +11,7 @@ type Dataset = "fish" | "ma-buoy" | "osom" | "plankton" | "ri-buoy";
 const getDatasetRoutes = (dataset: Dataset, title: string) => {
   return {
     path: dataset,
-    component: () => import(`../views/datasets/${dataset}/index.vue`),
+    component: () => import(`./views/datasets/${dataset}/index.vue`),
     children: [
       {
         path: "",
@@ -20,12 +20,12 @@ const getDatasetRoutes = (dataset: Dataset, title: string) => {
       {
         path: "summary",
         name: `${title} - Summary`,
-        component: () => import(`../views/datasets/${dataset}/summary.vue`),
+        component: () => import(`./views/datasets/${dataset}/summary.vue`),
       },
       {
         path: "dashboard",
         name: `${title} - Dashboard`,
-        component: () => import(`../views/datasets/${dataset}/dashboard.vue`),
+        component: () => import(`./views/datasets/${dataset}/dashboard.vue`),
       },
     ],
   };
@@ -59,7 +59,7 @@ const routes = [
       {
         path: "domoic-acid",
         name: "Domoic Acid",
-        component: () => import("../views/datasets/domoic-acid/index.vue"),
+        component: () => import("./views/datasets/domoic-acid/index.vue"),
       },
     ],
   },

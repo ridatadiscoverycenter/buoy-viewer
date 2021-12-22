@@ -1,4 +1,6 @@
 import { defineStore } from "pinia";
+import { scaleSqrt, scaleDiverging } from "d3-scale";
+import { interpolateTurbo } from "d3-scale-chromatic";
 
 import { erddapGet } from "@/utils/erddap.ts";
 
@@ -20,6 +22,7 @@ interface State {
   route: string;
   coordinates: Coordinate[];
   samples: Sample[];
+  selectedDate: Date;
 }
 
 export const useDAStore = defineStore("domoic-acid", {
@@ -29,6 +32,7 @@ export const useDAStore = defineStore("domoic-acid", {
       route: "da",
       coordinates: [],
       samples: [],
+      selectedDate: new Date(),
     };
   },
   actions: {
@@ -41,6 +45,7 @@ export const useDAStore = defineStore("domoic-acid", {
         s.date = new Date(s.date);
       });
       this.samples = samples;
+      this.selectedDate = this.dates[0];
     },
     async fetchBaseData(): Promise<void> {
       if (this.coordinates.length === 0) {
@@ -50,33 +55,38 @@ export const useDAStore = defineStore("domoic-acid", {
   },
   getters: {
     dates(): Date[] {
-      return [...new Set(this.samples.map((s) => s.date))].sort(
-        (f, s) => f - s
+      return [...new Set(this.samples.map(({ date }) => date))].sort(
+        (f, s) => f.valueOf() - s.valueOf()
       );
     },
-    siteCoordinates: (state) => (site: string) => {
-      const match = state.coordinates.find(
-        ({ station_name }) => station_name === site
-      );
-      if (match) {
-        return [match.longitude, match.latitude];
-      } else {
-        return [0, 0];
-      }
+    siteCoordinates() {
+      return function (site: string) {
+        const match = this.coordinates.find(
+          ({ station_name }) => station_name === site
+        );
+        if (match) {
+          return [match.longitude, match.latitude];
+        } else {
+          return [0, 0];
+        }
+      };
     },
-    activeCoordinates() {
+    activeCoordinates(): Coordinate[] {
       const activeSites = this.samples.map(({ station_name }) => station_name);
       return this.coordinates.filter(({ station_name }) =>
         activeSites.includes(station_name)
       );
     },
-    selectedSamples: (state, getters) => {
-      const daySamples = state.samples.filter(
-        (sample) => sample.date - state.selectedDate === 0
+    maxDA() {
+      return Math.max(...this.samples.map(({ pDA }) => pDA));
+    },
+    selectedSamples() {
+      const daySamples = this.samples.filter(
+        ({ date }) => date - this.selectedDate === 0
       );
 
-      const domain = [0, getters.maxDA];
-      const sqrtScale = scaleSqrt().domain(domain).range([10, 50]);
+      const domain = [0, this.maxDA];
+      const sqrtScale = scaleSqrt().domain(domain).range([0.2, 1]);
 
       const colorScale = scaleDiverging()
         .domain([-100, -0.4, 1])
@@ -94,34 +104,6 @@ export const useDAStore = defineStore("domoic-acid", {
           size: sqrtScale(row.pDA),
         };
       });
-    },
-    selectedSamplesGeoJSON: (state, getters) => {
-      const daySamples = getters.selectedSamples;
-      const rows = daySamples.map((row) => {
-        return {
-          type: "Feature",
-          properties: {
-            date: row.date,
-            site: row.station_name,
-            da: row.pDA,
-            norm_da: row.normDA,
-            color: row.color,
-            size: row.size,
-          },
-          geometry: {
-            type: "Point",
-            coordinates: getters.siteCoordinates(row.station_name),
-          },
-        };
-      });
-      return {
-        type: "geojson",
-        data: {
-          id: "buoy",
-          type: "FeatureCollection",
-          features: rows,
-        },
-      };
     },
     startDate() {
       return this.dates[0];

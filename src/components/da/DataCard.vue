@@ -38,27 +38,29 @@ const sampleText = (site) => {
 };
 
 const sampleColor = (site) =>
-  store.selectedSamples.find(({ station_name }) => station_name === site) ??
-  "white";
+  store.selectedSamples.find(({ station_name }) => station_name === site)
+    ?.color ?? "white";
 
 const sampleNormDA = (site) =>
-  store.selectedSamples.find(({ station_name }) => station_name === site) ?? -1;
+  store.selectedSamples.find(({ station_name }) => station_name === site)
+    ?.normDA ?? -1;
 </script>
 
-<style lang="sass" scoped>
-.data-card
-    z-index: 10000
-    position: absolute
-    background-color: white
-    width: 280px
-    margin: 20px
-    border-radius: 1rem
-    box-shadow: 3px 3px  rgba(1,1,1,0.1)
-
-.is-size-7-half
-  font-size: 0.85rem
-
-svg
-    display: block
-    margin-bottom: 10px
+<style lang="scss" scoped>
+.data-card {
+  z-index: 10000;
+  position: absolute;
+  background-color: white;
+  width: 280px;
+  margin: 20px;
+  border-radius: 1rem;
+  box-shadow: 3px 3px rgba(1, 1, 1, 0.1);
+}
+.is-size-7-half {
+  font-size: 0.85rem;
+}
+svg {
+  display: block;
+  margin-bottom: 10px;
+}
 </style>

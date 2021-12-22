@@ -7,7 +7,7 @@
       class="slider mb-2"
       step="1"
       min="0"
-      :max="dateLength - 1"
+      :max="store.dateLength - 1"
       type="range"
       @input="changeDate"
     />
@@ -38,7 +38,6 @@ const updatedDate = computed(() => {
 const domainArray = computed(() => [store.startDate, store.endDate]);
 
 const generateAxis = () => {
-  if (this.dates.length === 0) return;
   try {
     // remove the old axis if it exists
     select(".x-axis svg").remove();
@@ -53,7 +52,9 @@ const generateAxis = () => {
   svg.append("g").attr("transform", "translate(20, 20)").call(xAxis);
 };
 
-const changeDate = () => store.updateDate(updatedDate.value);
+const changeDate = () => {
+  store.selectedDate = updatedDate.value;
+};
 
 const onResize = () => {
   // debounce re-drawing axis
@@ -70,38 +71,39 @@ onMounted(() => {
 onBeforeUnmount(() => window.removeEventListener("resize", onResize));
 </script>
 
-<style lang="sass" scoped>
-.slider-container
-  display: flex
-  flex-direction: column
-  position: absolute
-  background: rgba(355, 355, 355, 0.7)
-  z-index: 2
-  width: 95%
-  margin: auto
-  height: 70px
-  bottom: 30px
-  left: 2.5%
-
-.x-axis
-  z-index: 1000
-  height: 0
-  font-weight: 600
-  stroke-width: 1.5px
-
-.slider
-  margin-left: 20px !important
-  bottom: 0px
-  position: absolute
-  z-index: 1000
-  width: calc(100% - 40px) !important
-
-input[type="range"]::-webkit-slider-runnable-track
-  background: rgb(89, 81, 139) !important
-
-input[type="range"]::-moz-range-track
-  background: rgb(89, 81, 139) !important
-
-input[type="range"]::-ms-track
-  background: rgb(89, 81, 139) !important
+<style lang="scss" scoped>
+.slider-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background: rgba(355, 355, 355, 0.7);
+  z-index: 2;
+  width: 95%;
+  margin: auto;
+  height: 70px;
+  bottom: 30px;
+  left: 2.5%;
+}
+.x-axis {
+  z-index: 1000;
+  height: 0;
+  font-weight: 600;
+  stroke-width: 1.5px;
+}
+.slider {
+  margin-left: 20px !important;
+  bottom: 0px;
+  position: absolute;
+  z-index: 1000;
+  width: calc(100% - 40px) !important;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  background: rgb(89, 81, 139) !important;
+}
+input[type="range"]::-moz-range-track {
+  background: rgb(89, 81, 139) !important;
+}
+input[type="range"]::-ms-track {
+  background: rgb(89, 81, 139) !important;
+}
 </style>
