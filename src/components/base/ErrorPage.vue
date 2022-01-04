@@ -8,7 +8,6 @@
       <i class="fas fa-arrow-left mr-2" />
       Back
     </a>
-    <!-- TODO: is this error clearning working? -->
     <router-link to="/" @click="emit('clear')">
       <i class="fas fa-home mr-2" />
       Home

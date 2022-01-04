@@ -4,7 +4,7 @@ import HomePage from "@/views/HomePage.vue";
 import AboutPage from "@/views/AboutPage.vue";
 import DatasetPage from "@/views/datasets/index.vue";
 
-// TODO: route nuxt-style paths to new-style
+// TODO-QUESTION: route nuxt-style paths to new-style?
 type Dataset = "fish" | "ma-buoy" | "osom" | "plankton" | "ri-buoy";
 
 // use relative paths instead of `@` due to https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations

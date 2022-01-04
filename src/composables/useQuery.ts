@@ -39,7 +39,7 @@ export function useQuery(store, routePath: string) {
     query.startDate = copyQuery.start;
     query.endDate = copyQuery.end;
 
-    // TODO: is this really needed? is that key doing anything?
+    // used as a key to make sure things re-load with spinner
     query.hash = hash(copyQuery);
   };
 

@@ -11,8 +11,8 @@ import embed from "vega-embed";
 import { View } from "vega";
 import { cloneDeep } from "lodash/lang";
 
-// TODO: have this use suspense so we get loading on the plot updates?
-// TODO: how to handle/supress voronoi error after unmount?
+// TODO-IMPROVEMENT: have this use suspense so we get loading on the plot updates?
+// TODO-IMPROVEMENT: how to handle/supress voronoi error after unmount?
 
 export function useVega({
   spec,
