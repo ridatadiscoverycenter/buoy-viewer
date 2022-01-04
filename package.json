@@ -10,7 +10,8 @@
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
     "lint": "eslint --ext .ts,.js,.vue src --fix",
-    "tscheck": "vue-tsc --noEmit"
+    "tscheck": "vue-tsc --noEmit",
+    "prepare": "husky install"
   },
   "dependencies": {
     "arquero": "^4.8.7",
@@ -42,6 +43,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^8.2.0",
     "firebase-tools": "^10.0.1",
+    "husky": "^7.0.4",
     "prettier": "^2.5.1",
     "sass": "^1.45.2",
     "typescript": "^4.5.4",
