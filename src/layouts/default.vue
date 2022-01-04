@@ -5,6 +5,7 @@
       <BaseLogo />
     </a>
     <slot />
+    <BaseFooter />
   </div>
 
   <ErrorPage v-if="errored" :message="errorMessage" @clear="errored = false" />
@@ -14,6 +15,7 @@
 import { ref, onErrorCaptured } from "vue";
 
 import BaseLogo from "@/components/base/BaseLogo.vue";
+import BaseFooter from "@/components/base/BaseFooter.vue";
 import ErrorPage from "@/components/base/ErrorPage.vue";
 
 // ERROR HANDLING

@@ -4,8 +4,6 @@ $link: hsl(194deg 50% 50%);
 $info: #87ADB3;
 $primary-color: $link;
 
-// TODO: change info color to something better going with the purple/teal
-
 @import "../../../node_modules/bulma/bulma.sass";
 @import '../../../node_modules/vue-datepicker-next/scss/index.scss';
 
