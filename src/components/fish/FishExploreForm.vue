@@ -22,13 +22,13 @@
 </template>
 
 <script setup lang="ts">
-import { inject, ref } from "vue";
+import { ref } from "vue";
 import Multiselect from "vue-multiselect";
 
 import BaseForm from "@/components/base/BaseForm.vue";
 
 const selectedSpecies = ref("");
 
-import { FishStore } from "../../store/fish";
-const store = inject("store") as FishStore;
+import { useFishStore } from "../../store/fish";
+const store = useFishStore();
 </script>

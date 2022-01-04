@@ -78,7 +78,7 @@
 </template>
 
 <script setup lang="ts">
-import { inject, ref } from "vue";
+import { ref } from "vue";
 import Multiselect from "vue-multiselect";
 
 import DashboardCard from "@/components/base/DashboardCard.vue";
@@ -86,8 +86,8 @@ import BuoyLocations from "@/components/buoy/LocationMap.vue";
 import FishHeatMap from "@/components/fish/FishHeatMap.vue";
 import FishExploreForm from "@/components/fish/FishExploreForm.vue";
 
-import { FishStore } from "../../../store/fish";
-const store = inject("store") as FishStore;
+import { useFishStore } from "../../../store/fish";
+const store = useFishStore();
 
 const station = ref(store.stations[0]);
 </script>

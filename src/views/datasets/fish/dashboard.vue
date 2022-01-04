@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject } from "vue";
+import { computed } from "vue";
 import { useRoute } from "vue-router";
 
 import DashboardCard from "@/components/base/DashboardCard.vue";
@@ -24,8 +24,8 @@ import FishExploreForm from "@/components/fish/FishExploreForm.vue";
 import FishChartCard from "@/components/fish/FishChartCard.vue";
 import SuspenseComponent from "@/components/base/SuspenseComponent.vue";
 
-import { FishStore } from "../../../store/fish";
-const store = inject("store") as FishStore;
+import { useFishStore } from "../../../store/fish";
+const store = useFishStore();
 const route = useRoute();
 
 const species = computed(() => route.query.species);

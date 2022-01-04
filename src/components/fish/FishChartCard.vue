@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import FishLineChart from "@/components/fish/FishLineChart.vue";
@@ -66,8 +66,8 @@ const props = defineProps({
   },
 });
 
-import { FishStore, Info } from "../../store/fish";
-const store = inject("store") as FishStore;
+import { useFishStore, Info } from "../../store/fish";
+const store = useFishStore();
 
 const data = computed(() =>
   store.samples.filter(({ title }) => title === props.species)
