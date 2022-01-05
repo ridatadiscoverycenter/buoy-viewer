@@ -19,7 +19,9 @@
           id="buoy-id"
           v-model="downloadBuoys"
           class="multiselect"
-          :options="store.buoys"
+          :options="store.coordinates"
+          :custom-label="formatCoordinate"
+          track-by="station_name"
           :multiple="true"
         />
       </div>
@@ -39,16 +41,17 @@
     </template>
 
     <template #buttons>
-      <a
-        role="button"
-        class="button is-primary control-item-button"
-        :href="downloadUrl"
-        :disabled="
-          downloadBuoys.length === 0 ||
-          downloadVariables.length === 0 ||
-          !fileFormat
-        "
-        >Download Data</a
+      <a :href="downloadUrl"
+        ><button
+          class="button is-primary control-item-button"
+          :disabled="
+            downloadBuoys.length === 0 ||
+            downloadVariables.length === 0 ||
+            !fileFormat
+          "
+        >
+          Download Data
+        </button></a
       >
     </template>
   </BaseForm>
@@ -61,7 +64,7 @@ import Multiselect from "vue-multiselect";
 
 import BaseForm from "@/components/base/BaseForm.vue";
 
-import { formatVariable } from "../../utils/utils";
+import { formatVariable, formatCoordinate } from "../../utils/utils";
 import { useErddapDownload } from "../../composables/useErddapDownload";
 import { BuoyStore } from "../../store/buoy";
 

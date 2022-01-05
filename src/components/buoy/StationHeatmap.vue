@@ -2,7 +2,7 @@
   <div class="is-flex-column">
     <div class="control-item control-item-first">
       <label for="variable" class="label">Variable</label>
-      <Multiselect
+      <multiselect
         id="variable"
         v-model="variable"
         class="multiselect"

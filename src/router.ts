@@ -24,7 +24,7 @@ const updateQueryParams = ({ path, query }) => {
 };
 
 // use relative paths instead of `@` due to https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
-const getDatasetRoutes = (
+const getBuoyDatasetRoutes = (
   dataset: Dataset,
   title: string,
   oldPath?: string
@@ -56,7 +56,7 @@ const getDatasetRoutes = (
         },
         {
           path: "",
-          redirect: `summary`,
+          redirect: `/dataset/${dataset}/summary`,
         },
       ],
     },
@@ -85,15 +85,38 @@ const routes: RouteRecordRaw[] = [
         path: "",
         redirect: "/dataset/ri-buoy/summary",
       },
-      ...getDatasetRoutes("fish", "Fish Trawl Survey"),
-      ...getDatasetRoutes("ma-buoy", "Historical MA Buoy Data", "ma-buoy-data"),
-      ...getDatasetRoutes("osom", "Ocean State Ocean Model", "osom-data"),
-      ...getDatasetRoutes("plankton", "Plankton Time Series"),
-      ...getDatasetRoutes(
+      ...getBuoyDatasetRoutes(
+        "ma-buoy",
+        "Historical MA Buoy Data",
+        "ma-buoy-data"
+      ),
+      ...getBuoyDatasetRoutes("osom", "Ocean State Ocean Model", "osom-data"),
+      ...getBuoyDatasetRoutes("plankton", "Plankton Time Series"),
+      ...getBuoyDatasetRoutes(
         "ri-buoy",
         "Historical RI Buoy Data",
         "historical-buoy-data"
       ),
+      {
+        path: "fish",
+        component: () => import(`./views/datasets/fish/index.vue`),
+        children: [
+          {
+            path: "summary",
+            name: `Fish Trawl Survey - Summary`,
+            component: () => import(`./views/datasets/fish/summary.vue`),
+          },
+          {
+            path: "dashboard",
+            name: `Fish Trawl Survey - Dashboard`,
+            component: () => import(`./views/datasets/fish/dashboard.vue`),
+          },
+          {
+            path: "",
+            redirect: `/dataset/fish/summary`,
+          },
+        ],
+      },
       {
         path: "domoic-acid",
         name: "Domoic Acid",

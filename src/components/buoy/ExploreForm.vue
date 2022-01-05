@@ -9,6 +9,7 @@
           class="multiselect"
           :options="store.coordinates"
           :custom-label="formatCoordinate"
+          track-by="station_name"
           :multiple="true"
         />
       </div>

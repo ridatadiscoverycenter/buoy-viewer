@@ -137,11 +137,6 @@ const createStore = (config: BuoyConfig) => {
         }
       },
     },
-    getters: {
-      buoys() {
-        return this.coordinates.map(({ fullName }) => fullName);
-      },
-    },
   });
 };
 
