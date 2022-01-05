@@ -39,4 +39,11 @@ onErrorCaptured((err: Error) => {
   align-items: center;
   border-bottom: 1px solid #a4b1bf;
 }
+
+.brand-title {
+  @extend .mb-0;
+  @extend .mr-2;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
 </style>

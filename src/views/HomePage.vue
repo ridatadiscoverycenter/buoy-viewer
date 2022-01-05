@@ -82,7 +82,7 @@ $gradient3: #f8eade;
 
 .grid-container {
   background-image: linear-gradient($gradient1, $gradient2, $gradient3);
-  display: grid !important;
+  display: grid;
   grid-template-columns: 1fr 4fr minmax(300px, 5fr) 1fr;
   grid-template-rows: 2rem auto;
   grid-template-areas:

@@ -90,20 +90,11 @@ onBeforeUnmount(() => window.removeEventListener("resize", onResize));
   font-weight: 600;
   stroke-width: 1.5px;
 }
-.slider {
-  margin-left: 20px !important;
+input[type="range"].slider {
+  margin-left: 20px;
   bottom: 0px;
   position: absolute;
   z-index: 1000;
-  width: calc(100% - 40px) !important;
-}
-input[type="range"]::-webkit-slider-runnable-track {
-  background: rgb(89, 81, 139) !important;
-}
-input[type="range"]::-moz-range-track {
-  background: rgb(89, 81, 139) !important;
-}
-input[type="range"]::-ms-track {
-  background: rgb(89, 81, 139) !important;
+  width: calc(100% - 40px);
 }
 </style>

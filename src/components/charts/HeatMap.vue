@@ -150,7 +150,6 @@ const el = ref<HTMLDivElement>(null);
 useVega({
   spec,
   el,
-  // minHeight: props.height,
   maxWidth: ref(1280),
   includeActions: ref(false),
 });

@@ -170,15 +170,12 @@ const activeRoute = computed(() => {
 <style lang="scss" scoped>
 @import "@/assets/styles/main.scss";
 
-.is-active {
-  background-color: $primary !important;
-}
 .not-allowed-cursor {
   cursor: not-allowed;
 }
 .bars {
-  border: none !important;
-  background-color: whitesmoke !important;
+  border: none;
+  background-color: whitesmoke;
 }
 .collapsed-flex-item {
   display: flex;

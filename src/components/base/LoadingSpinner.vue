@@ -29,7 +29,7 @@ defineProps({
 
 .loading-icon {
   align-self: center;
-  font-size: 15rem !important;
+  font-size: 15rem;
   color: $primary;
   animation-name: spin;
   animation-duration: 2500ms;

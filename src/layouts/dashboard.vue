@@ -92,8 +92,8 @@ main {
   @include mobile {
     grid-template-columns: 100vw;
     column-gap: 0px;
-    padding-left: 0px !important;
-    padding-right: 0px !important;
+    padding-left: 0px !important; // overrides @extend px-4
+    padding-right: 0px !important; // overrides @extend px-4
   }
 }
 
