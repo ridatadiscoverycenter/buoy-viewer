@@ -12,9 +12,9 @@ For the map in the domoic acid page to work, you'll need a .env file with the fo
 ```
 VITE_MAPBOX_ACCESS_TOKEN=
 ```
+The mapbox token can be found by logging in as ccv-bot on mapbox (credentials in lastpass).
 
 Node version: 14+
-
 
 ```bash
 # install dependencies
