@@ -54,25 +54,6 @@ const props = defineProps<{
   endDate: string;
 }>();
 
-// {
-//   variables: {
-//     type: Array<Variable>,
-//     required: true,
-//   },
-//   coordinates: {
-//     type: Array<Coordinate>,
-//     required: true,
-//   },
-//   startDate: {
-//     type: String,
-//     required: true,
-//   },
-//   endDate: {
-//     type: String,
-//     required: true,
-//   },
-// }
-
 const { coordinates, variables, startDate, endDate } = toRefs(props);
 
 const fileFormat = ref("json");

@@ -20,8 +20,6 @@
 <script setup lang="ts">
 import { computed, withDefaults } from "vue";
 
-// import * as aq from "arquero";
-
 import { Coordinate } from "../../utils/erddap";
 import { useColorMap } from "../../store/colorMap";
 

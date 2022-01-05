@@ -33,11 +33,6 @@ import HeatMap from "@/components/charts/HeatMap.vue";
 import { formatVariable } from "../../utils/utils";
 import { Summary, Variable } from "../../utils/erddap";
 
-// interface Props {
-//   summary: Summary[];
-//   variables: Variable[];
-// }
-
 const props = defineProps<{
   summary: Summary[];
   variables: Variable[];
