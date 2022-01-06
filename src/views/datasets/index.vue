@@ -1,18 +1,14 @@
 <template>
   <DashboardLayout>
     <router-view v-slot="{ Component }">
-      <Suspense :key="$route.path">
+      <SuspenseComponent :key="$route.path">
         <component :is="Component"></component>
-
-        <template #fallback>
-          <LoadingSpinner :loading="true" />
-        </template>
-      </Suspense>
+      </SuspenseComponent>
     </router-view>
   </DashboardLayout>
 </template>
 
 <script setup lang="ts">
 import DashboardLayout from "@/layouts/dashboard.vue";
-import LoadingSpinner from "@/components/base/LoadingSpinner.vue";
+import SuspenseComponent from "@/components/base/SuspenseComponent.vue";
 </script>

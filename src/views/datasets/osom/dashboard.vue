@@ -1,20 +1,14 @@
 <template>
-  <Suspense>
-    <LineChartDashboard :query="query">
-      <template #summary-heatmap>
-        <VariableHeatmap
-          :summary="store.summary"
-          :variables="store.variables"
-          x-title="Year"
-          x-unit="year"
-        />
-      </template>
-    </LineChartDashboard>
-
-    <template #fallback>
-      <LoadingSpinner :loading="true" />
+  <LineChartDashboard :query="query">
+    <template #summary-heatmap>
+      <VariableHeatmap
+        :summary="store.summary"
+        :variables="store.variables"
+        x-title="Year"
+        x-unit="year"
+      />
     </template>
-  </Suspense>
+  </LineChartDashboard>
 </template>
 
 <script setup lang="ts">
@@ -23,11 +17,11 @@ import { useRoute } from "vue-router";
 
 import LineChartDashboard from "@/components/buoy/LineChartDashboard.vue";
 import VariableHeatmap from "@/components/buoy/VariableHeatmap.vue";
-import LoadingSpinner from "@/components/base/LoadingSpinner.vue";
 
-const store = inject("store");
+import { BuoyStore } from "../../../store/buoy";
+const store = inject("store") as BuoyStore;
 const route = useRoute();
-import { useQuery } from "@/composables/useQuery.ts";
+import { useQuery } from "../../../composables/useQuery";
 const { query, updateQuery } = useQuery(store, route.path);
 
 updateQuery(route.query, route.path);
@@ -37,7 +31,7 @@ watch(
 );
 
 // set up the comparison dataset - create combined store with keys that are used
-import { buoyStores } from "@/store/buoy.ts";
+import { buoyStores } from "../../../store/buoy";
 const riStore = buoyStores["ri-buoy"].useStore();
 const maStore = buoyStores["ma-buoy"].useStore();
 const compareStore = {
@@ -50,7 +44,6 @@ const compareStore = {
       maStore.fetchBuoyData(query),
     ]);
 
-    console.log(res);
     return res.reduce((acc, cur) => ({
       data: [...acc.data, ...cur.data],
       downsampled: acc.downsampled || cur.downsampled,

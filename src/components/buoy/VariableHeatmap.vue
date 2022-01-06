@@ -17,7 +17,7 @@
 <script>
 import * as aq from "arquero";
 
-import Heatmap from "@/components/charts/Heatmap.vue";
+import Heatmap from "@/components/charts/HeatMap.vue";
 
 export default {
   components: {

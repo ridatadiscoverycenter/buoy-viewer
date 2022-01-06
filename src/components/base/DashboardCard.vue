@@ -30,8 +30,8 @@ withDefaults(defineProps<Props>(), {
 @import "@/assets/styles/main.scss";
 
 .dashboard-card {
-  margin-bottom: 0 !important;
   @extend .box;
+  margin-bottom: 0 !important; /* overrides .box */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

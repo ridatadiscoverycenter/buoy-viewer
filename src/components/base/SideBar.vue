@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="sidebar-container" :class="[collapsed ? 'p-2' : 'p-4']">
     <div class="has-text-right">
       <button type="button" class="button bars px-0" @click="toggle">
         <i v-if="!collapsed" class="fas fa-times" />
         <i v-else class="fas fa-bars" />
       </button>
     </div>
-    <div class="sidebar-body">
+    <div class="sidebar-body" :class="{ 'is-hidden-mobile': collapsed }">
       <p v-if="!collapsed" class="menu-label">Narragansett Bay Data Explorer</p>
       <p v-else class="menu-label">
         <abbr title="Narragansett Bay Data Explorer">NBDE</abbr>
@@ -73,12 +73,12 @@
           <a :href="item.link">
             <span v-if="!collapsed">
               <i class="fas mr-1" :class="item.icon" />
-              {{ item.title }}
+              <span>{{ item.title }}</span>
             </span>
             <span v-else>
               <abbr :title="item.title" class="collapsed-flex-item">
                 <i class="fas mr-1" :class="item.icon" />
-                {{ item.initials }}
+                <span>{{ item.initials }}</span>
               </abbr>
             </span>
           </a>
@@ -126,7 +126,7 @@ const DATASETS = [
   {
     name: "Domoic Acid",
     route: "domoic-acid",
-    available: false,
+    available: true,
   },
   {
     name: "Fish Trawl Survey",
@@ -138,13 +138,13 @@ const DATASETS = [
 const RESOURCES = [
   {
     title: "Rhode Island Data Discovery Center Home",
-    abbreviation: "RIDDC",
+    initials: "RIDDC",
     link: "https://ridatadiscovery.org",
     icon: "fa-water",
   },
   {
     title: "ERDDAP Server",
-    abbreviation: "ES",
+    initials: "ES",
     link: "https://pricaimcit.services.brown.edu/erddap/index.html",
     icon: "fa-database",
   },
@@ -170,15 +170,12 @@ const activeRoute = computed(() => {
 <style lang="scss" scoped>
 @import "@/assets/styles/main.scss";
 
-.is-active {
-  background-color: $primary !important;
-}
 .not-allowed-cursor {
   cursor: not-allowed;
 }
 .bars {
-  border: none !important;
-  background-color: whitesmoke !important;
+  border: none;
+  background-color: whitesmoke;
 }
 .collapsed-flex-item {
   display: flex;

@@ -2,7 +2,7 @@
   <div class="is-flex-column">
     <div class="control-item control-item-first">
       <label for="variable" class="label">Variable</label>
-      <Multiselect
+      <multiselect
         id="variable"
         v-model="variable"
         class="multiselect"
@@ -30,13 +30,8 @@ import Multiselect from "vue-multiselect";
 
 import HeatMap from "@/components/charts/HeatMap.vue";
 
-import { formatVariable } from "@/utils/utils.ts";
-import { Summary, Variable } from "@/utils/erddap.ts";
-
-// interface Props {
-//   summary: Summary[];
-//   variables: Variable[];
-// }
+import { formatVariable } from "../../utils/utils";
+import { Summary, Variable } from "../../utils/erddap";
 
 const props = defineProps<{
   summary: Summary[];

@@ -56,7 +56,8 @@ import { inject } from "vue";
 import StationHeatmap from "@/components/buoy/StationHeatmap.vue";
 import BuoyDashboard from "@/components/buoy/SummaryDashboard.vue";
 
-const store = inject("store");
+import { BuoyStore } from "../../../store/buoy";
+const store = inject("store") as BuoyStore;
 
 const scenarios = [
   {

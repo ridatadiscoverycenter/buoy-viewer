@@ -4,67 +4,27 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { Legend } from "vega";
 
-import { useVega } from "@/composables/useVega.ts";
+import { useVega } from "../../composables/useVega";
 
-import { formatVariable } from "@/utils/utils.ts";
+import { formatVariable } from "../../utils/utils";
+import { Variable, Data } from "../../utils/erddap";
 
-const props = defineProps({
-  variables: {
-    type: Array,
-    required: true,
-  },
-  x: {
-    type: String,
-    required: true,
-  },
-  y: {
-    type: String,
-    required: true,
-  },
-  compareDataset: {
-    type: Array,
-    required: false,
-    default() {
-      return [];
-    },
-  },
-  compareLineWidth: {
-    type: Number,
-    required: true,
-  },
-  compareName: {
-    type: String,
-    required: true,
-  },
-  datasetName: {
-    type: String,
-    required: true,
-  },
-  datasetLineWidth: {
-    type: Number,
-    required: true,
-  },
-  colorDomain: {
-    type: Array,
-    required: true,
-  },
-  colorRange: {
-    type: Array,
-    required: true,
-  },
-  weatherDataset: {
-    type: Array,
-    required: false,
-    default() {
-      return [];
-    },
-  },
-  dataset: {
-    type: Array,
-    required: true,
-  },
-});
+const props = defineProps<{
+  variables: Variable[];
+  x: string;
+  y: string;
+  compareDataset: Data[];
+  compareLineWidth: number;
+  compareName: string;
+  dataset: Data[];
+  datasetLineWidth: number;
+  datasetName: string;
+  colorDomain: string[];
+  colorRange: string[];
+  weatherDataset: object[];
+}>();
 
 const DASHES = [
   [1, 0],
@@ -81,7 +41,7 @@ const yTitle = computed(() =>
 );
 
 const legends = computed(() => {
-  const legend = [
+  const legend: Legend[] = [
     {
       title: "Buoys",
       fill: "color",
@@ -488,7 +448,6 @@ const el = ref<HTMLDivElement>(null);
 useVega({
   spec,
   el,
-  // minHeight: props.height,
   maxWidth: ref(1280),
   includeActions: ref(false),
 });

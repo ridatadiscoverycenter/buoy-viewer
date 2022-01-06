@@ -79,7 +79,7 @@ import { computed, inject, ref, watch } from "vue";
 import LineChart from "@/components/charts/LineChart.vue";
 import DashboardCard from "@/components/base/DashboardCard.vue";
 
-import { formatVariable } from "@/utils/utils.ts";
+import { formatVariable } from "../../utils/utils";
 
 const props = defineProps({
   query: {
@@ -98,7 +98,7 @@ const toggleCompare = () => {
 };
 
 // set up color domain and range for vega
-import { useColorMap } from "@/store/colorMap.ts";
+import { useColorMap } from "../../store/colorMap";
 
 const colorMap = useColorMap();
 const colorDomain = computed(() =>
@@ -118,19 +118,19 @@ const nonPlottableVariables = computed(() =>
 );
 
 // fetch the data
-import { fetchWeather } from "@/utils/weather.ts";
+import { fetchWeather } from "../../utils/weather";
+import { BuoyStore } from "../../store/buoy";
 
-const compareStore = inject("compareStore");
+const compareStore = inject("compareStore") as BuoyStore;
 const compareDataset = ref([]);
 
-const store = inject("store");
+const store = inject("store") as BuoyStore;
 const dataset = ref([]);
 const downsampled = ref(false);
 
 const weather = ref([]);
 
 const fetchData = async () => {
-  console.log("fetching data");
   const { coordinates, startDate, endDate } = props.query;
   const query = {
     ids: coordinates.map((c) => c.buoyId),

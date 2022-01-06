@@ -38,11 +38,12 @@ const collapsed = ref(false);
 .sidebar {
   border-right: 1px solid #a4b1bf;
   grid-area: sidebar;
-  @extend .px-4;
-  @extend .py-4;
   overflow: hidden;
   background-color: whitesmoke;
   min-height: 90vh;
+  @include mobile {
+    min-height: auto;
+  }
 }
 main {
   grid-area: main;
@@ -66,7 +67,7 @@ main {
   grid-template-areas: "sidebar main";
   @include mobile {
     grid-template-columns: 100vw;
-    grid-template-rows: 3.5rem auto auto auto;
+    grid-template-rows: auto auto;
     grid-template-areas:
       "sidebar"
       "main";
@@ -91,8 +92,8 @@ main {
   @include mobile {
     grid-template-columns: 100vw;
     column-gap: 0px;
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 0px !important; // overrides @extend px-4
+    padding-right: 0px !important; // overrides @extend px-4
   }
 }
 

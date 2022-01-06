@@ -1,11 +1,38 @@
-# Vue 3 + Typescript + Vite
+# [Narragansett Bay Data Explorer](https://data-explorer.riddc.brown.edu)
 
-This template should help get you started developing with Vue 3 and Typescript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+[![DOI](https://zenodo.org/badge/271652303.svg)](https://zenodo.org/badge/latestdoi/271652303)
 
-## Recommended IDE Setup
+> Explore data from the [RI Data Discovery Center](https://ridatadiscovery.org) about the Narragansett Bay.
+
+A web app to explore data about the Narragansett bay.  Built using Vue 3 + Typescript.  Uses the buoy-api as a backend.
+
+## Build Setup
+
+For the map in the domoic acid page to work, you'll need a .env file with the following keys:
+```
+VITE_MAPBOX_ACCESS_TOKEN=
+```
+The mapbox token can be found by logging in as ccv-bot on mapbox (credentials in lastpass).
+
+Node version: 14+
+
+```bash
+# install dependencies
+$ npm install
+
+# serve with hot reload at localhost:3000
+$ npm run dev # connect to production api
+$ npm run dev:local # connect to locally running api
+
+# linting
+$ npm run lint # report and fix linting errors
+$ npm run tscheck # check for type errors
+
+# build for production and launch server
+$ npm run build
+$ npm run serve
+```
+
+## Recommended IDE Setup (very optional)
 
 - [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
-
-## Type Support For `.vue` Imports in TS
-
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's `.vue` type support plugin by running `Volar: Switch TS Plugin on/off` from VSCode command palette.

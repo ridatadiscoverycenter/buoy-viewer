@@ -1,10 +1,18 @@
-import { ref, Ref, computed, onMounted, onUnmounted, watch } from "vue";
+import {
+  ref,
+  Ref,
+  computed,
+  ComputedRef,
+  onMounted,
+  onUnmounted,
+  watch,
+} from "vue";
 import embed from "vega-embed";
 import { View } from "vega";
 import { cloneDeep } from "lodash/lang";
 
-// TODO: have this use suspense so we get loading on the plot updates?
-// TODO: how to handle/supress voronoi error after unmount?
+// TODO-IMPROVEMENT: have this use suspense so we get loading on the plot updates?
+// TODO-IMPROVEMENT: how to handle/supress voronoi error after unmount?
 
 export function useVega({
   spec,
@@ -14,11 +22,11 @@ export function useVega({
   hasData = ref(true),
   el,
 }: {
-  spec: Ref<object>;
-  minWidth: Ref<number>;
-  maxWidth: Ref<number>;
-  includeActions: Ref<boolean>;
-  hasData: Ref<boolean>;
+  spec: Ref | ComputedRef;
+  minWidth?: Ref<number>;
+  maxWidth?: Ref<number>;
+  includeActions?: Ref<boolean>;
+  hasData?: Ref<boolean>;
   el: Ref<HTMLDivElement | null>;
 }) {
   const actionsWidth = computed(() => (includeActions.value ? 38 : 0));
@@ -58,12 +66,9 @@ export function useVega({
   });
 
   const updatePlot = () => {
-    console.log("in update plot");
     if (view.value) {
       view.value.finalize();
     }
-
-    console.log(spec.value);
 
     // don't try to render if we don't have data yet
     if (!hasData.value) return;
@@ -91,7 +96,6 @@ export function useVega({
   };
 
   const finalize = () => {
-    console.log("in vega finalizer");
     if (view.value) {
       view.value.finalize();
     }

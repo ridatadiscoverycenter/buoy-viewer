@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 
-import { useVega } from "@/composables/useVega.ts";
+import { useVega } from "../../composables/useVega";
 
 const props = defineProps({
   dataset: {
@@ -166,7 +166,6 @@ const el = ref<HTMLDivElement>(null);
 useVega({
   spec,
   el,
-  // minHeight: props.height,
   maxWidth: ref(1280),
   includeActions: ref(false),
 });

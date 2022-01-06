@@ -5,38 +5,24 @@
       <BaseLogo />
     </a>
     <slot />
+    <BaseFooter />
   </div>
 
-  <main v-if="errored" class="error-container">
-    <div class="error-content">
-      <i class="fas fa-life-ring mr-2 has-text-danger" />
-      <p>{{ errorMessage }}</p>
-    </div>
-    <a @click="goBack">
-      <i class="fas fa-arrow-left mr-2" />
-      Back
-    </a>
-    <!-- TODO: is this error clearning working? -->
-    <router-link to="/" @click="errored = false">
-      <i class="fas fa-home mr-2" />
-      Home
-    </router-link>
-  </main>
+  <ErrorPage v-if="errored" :message="errorMessage" @clear="errored = false" />
 </template>
 
 <script setup lang="ts">
 import { ref, onErrorCaptured } from "vue";
 
 import BaseLogo from "@/components/base/BaseLogo.vue";
+import BaseFooter from "@/components/base/BaseFooter.vue";
+import ErrorPage from "@/components/base/ErrorPage.vue";
 
 // ERROR HANDLING
 const errored = ref(false);
 const errorMessage = ref("");
 
-const goBack = () => console.log("GO BACK"); // TODO: go somewhere
-
 onErrorCaptured((err: Error) => {
-  console.log("in error handler");
   errored.value = true;
   errorMessage.value = err.message;
 });
@@ -54,22 +40,10 @@ onErrorCaptured((err: Error) => {
   border-bottom: 1px solid #a4b1bf;
 }
 
-.error-content,
-.error-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.error-container {
-  padding: 3rem;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: white;
-}
-.error-content {
-  font-size: 3rem;
+.brand-title {
+  @extend .mb-0;
+  @extend .mr-2;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 </style>

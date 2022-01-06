@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
-import { erddapGet } from "@/utils/erddap.ts";
-import { useColorMap } from "@/store/colorMap.ts";
+import { erddapGet } from "../utils/erddap";
+import { useColorMap } from "./colorMap";
 
 type StationName = "Fox Island" | "Whale Rock";
 
@@ -30,12 +30,17 @@ interface Temperature {
   delta: number;
 }
 
-interface FishInfo {
+export interface Info {
+  href?: string;
   name?: string;
   sciName?: string;
-  href?: string;
   photoUrl?: string;
-  sectionData?: any;
+  sectionData?: {
+    Classification?: {
+      Classification?: string;
+    };
+    IUCN?: string;
+  };
 }
 
 interface State {
@@ -44,7 +49,6 @@ interface State {
   coordinates: Coordinate[];
   samples: Sample[];
   temps: Temperature[];
-  info: FishInfo;
 }
 
 export const useFishStore = defineStore("fish", {
@@ -55,7 +59,6 @@ export const useFishStore = defineStore("fish", {
       coordinates: [],
       samples: [],
       temps: [],
-      info: {},
     };
   },
   actions: {
@@ -86,7 +89,7 @@ export const useFishStore = defineStore("fish", {
       this.temps = await erddapGet("/fish/temps");
     },
     async fetchInfo(species: string) {
-      this.info = await erddapGet(`/fish/info/${species}`);
+      return (await erddapGet(`/fish/info/${species}`)) as Info;
     },
     async fetchBaseData(): Promise<void> {
       if (this.coordinates.length === 0) {
@@ -100,7 +103,7 @@ export const useFishStore = defineStore("fish", {
   },
   getters: {
     stations(): string[] {
-      return this.samples.map(({ title }) => title).sort();
+      return this.coordinates.map(({ station_name }) => station_name).sort();
     },
     species(): string[] {
       // unique species in alphabetical order
@@ -111,3 +114,5 @@ export const useFishStore = defineStore("fish", {
     },
   },
 });
+
+export type FishStore = ReturnType<typeof useFishStore>;

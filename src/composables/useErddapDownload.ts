@@ -1,6 +1,6 @@
 import { Ref, computed } from "vue";
 
-import { Coordinate, Variable } from "@/utils/erddap.ts";
+import { Coordinate, Variable } from "../utils/erddap";
 
 interface DownloadParams {
   variables: Ref<Variable[]>;
