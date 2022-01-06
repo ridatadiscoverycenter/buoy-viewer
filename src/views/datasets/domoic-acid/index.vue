@@ -22,7 +22,7 @@
     >
     <template #content>
       <div class="content columns pl-2 mx-0">
-        <div class="column">
+        <div class="column pl-2">
           <h3>Background</h3>
           <p>
             The project monitored species of the diatom
@@ -104,33 +104,37 @@
   <DashboardCard width="half">
     <template #title>Acknowledgments</template>
     <template #content>
-      <p>
-        Thanks to Dr. Tatiana Rynearson, Jacob Strock, Jessica Carney, Nina
-        Santos, Captain Stephen Barber on the R/V <i>Cap’n Bert</i>, Dr. Harold
-        “Bud” Vincent II on the R/V <i>Hope Hudner</i>, and Steve Granger on the
-        R/V <i>Zostera</i> for assistance with sampling.
-      </p>
-      <br />
-      <p>
-        We thank graduate and undergraduate researchers and other research
-        personnel Alexa Sterling, Riley Kirk, Katherine Bell, Dr. Laura Holland,
-        Marissa Caponi, Meagan King, Emily McDermith, Erin Tully, Samantha
-        Vaverka, Patrick Wilson, Stephanie Anderson, and Jorge Vazquez-Custodio
-        for sampling assistance.
-      </p>
+      <div class="content px-4">
+        <p>
+          Thanks to Dr. Tatiana Rynearson, Jacob Strock, Jessica Carney, Nina
+          Santos, Captain Stephen Barber on the R/V <i>Cap’n Bert</i>, Dr.
+          Harold “Bud” Vincent II on the R/V <i>Hope Hudner</i>, and Steve
+          Granger on the R/V <i>Zostera</i> for assistance with sampling.
+        </p>
+        <br />
+        <p>
+          We thank graduate and undergraduate researchers and other research
+          personnel Alexa Sterling, Riley Kirk, Katherine Bell, Dr. Laura
+          Holland, Marissa Caponi, Meagan King, Emily McDermith, Erin Tully,
+          Samantha Vaverka, Patrick Wilson, Stephanie Anderson, and Jorge
+          Vazquez-Custodio for sampling assistance.
+        </p>
+      </div>
     </template>
   </DashboardCard>
 
   <DashboardCard width="half" :height="1">
     <template #title>Learn More</template>
     <template #content>
-      <p>
-        The full dataset used to power this app is available on
-        <a
-          href="https://pricaimcit.services.brown.edu/erddap/tabledap/da_4566_36f0_124a.html"
-          >ERDDAP</a
-        >. If using this data, please cite the ERDDAP dataset.
-      </p>
+      <div class="content px-4">
+        <p>
+          The full dataset used to power this app is available on
+          <a
+            href="https://pricaimcit.services.brown.edu/erddap/tabledap/da_4566_36f0_124a.html"
+            >ERDDAP</a
+          >. If using this data, please cite the ERDDAP dataset.
+        </p>
+      </div>
     </template>
   </DashboardCard>
 </template>
