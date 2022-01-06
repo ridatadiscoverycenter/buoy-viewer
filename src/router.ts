@@ -6,7 +6,6 @@ import HomePage from "@/views/HomePage.vue";
 import AboutPage from "@/views/AboutPage.vue";
 import DatasetPage from "@/views/datasets/index.vue";
 
-// TODO-QUESTION: route nuxt-style paths to new-style?
 type Dataset = "fish" | "ma-buoy" | "osom" | "plankton" | "ri-buoy";
 
 const updateQueryParams = ({ path, query }) => {

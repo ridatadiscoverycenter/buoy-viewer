@@ -128,7 +128,7 @@ const createStore = (config: BuoyConfig) => {
 
       // fetch the base data in one call if not already loaded
       async fetchBaseData(): Promise<void> {
-        if (this.coordinates.length === 0) {
+        if (this.summary.length === 0) {
           await Promise.all([
             this.fetchSummaryData(),
             this.fetchBuoyCoordinates(),
