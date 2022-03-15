@@ -6,7 +6,13 @@ import HomePage from "@/views/HomePage.vue";
 import AboutPage from "@/views/AboutPage.vue";
 import DatasetPage from "@/views/datasets/index.vue";
 
-type Dataset = "fish" | "ma-buoy" | "osom" | "plankton" | "ri-buoy";
+type Dataset =
+  | "fish"
+  | "ma-buoy"
+  | "osom"
+  | "plankton"
+  | "ri-buoy"
+  | "buoy-telemetry";
 
 const updateQueryParams = ({ path, query }) => {
   const newQuery = (({ ids, variables, start, end }) => {
@@ -96,6 +102,7 @@ const routes: RouteRecordRaw[] = [
         "Historical RI Buoy Data",
         "historical-buoy-data"
       ),
+      ...getBuoyDatasetRoutes("buoy-telemetry", "Real Time Buoy Data"),
       {
         path: "fish",
         component: () => import(`./views/datasets/fish/index.vue`),

@@ -2,8 +2,8 @@ import axios from "axios";
 
 const erddapAxios = axios.create({
   baseURL:
-    (import.meta.env.VITE_RIDDC_API_BASEURL as string | false) ||
-    "https://api.riddc.brown.edu/erddap",
+    ((import.meta.env.VITE_RIDDC_API_BASEURL as string | false) ||
+      "https://api.riddc.brown.edu") + "/erddap",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
