@@ -148,6 +148,12 @@ const RESOURCES = [
     link: "https://pricaimcit.services.brown.edu/erddap/index.html",
     icon: "fa-database",
   },
+  {
+    title: "Glossary",
+    initials: "GL",
+    link: "",
+    icon: "fa-book",
+  },
 ];
 
 const toggle = () => {
