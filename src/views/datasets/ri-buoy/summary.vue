@@ -2,7 +2,7 @@
   <BuoyDashboard :scenarios="scenarios">
     <template #available-data>
       This dataset spans from {{ store.minDate.slice(0, 4) }} to
-      {{ store.maxDate.slice(0, 4) }}. and was collected by the Narragansett
+      {{ store.maxDate.slice(0, 4) }} and was collected by the Narragansett
       Bay Fixed Station Monitoring Network (NBFSMN) with RIDEM-OWR as the lead agency. 
       Agencies involved in collection and maintenance of the data are: RIDEM-OWR, 
       URI/GSO MERL, NBC, NBNERR, and MassDEP. The heatmap below summarizes the number

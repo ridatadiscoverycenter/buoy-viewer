@@ -1,9 +1,9 @@
 <template>
   <BuoyDashboard :scenarios="scenarios">
     <template #available-data>
-      Narragansett Bay Long-Term Plankton Time Series, upheld by the University of
-      Rhode Island, is one of the world’s
-      longest-running plankton surveys. Since 1957, weekly samples have
+      Narragansett Bay Long-Term Plankton Time Series is one of the world’s
+      longest-running plankton surveys maintained by the University of
+      Rhode Island. Since 1957, weekly samples have
       been collected to assess the phytoplankton community and characterize the
       physical parameters of Narragansett Bay. The heatmap below summarizes the
       number of observations collected for each month for different variables.

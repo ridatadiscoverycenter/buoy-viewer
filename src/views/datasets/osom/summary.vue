@@ -1,14 +1,13 @@
 <template>
   <BuoyDashboard :scenarios="scenarios">
     <template #available-data>
-    The Ocean State Ocean Model (OSOM), developed in a collaboration between
-    the University of Rhode Island and Brown University, is an application
-    of the Regional Ocean Modeling System (ROMS) spanning Rhode spanning Rhode
-    Island waterways, including Narragansett Bay, Mt. Hope Bay, larger rivers,
-    and the Block Island Shelf circulation from Long Island to Nantucket.
-    Data is available by the year at 1.5 hour increments. As the model covers
-    the entire Narragansett Bay, data is always available at all buoy locations.
-      
+      The Ocean State Ocean Model (OSOM), developed in a collaboration between
+      the University of Rhode Island and Brown University, is an application of the
+      Regional Ocean Modeling System (ROMS). Spatial coverage of the model 
+      spans Rhode Island's major waterways: Narragansett Bay, Mt. Hope Bay, larger rivers,
+      and the Block Island Shelf circulation from Long Island to Nantucket.
+      Data is available by the year at 1.5 hour increments. As the model covers
+      the entire Narragansett Bay, data is always available at all buoy locations.
     </template>
 
     <template #heatmap>

@@ -104,12 +104,12 @@ const collapsed = ref(false);
 
 const DATASETS = [
   {
-    name: "RI Buoy Data (NBFSMN)",
+    name: "RI Buoys (NBFSMN)",
     route: "ri-buoy",
     available: true,
   },
   {
-    name: "MA Buoy Data (MassDEP/NBFSMN)",
+    name: "MA Buoy (MassDEP/NBFSMN)",
     route: "ma-buoy",
     available: true,
   },
