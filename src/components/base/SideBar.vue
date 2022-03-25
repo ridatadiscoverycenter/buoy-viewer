@@ -24,6 +24,12 @@
             <span v-if="!collapsed">About</span>
           </router-link>
         </li>
+        <li>
+          <router-link to="/glossary">
+            <i class="fas fa-book mr-1" />
+            <span v-if="!collapsed">Glossary</span>
+          </router-link>
+        </li>
       </ul>
       <p v-if="!collapsed" class="menu-label">Exploration Datasets</p>
       <p v-else class="menu-label">
@@ -147,12 +153,6 @@ const RESOURCES = [
     initials: "ES",
     link: "https://pricaimcit.services.brown.edu/erddap/index.html",
     icon: "fa-database",
-  },
-  {
-    title: "Glossary",
-    initials: "GL",
-    link: "",
-    icon: "fa-book",
   },
 ];
 
