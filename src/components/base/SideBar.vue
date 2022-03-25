@@ -109,7 +109,7 @@ const DATASETS = [
     available: true,
   },
   {
-    name: "MA Buoy (MassDEP/NBFSMN)",
+    name: "MA Buoys (MassDEP/NBFSMN)",
     route: "ma-buoy",
     available: true,
   },

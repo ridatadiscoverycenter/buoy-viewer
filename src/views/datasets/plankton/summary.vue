@@ -1,16 +1,15 @@
 <template>
   <BuoyDashboard :scenarios="scenarios">
     <template #available-data>
-      Narragansett Bay Long-Term Plankton Time Series is one of the world’s
-      longest-running plankton surveys maintained by the University of
-      Rhode Island. Since 1957, weekly samples have
-      been collected to assess the phytoplankton community and characterize the
-      physical parameters of Narragansett Bay. The heatmap below summarizes the
-      number of observations collected for each month for different variables.
-      Use this heatmap to help you decide what data you want to visualize or
-      download. When you have an idea, go ahead and select the variables and
-      dates to explore. Or download the data in the most appropriate format for
-      your analyses!
+      The Narragansett Bay Long-Term Plankton Time Series, maintained by the University 
+      of Rhode Island, is one of the world’s longest-running plankton surveys.
+      Since 1957, weekly samples have been collected to assess the
+      phytoplankton community and characterize the physical parameters of
+      Narragansett Bay. The heatmap below summarizes the number of observations
+      collected for each month for different variables. Use this heatmap to help
+      you decide what data you want to visualize or download. When you have an
+      idea, go ahead and select the variables and dates to explore. Or download
+      the data in the most appropriate format for your analyses!
     </template>
 
     <template #heatmap>
