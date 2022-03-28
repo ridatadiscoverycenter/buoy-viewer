@@ -4,16 +4,16 @@
       <div class="item1 pt-4">
         <div class="center">
           <h1 class="home-title pb-4">Narragansett Bay Data Explorer</h1>
-          <h2 class="home-subtitle pb-4">
+          <h2 class="subtitle pb-4 is-size-subtitle">
             Explore historical data collected from multiple buoys in the
             Narragansett Bay
           </h2>
           <router-link
-            class="button is-large has-text-light is-primary"
+            class="button has-text-light is-primary is-size-subtitle"
             to="/dataset/"
           >
-            <span class="is-size-3">Start Exploring</span>
-            <i class="ml-3 is-size-3 fas fa-compass" />
+            <span>Start Exploring</span>
+            <i class="ml-3 fas fa-compass" />
           </router-link>
         </div>
       </div>
@@ -73,11 +73,19 @@ $gradient3: #f8eade;
 
 .home-title {
   @extend .title;
-  font-size: $size-1 * 1.4;
+  font-size: clamp(
+    2.5rem,
+    5.2vw - 1rem,
+    4.2rem
+  );
 }
-.home-subtitle {
-  @extend .subtitle;
-  font-size: $size-4 * 1.4;
+
+.is-size-subtitle {
+  font-size: clamp(
+    1.5rem,
+    1.7vw + 1rem,
+    2.5rem
+  );
 }
 
 .grid-container {
@@ -125,8 +133,5 @@ $gradient3: #f8eade;
 }
 .waves {
   margin-top: -10rem;
-  @include mobile {
-    visibility: hidden;
-  }
 }
 </style>
