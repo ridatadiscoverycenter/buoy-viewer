@@ -12,7 +12,7 @@
             class="button has-text-light is-primary is-size-subtitle"
             to="/dataset/"
           >
-            <span>Start Exploring</span>
+            Start Exploring
             <i class="ml-3 fas fa-compass" />
           </router-link>
         </div>
@@ -73,19 +73,11 @@ $gradient3: #f8eade;
 
 .home-title {
   @extend .title;
-  font-size: clamp(
-    2.5rem,
-    5.2vw - 1rem,
-    4.2rem
-  );
+  font-size: clamp(2.5rem, 5.2vw - 1rem, 4.2rem);
 }
 
 .is-size-subtitle {
-  font-size: clamp(
-    1.5rem,
-    1.7vw + 1rem,
-    2.5rem
-  );
+  font-size: clamp(1.5rem, 1.7vw + 1rem, 2.5rem);
 }
 
 .grid-container {
