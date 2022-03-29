@@ -24,6 +24,7 @@ const props = defineProps<{
   colorDomain: string[];
   colorRange: string[];
   weatherDataset: object[];
+  excludeNulls: boolean;
 }>();
 
 const DASHES = [
@@ -300,7 +301,7 @@ const spec = computed(() => {
             from: {
               facet: {
                 name: "series",
-                data: "union",
+                data: props.excludeNulls ? "unionNonNull": "union",
                 groupby: ["station_name", "unittedVariable", "dataset"],
               },
             },

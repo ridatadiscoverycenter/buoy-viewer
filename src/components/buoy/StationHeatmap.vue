@@ -20,6 +20,8 @@
       x="date"
       y="station_name"
       :variable="variable.name"
+      :x-unit="xUnit"
+      :x-title="xTitle"
     />
   </div>
 </template>
@@ -33,10 +35,15 @@ import HeatMap from "@/components/charts/HeatMap.vue";
 import { formatVariable } from "../../utils/utils";
 import { Summary, Variable } from "../../utils/erddap";
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   summary: Summary[];
   variables: Variable[];
-}>();
+  xUnit: string;
+  xTitle: string;
+}>(), {
+  xUnit: "month",
+  xTitle: "Month/Year",
+});
 
 const variable = ref(
   props.variables[0] ?? { name: "WaterTempSurface", units: "°C" }

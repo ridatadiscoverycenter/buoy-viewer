@@ -1,6 +1,6 @@
 <template>
   <SuspenseComponent :key="query.hash">
-    <BuoyLineChart :query="query" />
+    <BuoyLineChart :query="query" :exclude-nulls="excludeNulls" />
   </SuspenseComponent>
 
   <BuoyLocations :coordinates="query.coordinates" :height="3" />
@@ -46,5 +46,10 @@ defineProps({
     type: Object,
     required: true,
   },
+  excludeNulls: {
+    type: Boolean,
+    required: false,
+    default: false
+  }
 });
 </script>

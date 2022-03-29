@@ -25,7 +25,6 @@ $primary-color: $link;
   @extend .px-2;
   width: 100%;
   flex-grow: 1;
-  min-width: 250px;
 }
 
 // have buttons wrap lines - this is overwriting bulma

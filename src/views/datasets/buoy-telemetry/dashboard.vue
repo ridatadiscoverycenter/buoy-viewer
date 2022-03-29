@@ -1,7 +1,7 @@
 <template>
   <LineChartDashboard :query="query" :exclude-nulls="true">
     <template #summary-heatmap>
-      <VariableHeatmap :summary="store.summary" :variables="store.variables" />
+      <StationHeatmap :summary="store.summary" :variables="store.variables" x-title="Date" x-unit="day" />
     </template>
   </LineChartDashboard>
 </template>
@@ -11,7 +11,7 @@ import { inject, provide, watch } from "vue";
 import { useRoute } from "vue-router";
 
 import LineChartDashboard from "@/components/buoy/LineChartDashboard.vue";
-import VariableHeatmap from "@/components/buoy/VariableHeatmap.vue";
+import StationHeatmap from "@/components/buoy/StationHeatmap.vue";
 
 import { BuoyStore } from "../../../store/buoy";
 const store = inject("store") as BuoyStore;

@@ -43,6 +43,13 @@ const CONFIG = {
     lineWidth: MEASUREMENT_LINEWIDTH,
     title: "Plankton",
   },
+  "buoy-telemetry": {
+    name: "buoy-telemetry",
+    route: "telemetry-raw",
+    datasetId: "buoy_telemetry_0ffe_2dc0_916e",
+    lineWidth: MEASUREMENT_LINEWIDTH,
+    title: "Real Time"
+  }
 };
 
 interface BuoyConfig {
@@ -61,9 +68,8 @@ interface BuoyState extends BuoyConfig {
   maxDate: string;
 }
 
-const createStore = (config: BuoyConfig) => {
-  const route = config.route;
-  const name = config.name;
+const createStore = (config: BuoyConfig, bustCache=false) => {
+  const { route, name } = config;
   return defineStore(name, {
     state: (): BuoyState => {
       return {
@@ -79,7 +85,8 @@ const createStore = (config: BuoyConfig) => {
       // fetch the summary for the heatmaps
       async fetchSummaryData() {
         // assign to intermediate variable for performance while updating date/time data
-        const summary = await erddapGet(`/${route}/summary`);
+        const summary = await erddapGet(`/${route}/summary${bustCache ? '?cacheBust=${Math.random()' : ''}`);
+        console.log(summary);
         let minDate = new Date();
         let maxDate = new Date(0);
         summary.map((d) => {
@@ -95,6 +102,9 @@ const createStore = (config: BuoyConfig) => {
         this.summary = summary;
         this.minDate = localISODate(minDate);
         this.maxDate = localISODate(maxDate);
+
+        console.log(minDate, this.minDate)
+        console.log(maxDate, this.maxDate)
       },
 
       // just fetch data, don't save anything
@@ -147,4 +157,5 @@ export const buoyStores = {
   "ma-buoy": { useStore: createStore(CONFIG["ma-buoy"]) },
   osom: { useStore: createStore(CONFIG["osom"]) },
   plankton: { useStore: createStore(CONFIG["plankton"]) },
+  "buoy-telemetry": { useStore: createStore(CONFIG["buoy-telemetry"], true) },
 };
