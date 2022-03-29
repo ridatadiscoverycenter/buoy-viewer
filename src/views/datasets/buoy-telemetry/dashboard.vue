@@ -1,7 +1,12 @@
 <template>
   <LineChartDashboard :query="query" :exclude-nulls="true">
     <template #summary-heatmap>
-      <StationHeatmap :summary="store.summary" :variables="store.variables" x-title="Date" x-unit="day" />
+      <StationHeatmap
+        :summary="store.summary"
+        :variables="store.variables"
+        x-title="Date"
+        x-unit="day"
+      />
     </template>
   </LineChartDashboard>
 </template>

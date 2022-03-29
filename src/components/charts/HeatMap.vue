@@ -134,7 +134,11 @@ const spec = computed(() => {
               signal: `scale('x', timeOffset('${props.xUnit}', now())) - scale('x', now())`,
             },
             tooltip: {
-              signal: `{'Date': utcFormat(datum.${props.x}, '${props.xUnit === "day" ? "%d " :""}%B %Y'), '${props.yTitle}': datum.${props.y}, 'Count': datum.${props.variable}}`,
+              signal: `{'Date': utcFormat(datum.${props.x}, '${
+                props.xUnit === "day" ? "%d " : ""
+              }%B %Y'), '${props.yTitle}': datum.${props.y}, 'Count': datum.${
+                props.variable
+              }}`,
             },
           },
           update: {

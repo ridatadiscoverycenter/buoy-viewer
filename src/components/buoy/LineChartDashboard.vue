@@ -49,7 +49,7 @@ defineProps({
   excludeNulls: {
     type: Boolean,
     required: false,
-    default: false
-  }
+    default: false,
+  },
 });
 </script>

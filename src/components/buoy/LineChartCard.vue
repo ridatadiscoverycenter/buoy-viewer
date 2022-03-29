@@ -90,8 +90,8 @@ const props = defineProps({
   excludeNulls: {
     type: Boolean,
     required: false,
-    default: false
-  }
+    default: false,
+  },
 });
 
 // comparison of other dataset

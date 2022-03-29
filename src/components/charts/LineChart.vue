@@ -301,7 +301,7 @@ const spec = computed(() => {
             from: {
               facet: {
                 name: "series",
-                data: props.excludeNulls ? "unionNonNull": "union",
+                data: props.excludeNulls ? "unionNonNull" : "union",
                 groupby: ["station_name", "unittedVariable", "dataset"],
               },
             },
