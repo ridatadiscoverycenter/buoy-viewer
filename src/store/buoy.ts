@@ -88,7 +88,6 @@ const createStore = (config: BuoyConfig, bustCache = false) => {
         const summary = await erddapGet(
           `/${route}/summary${bustCache ? "?cacheBust=${Math.random()" : ""}`
         );
-        console.log(summary);
         let minDate = new Date();
         let maxDate = new Date(0);
         summary.map((d) => {
@@ -104,9 +103,6 @@ const createStore = (config: BuoyConfig, bustCache = false) => {
         this.summary = summary;
         this.minDate = localISODate(minDate);
         this.maxDate = localISODate(maxDate);
-
-        console.log(minDate, this.minDate);
-        console.log(maxDate, this.maxDate);
       },
 
       // just fetch data, don't save anything
