@@ -3,33 +3,35 @@
     <DashboardCard>
       <template #title> Agencies and Organizations </template>
       <template #content>
-        <div class="px-4" style="font-size: 0.95rem">
+        <div class="px-4 is-size-6">
           <p v-for="agency in agencyAcronyms" :key="agency.acronym">
-            <strong style="font-size: 1.02rem">{{ agency.acronym }}:</strong>
+            <strong>{{ agency.acronym }}:</strong>
             {{ agency.name }}
           </p>
         </div>
       </template>
     </DashboardCard>
+    
     <DashboardCard>
-      <template #title>Models and Data</template>
+      <template #title>Data Variables</template>
       <template #content>
-        <div class="px-4" style="font-size: 0.95rem">
-          <p v-for="model in modelAcronyms" :key="model.acronym">
-            <strong style="font-size: 1.02rem">{{ model.acronym }}:</strong>
-            {{ model.name }}
+        <div class="px-4 is-size-6">
+          <p v-for="data in dataAcronyms" :key="data.variable">
+            <strong>{{ data.variable }}:</strong>
+            ({{ data.units }})
+            {{ data.description }}
           </p>
         </div>
       </template>
     </DashboardCard>
+
     <DashboardCard>
-      <template #title>Data Variables</template>
+      <template #title>Other Acronyms</template>
       <template #content>
-        <div class="px-4" style="font-size: 0.9rem">
-          <p v-for="data in dataAcronyms" :key="data.variable">
-            <strong style="font-size: 1.02rem">{{ data.variable }}:</strong>
-            ({{ data.units }})
-            {{ data.description }}
+        <div class="px-4 is-size-6">
+          <p v-for="model in modelAcronyms" :key="model.acronym">
+            <strong>{{ model.acronym }}:</strong>
+            {{ model.name }}
           </p>
         </div>
       </template>
@@ -85,16 +87,10 @@ const modelAcronyms = [
 
 const dataAcronyms = [
   {
-    variable: "ChlorophyllSurface",
+    variable: "Chlorophyll",
     units: "µg L-1",
     description:
-      "Concentration of chlorophyll in sea water at surface, Relative Fluorescence Units",
-  },
-  {
-    variable: "ChlorophyllBottom",
-    units: "µg L-1",
-    description:
-      "Concentration of chlorophyll in sea water at bottom, Relative Fluorescence Units",
+      "Concentration of chlorophyll in sea water, Relative Fluorescence Units",
   },
   {
     variable: "depth",
@@ -107,169 +103,92 @@ const dataAcronyms = [
     description: "Measured water depth under buoy",
   },
   {
-    variable: "NitrateNSurface",
+    variable: "NitrateN",
     units: "mg L-1",
-    description: "Concentration of nitrate in sea water at surface, Moles",
+    description: "Concentration of nitrate in sea water, Moles",
   },
   {
-    variable: "O2Bottom",
+    variable: "O2",
     units: "mg L-1",
-    description: "Concentration of oxygen in sea water at bottom",
+    description: "Concentration of oxygen in sea water",
   },
   {
-    variable: "O2Surface",
-    units: "mg L-1",
-    description: "Concentration of oxygen in sea water at surface",
-  },
-  {
-    variable: "O2PercentBottom",
+    variable: "O2Percent",
     units: "%",
-    description: "Percent oxygen in sea water at bottom",
+    description: "Percent oxygen in sea water",
   },
   {
-    variable: "O2PercentSurface",
-    units: "%",
-    description: "Percent oxygen in sea water at surface",
-  },
-  {
-    variable: "pHBottom",
+    variable: "pH",
     units: "SU",
-    description: "Potential Hydrogen in sea water at bottom, standard pH scale",
+    description: "Potential Hydrogen in sea water, standard pH scale",
   },
   {
-    variable: "pHSurface",
-    units: "SU",
-    description:
-      "Potential Hydrogen in sea water at surface, standard pH scale",
-  },
-  {
-    variable: "PhycoerythrinBottom",
+    variable: "Phycoerythrin",
     units: "µg L-1",
     description:
-      "Concentration of phycoerythrin in sea water at bottom, Relative Fluorescence Units",
+      "Concentration of phycoerythrin in sea water, Relative Fluorescence Units",
   },
   {
-    variable: "PhycoerythrinSurface",
-    units: "µg L-1",
-    description:
-      "Concentration of phycoerythrin in sea water at surface, Relative Fluorescence Units",
-  },
-  {
-    variable: "SalinityBottom",
+    variable: "Salinity",
     units: "g kg-1",
-    description: "Salinity of sea water at bottom, Practical Salinity Units",
+    description: "Salinity of sea water, Practical Salinity Units",
   },
   {
-    variable: "SalinitySurface",
-    units: "g kg-1",
-    description: "Salinity of sea water at surface, Practical Salinity Units",
-  },
-  {
-    variable: "SpCondBottom",
+    variable: "SpCond",
     units: "mS cm-1",
-    description: "Conductivity of sea water at bottom, MilliSiemens",
+    description: "Conductivity of sea water, MilliSiemens",
   },
   {
-    variable: "SpCondSurface",
-    units: "mS cm-1",
-    description: "Conductivity of sea water at surface, MilliSiemens",
-  },
-  {
-    variable: "WaterTempBottom",
+    variable: "WaterTemp",
     units: "°C",
-    description: "Sea water temperature at bottom",
+    description: "Sea water temperature in degrees Celsius",
   },
   {
-    variable: "WaterTempSurface",
-    units: "°C",
-    description: "Sea water temperature at surface",
-  },
-  {
-    variable: "TurbidityBottom",
+    variable: "Turbidity",
     units: "unknown",
-    description: "Sea water turbidity at bottom",
+    description: "Sea water turbidity",
   },
-  { variable: "FSpercentSurface", units: "unknown", description: "unknown" },
+  { variable: "FSpercent", units: "unknown", description: "unknown" },
   {
-    variable: "DensitySurface",
+    variable: "Density",
     units: "g cm-3",
-    description: "Density of sea water at surface",
+    description: "Density of sea water",
   },
   {
-    variable: "DensityBottom",
-    units: "g cm-3",
-    description: "Density of sea water at bottom",
-  },
-  {
-    variable: "DINSurface",
+    variable: "DIN",
     units: "µmole L-1",
-    description: "Dissolved inorganic nitrogen in sea water at surface, Moles",
+    description: "Dissolved inorganic nitrogen in sea water, Moles",
   },
   {
-    variable: "DINBottom",
-    units: "µmole L-1",
-    description: "Dissolved inorganic nitrogen in sea water at bottom, Moles",
-  },
-  {
-    variable: "DIPSurface",
+    variable: "DIP",
     units: "µmole L-1",
     description:
-      "Dissolved inorganic phosphorus in sea water at surface, Moles",
+      "Dissolved inorganic phosphorus in sea water, Moles",
   },
   {
-    variable: "DIPBottom",
+    variable: "NH4",
     units: "µmole L-1",
-    description: "Dissolved inorganic phosphorus in sea water at bottom, Moles",
+    description: "Concentration of ammonium in sea water, Moles",
   },
   {
-    variable: "NH4Surface",
+    variable: "NO2",
     units: "µmole L-1",
-    description: "Concentration of ammonium in sea water at surface, Moles",
+    description: "Concentration of nitrite in sea water, Moles",
   },
   {
-    variable: "NH4Bottom",
+    variable: "NO3",
     units: "µmole L-1",
-    description: "Concentration of ammonium in sea water at bottom, Moles",
+    description: "Concentration of nitrate in sea water, Moles",
   },
   {
-    variable: "NO2Surface",
-    units: "µmole L-1",
-    description: "Concentration of nitrite in sea water at surface, Moles",
-  },
-  {
-    variable: "NO2Bottom",
-    units: "µmole L-1",
-    description: "Concentration of nitrite in sea water at bottom, Moles",
-  },
-  {
-    variable: "NO3Surface",
-    units: "µmole L-1",
-    description: "Concentration of nitrate in sea water at surface, Moles",
-  },
-  {
-    variable: "NO3Bottom",
-    units: "µmole L-1",
-    description: "Concentration of nitrate in sea water at bottom, Moles",
-  },
-  {
-    variable: "PhaeoSurface",
+    variable: "Phaeo",
     units: "µg L-1",
-    description: "Concentration of phaeopigment in sea water at surface",
+    description: "Concentration of phaeopigment in sea water",
   },
   {
-    variable: "PhaeoBottom",
-    units: "µg L-1",
-    description: "Concentration of phaeopigment in sea water at bottom",
-  },
-  {
-    variable: "SilicaSurface",
+    variable: "Silica",
     units: "µmole L-1",
-    description: "Concentration of silica in sea water at surface, Moles",
-  },
-  {
-    variable: "SilicaBottom",
-    units: "µmole L-1",
-    description: "Concentration of silica in sea water at bottom, Moles",
+    description: "Concentration of silica in sea water, Moles",
   },
 ];
 
