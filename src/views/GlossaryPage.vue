@@ -3,22 +3,29 @@
     <DashboardCard>
       <template #title> Agencies and Organizations </template>
       <template #content>
-        <div class="px-4 is-size-6">
-          <p v-for="agency in agencyAcronyms" :key="agency.acronym">
+        <div>
+          <p
+            v-for="agency in agencyAcronyms"
+            :key="agency.acronym"
+            class="px-4 py-1 is-size-6"
+          >
             <strong>{{ agency.acronym }}:</strong>
             {{ agency.name }}
           </p>
         </div>
       </template>
     </DashboardCard>
-    
+
     <DashboardCard>
       <template #title>Data Variables</template>
       <template #content>
-        <div class="px-4 is-size-6">
-          <p v-for="data in dataAcronyms" :key="data.variable">
-            <strong>{{ data.variable }}:</strong>
-            ({{ data.units }})
+        <div>
+          <p
+            v-for="data in dataAcronyms"
+            :key="data.variable"
+            class="px-4 py-1 is-size-6"
+          >
+            <strong>{{ data.variable }} ({{ data.units }}):</strong>
             {{ data.description }}
           </p>
         </div>
@@ -28,8 +35,12 @@
     <DashboardCard>
       <template #title>Other Acronyms</template>
       <template #content>
-        <div class="px-4 is-size-6">
-          <p v-for="model in modelAcronyms" :key="model.acronym">
+        <div>
+          <p
+            v-for="model in modelAcronyms"
+            :key="model.acronym"
+            class="px-4 py-1 is-size-6"
+          >
             <strong>{{ model.acronym }}:</strong>
             {{ model.name }}
           </p>
@@ -120,7 +131,7 @@ const dataAcronyms = [
   {
     variable: "pH",
     units: "SU",
-    description: "Potential Hydrogen in sea water, standard pH scale",
+    description: "Potential hydrogen in sea water, standard pH scale",
   },
   {
     variable: "Phycoerythrin",
@@ -162,8 +173,7 @@ const dataAcronyms = [
   {
     variable: "DIP",
     units: "µmole L-1",
-    description:
-      "Dissolved inorganic phosphorus in sea water, Moles",
+    description: "Dissolved inorganic phosphorus in sea water, Moles",
   },
   {
     variable: "NH4",
