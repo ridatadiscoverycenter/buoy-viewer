@@ -4,14 +4,13 @@
       <template #title> Agencies and Organizations </template>
       <template #content>
         <div>
-          <p
+          <GlossaryDefinitions
             v-for="agency in agencyAcronyms"
             :key="agency.acronym"
-            class="px-4 py-1 is-size-6"
+            :term="agency.acronym"
           >
-            <strong>{{ agency.acronym }}:</strong>
             {{ agency.name }}
-          </p>
+          </GlossaryDefinitions>
         </div>
       </template>
     </DashboardCard>
@@ -20,14 +19,14 @@
       <template #title>Data Variables</template>
       <template #content>
         <div>
-          <p
+          <GlossaryDefinitions
             v-for="data in dataAcronyms"
             :key="data.variable"
-            class="px-4 py-1 is-size-6"
+            :term="data.variable"
+            :unit="data.units"
           >
-            <strong>{{ data.variable }} ({{ data.units }}):</strong>
             {{ data.description }}
-          </p>
+          </GlossaryDefinitions>
         </div>
       </template>
     </DashboardCard>
@@ -36,14 +35,13 @@
       <template #title>Other Acronyms</template>
       <template #content>
         <div>
-          <p
+          <GlossaryDefinitions
             v-for="model in modelAcronyms"
             :key="model.acronym"
-            class="px-4 py-1 is-size-6"
+            :term="model.acronym"
           >
-            <strong>{{ model.acronym }}:</strong>
             {{ model.name }}
-          </p>
+          </GlossaryDefinitions>
         </div>
       </template>
     </DashboardCard>
@@ -53,6 +51,7 @@
 <script setup lang="ts">
 import DashboardLayout from "@/layouts/dashboard.vue";
 import DashboardCard from "@/components/base/DashboardCard.vue";
+import GlossaryDefinitions from "@/components/base/GlossaryDefinitions.vue";
 import { sortByProperty } from "../utils/utils";
 
 const agencyAcronyms = [

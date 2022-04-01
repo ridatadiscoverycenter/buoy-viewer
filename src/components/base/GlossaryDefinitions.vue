@@ -1,8 +1,13 @@
-<style lang="scss" scoped>
-@import "@/assets/styles/main.scss";
-.glossary-definition {
-  font-size: is-size-7;
-  padding-left: px-4;
-  padding-top: py-1;
-}
-</style>
+<template>
+  <p class="px-4 py-1 is-size-6">
+    <strong>{{ term }}{{ unit ? ` (${unit})` : "" }}: </strong>
+    <slot></slot>
+  </p>
+</template>
+
+<script lang="ts" setup>
+defineProps<{
+  term: string;
+  unit: string;
+}>();
+</script>
