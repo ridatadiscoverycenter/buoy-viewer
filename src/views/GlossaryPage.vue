@@ -3,7 +3,7 @@
     <DashboardCard>
       <template #title> Agencies and Organizations </template>
       <template #content>
-        <div>
+        <div class="px-4">
           <GlossaryDefinitions
             v-for="agency in agencyAcronyms"
             :key="agency.acronym"
@@ -18,7 +18,7 @@
     <DashboardCard>
       <template #title>Data Variables</template>
       <template #content>
-        <div>
+        <div class="px-4">
           <GlossaryDefinitions
             v-for="data in dataAcronyms"
             :key="data.variable"
@@ -34,7 +34,7 @@
     <DashboardCard>
       <template #title>Other Acronyms</template>
       <template #content>
-        <div>
+        <div class="px-4">
           <GlossaryDefinitions
             v-for="model in modelAcronyms"
             :key="model.acronym"
