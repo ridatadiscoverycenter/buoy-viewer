@@ -103,12 +103,7 @@ const dataAcronyms = [
       "Concentration of chlorophyll in sea water, Relative Fluorescence Units",
   },
   {
-    variable: "depth",
-    units: "m",
-    description: "Topographic depth at buoy location",
-  },
-  {
-    variable: "DepthSurface",
+    variable: "Depth",
     units: "m",
     description: "Measured water depth under buoy",
   },
