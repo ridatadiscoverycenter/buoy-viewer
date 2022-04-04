@@ -86,7 +86,7 @@ const createStore = (config: BuoyConfig, bustCache = false) => {
       async fetchSummaryData() {
         // assign to intermediate variable for performance while updating date/time data
         const summary = await erddapGet(
-          `/${route}/summary${bustCache ? "?cacheBust=${Math.random()" : ""}`
+          `/${route}/summary${bustCache ? "?cacheBust=" + Math.random() : ""}`
         );
         let minDate = new Date();
         let maxDate = new Date(0);
