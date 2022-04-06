@@ -15,6 +15,7 @@
               id="file-format"
               v-model="fileFormat"
               class="multiselect"
+              :allow-empty="false"
               :options="FILE_FORMATS"
             />
           </div>

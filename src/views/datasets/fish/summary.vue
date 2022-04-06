@@ -28,6 +28,7 @@
             id="station"
             v-model="station"
             class="multiselect"
+            :allow-empty="false"
             :options="store.stations"
           ></multiselect>
         </div>

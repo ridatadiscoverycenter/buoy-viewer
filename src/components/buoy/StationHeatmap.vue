@@ -7,6 +7,7 @@
         v-model="variable"
         class="multiselect"
         :options="variables"
+        :allow-empty="false"
         :custom-label="formatVariable"
         track-by="name"
       />
