@@ -102,7 +102,7 @@ const routes: RouteRecordRaw[] = [
         "Historical RI Buoy Data",
         "historical-buoy-data"
       ),
-      ...getBuoyDatasetRoutes("buoy-telemetry", "Real Time Buoy Data"),
+      ...getBuoyDatasetRoutes("buoy-telemetry", "Real Time Buoys"),
       {
         path: "fish",
         component: () => import(`./views/datasets/fish/index.vue`),
