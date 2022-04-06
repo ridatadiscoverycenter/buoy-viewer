@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="layout">
     <a class="logo-container" href="https://ridatadiscovery.org">
       <span class="brand-title">Rhode Island Data Discovery Center</span>
       <BaseLogo />
@@ -30,6 +30,12 @@ onErrorCaptured((err: Error) => {
 
 <style lang="scss" scoped>
 @import "@/assets/styles/main.scss";
+
+.layout {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
 
 .logo-container {
   @extend .is-flex;

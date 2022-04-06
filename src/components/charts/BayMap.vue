@@ -70,7 +70,6 @@ const spec = computed(() => {
       {
         name: "points",
         values: props.dataset,
-        format: { type: "json", parse: "auto" },
         transform: [
           {
             type: "geopoint",

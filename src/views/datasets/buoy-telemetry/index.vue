@@ -3,8 +3,12 @@
 </template>
 
 <script setup lang="ts">
-import { useBuoyTelemetryStore } from "../../../store/buoy-telemetry";
+import { provide } from "vue";
 
-const store = useBuoyTelemetryStore();
+import { buoyStores } from "../../../store/buoy";
+
+const store = buoyStores["buoy-telemetry"].useStore();
 await store.fetchBaseData();
+
+provide("store", store);
 </script>

@@ -43,6 +43,13 @@ const CONFIG = {
     lineWidth: MEASUREMENT_LINEWIDTH,
     title: "Plankton",
   },
+  "buoy-telemetry": {
+    name: "buoy-telemetry",
+    route: "telemetry-raw",
+    datasetId: "buoy_telemetry_0ffe_2dc0_916e",
+    lineWidth: MEASUREMENT_LINEWIDTH,
+    title: "Real Time",
+  },
 };
 
 interface BuoyConfig {
@@ -61,9 +68,8 @@ interface BuoyState extends BuoyConfig {
   maxDate: string;
 }
 
-const createStore = (config: BuoyConfig) => {
-  const route = config.route;
-  const name = config.name;
+const createStore = (config: BuoyConfig, bustCache = false) => {
+  const { route, name } = config;
   return defineStore(name, {
     state: (): BuoyState => {
       return {
@@ -79,22 +85,10 @@ const createStore = (config: BuoyConfig) => {
       // fetch the summary for the heatmaps
       async fetchSummaryData() {
         // assign to intermediate variable for performance while updating date/time data
-        const summary = await erddapGet(`/${route}/summary`);
-        let minDate = new Date();
-        let maxDate = new Date(0);
-        summary.map((d) => {
-          d.date = new Date(d.time);
-          if (d.date < minDate) {
-            minDate = d.date;
-          }
-          if (d.date > maxDate) {
-            maxDate = d.date;
-          }
-          return d;
-        });
-        this.summary = summary;
-        this.minDate = localISODate(minDate);
-        this.maxDate = localISODate(maxDate);
+        const summary = await erddapGet(
+          `/${route}/summary${bustCache ? "?cacheBust=" + Math.random() : ""}`
+        );
+        this.summary = summary.map((d) => ({ date: new Date(d.time), ...d }));
       },
 
       // just fetch data, don't save anything
@@ -126,6 +120,13 @@ const createStore = (config: BuoyConfig) => {
         this.variables = variables;
       },
 
+      // fetch the min/max date for the dataset
+      async fetchTimeRange(): Promise<void> {
+        const { min, max } = await erddapGet(`/${route}/timerange`);
+        this.minDate = localISODate(new Date(min));
+        this.maxDate = localISODate(new Date(max));
+      },
+
       // fetch the base data in one call if not already loaded
       async fetchBaseData(): Promise<void> {
         if (this.summary.length === 0) {
@@ -133,6 +134,7 @@ const createStore = (config: BuoyConfig) => {
             this.fetchSummaryData(),
             this.fetchBuoyCoordinates(),
             this.fetchBuoyVariables(),
+            this.fetchTimeRange(),
           ]);
         }
       },
@@ -147,4 +149,5 @@ export const buoyStores = {
   "ma-buoy": { useStore: createStore(CONFIG["ma-buoy"]) },
   osom: { useStore: createStore(CONFIG["osom"]) },
   plankton: { useStore: createStore(CONFIG["plankton"]) },
+  "buoy-telemetry": { useStore: createStore(CONFIG["buoy-telemetry"], true) },
 };

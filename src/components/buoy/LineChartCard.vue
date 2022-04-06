@@ -61,6 +61,7 @@
         x="time"
         y="station_name"
         :weather-dataset="weather"
+        :exclude-nulls="excludeNulls"
       />
 
       <p v-if="downsampled">
@@ -85,6 +86,11 @@ const props = defineProps({
   query: {
     type: Object,
     required: true,
+  },
+  excludeNulls: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 });
 
