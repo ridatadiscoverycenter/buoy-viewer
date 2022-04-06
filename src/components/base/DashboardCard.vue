@@ -1,5 +1,8 @@
 <template>
-  <div class="dashboard-card" :class="['is-' + width, 'is-height-' + height]">
+  <div
+    class="dashboard-card is-isolated"
+    :class="['is-' + width, 'is-height-' + height]"
+  >
     <header class="dashboard-card-header">
       <h2 class="title">
         <slot name="title" />
