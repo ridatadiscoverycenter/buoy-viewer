@@ -9,31 +9,30 @@
       min="0"
       :max="store.dateLength - 1"
       type="range"
-      @input="changeDate"
     />
   </div>
 </template>
-
+<!-- @input="changeDate" put back in div when needed -->
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+import { computed, inject, onBeforeUnmount, onMounted, ref } from "vue";
 
 import { scaleTime } from "d3-scale";
 import { select } from "d3-selection";
 import { axisBottom } from "d3-axis";
 
-import { useDAStore } from "../../store/domoic-acid";
-const store = useDAStore();
+import { BuoyStore } from "../../store/buoy";
+const store = inject("store") as BuoyStore;
 
 const value = ref(0);
 const timeout = ref(null);
 
-const updatedDate = computed(() => {
-  const selectedDate = new Date(
-    store.startDate.valueOf() + value.value * 1000 * 60 * 60 * 24
-  );
+// const updatedDate = computed(() => {
+//   const selectedDate = new Date(
+//     store.startDate.valueOf() + value.value * 1000 * 60 * 60 * 24
+//   );
 
-  return store.dates.find((d) => d >= selectedDate);
-});
+//   return store.dates.find((d) => d >= selectedDate);
+// });
 
 const domainArray = computed(() => [store.startDate, store.endDate]);
 
@@ -52,9 +51,9 @@ const generateAxis = () => {
   svg.append("g").attr("transform", "translate(20, 20)").call(xAxis);
 };
 
-const changeDate = () => {
-  store.selectedDate = updatedDate.value;
-};
+// const changeDate = () => {
+// store.selectedDate = updatedDate.value;
+// };
 
 const onResize = () => {
   // debounce re-drawing axis

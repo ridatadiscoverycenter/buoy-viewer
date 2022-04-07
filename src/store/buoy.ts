@@ -1,4 +1,6 @@
 import { defineStore } from "pinia";
+import { scaleSqrt, scaleDiverging } from "d3-scale";
+import { interpolateTurbo } from "d3-scale-chromatic";
 
 import {
   erddapGet,
@@ -137,6 +139,74 @@ const createStore = (config: BuoyConfig, bustCache = false) => {
             this.fetchTimeRange(),
           ]);
         }
+      },
+    },
+    getters: {
+      dates(): Date[] {
+        // unique sorted dates
+        return this.samples
+          .map(({ date }) => date)
+          .filter((v, i, a) => a.indexOf(v) === i)
+          .sort((f, s) => f.valueOf() - s.valueOf());
+      },
+      siteCoordinates() {
+        return function (site: string) {
+          const match = this.coordinates.find(
+            ({ station_name }) => station_name === site
+          );
+          if (match) {
+            return [match.longitude, match.latitude];
+          } else {
+            return [0, 0];
+          }
+        };
+      },
+      activeCoordinates(): Coordinate[] {
+        const activeSites = this.variables.map(
+          ({ station_name }) => station_name
+        );
+        return this.coordinates.filter(({ station_name }) =>
+          activeSites.includes(station_name)
+        );
+      },
+      currentTemp() {
+        return this.variables.map(
+          ({ hydrocatTemperature }) => hydrocatTemperature
+        );
+      },
+      selectedSamples() {
+        const daySamples = this.variables.filter(
+          ({ date }) => date - this.maxDate === 0
+        );
+
+        const domain = [0, this.currentTemp];
+        const sqrtScale = scaleSqrt().domain(domain).range([0.2, 1]);
+
+        const colorScale = scaleDiverging()
+          .domain([-100, -0.4, 1])
+          .interpolator(interpolateTurbo)
+          .clamp(true);
+
+        const getColor = (val) => {
+          return val <= 0 ? "rgb(67, 163, 65)" : colorScale(val);
+        };
+
+        return daySamples.map((row) => {
+          return {
+            ...row,
+            color: getColor(row.hydrocatTemperature),
+            size: sqrtScale(row.hydrocatTemperature),
+          };
+        });
+      },
+      startDate() {
+        return this.dates[0];
+      },
+      endDate() {
+        return this.dates.slice(-1)[0];
+      },
+      dateLength() {
+        return (this.endDate - this.startDate) / 1000 / 60 / 60 / 24;
       },
     },
   });

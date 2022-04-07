@@ -1,10 +1,10 @@
 <template>
   <div class="mapboxgl-map-container">
     <div class="date is-hidden-touch">
-      <span>{{ formattedDate }}</span>
+      <span>{{ store.maxDate }}</span>
     </div>
     <div class="date-mobile is-hidden-desktop">
-      <span>{{ formattedDate }}</span>
+      <span>{{ store.maxDate }}</span>
     </div>
     <div ref="el" class="mapbox-container" />
   </div>
@@ -24,13 +24,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
+import { inject, onMounted, ref } from "vue";
 import mapboxgl from "mapbox-gl";
 
 import BuoyMarker from "@/assets/illustrations/buoy-marker.svg";
 
-import { useDAStore } from "../../store/domoic-acid";
-const store = useDAStore();
+import { BuoyStore } from "../../store/buoy";
+const store = inject("store") as BuoyStore;
 
 const el = ref<HTMLDivElement>(null);
 const imageEl = ref<HTMLImageElement>(null);
@@ -41,8 +41,8 @@ onMounted(() => {
   map.value = new mapboxgl.Map({
     container: el.value,
     style: "mapbox://styles/ccv-bot/ckmxra8oi0rsw17mzcbqrktzi",
-    center: [-71.46, 41.5],
-    zoom: 9,
+    center: [-71.39, 41.6],
+    zoom: 9.9,
     doubleClickZoom: false,
     scrollZoom: false,
   });
@@ -52,7 +52,7 @@ onMounted(() => {
     data: {
       id: "buoy",
       type: "FeatureCollection",
-      features: store.activeCoordinates.map(({ latitude, longitude }) => {
+      features: store.coordinates.map(({ latitude, longitude }) => {
         return {
           type: "Feature",
           geometry: {
@@ -113,11 +113,9 @@ const updateMarkers = () => {
   });
 };
 
-watch(() => store.selectedDate, updateMarkers);
+// watch(() => store.maxDate, updateMarkers);
 
-const formattedDate = computed(() =>
-  store.selectedDate.toLocaleDateString("sv")
-);
+// const formattedDate = computed(() => store.maxDate.toLocaleDateString("sv"));
 </script>
 
 <style lang="scss" scoped>

@@ -3,7 +3,10 @@
     <template #title>Current Conditions</template>
     <template #subtitle><p>Intro prose</p> </template>
     <template #content>
-      A map
+      <div class="map-app-container">
+        <BuoyMap />
+        <!--<DateSlider />-->
+      </div>
       {{ store.coordinates }}
     </template>
   </DashboardCard>
@@ -43,7 +46,15 @@ import { inject } from "vue";
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import DownloadForm from "@/components/buoy/DownloadForm.vue";
 import ExploreForm from "@/components/buoy/ExploreForm.vue";
+//import DateSlider from "@/components/buoy-telemetry/DateSlider.vue";
+import BuoyMap from "@/components/buoy-telemetry/BuoyMap.vue";
 
 import { BuoyStore } from "../../../store/buoy";
 const store = inject("store") as BuoyStore;
 </script>
+
+<style scoped>
+.map-app-container {
+  position: relative;
+}
+</style>
