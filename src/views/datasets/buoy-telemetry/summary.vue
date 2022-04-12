@@ -1,13 +1,24 @@
 <template>
   <DashboardCard width="full">
     <template #title>Current Conditions</template>
-    <template #subtitle><p>Intro prose</p> </template>
+    <template #subtitle>
+      <p>
+        This map contains selected real-time climate data from two buoys in
+        Narragansett Bay (NB). Data are collected every 15 minutes, although
+        there may be up to a 6-hour lag in available data. Explore and download
+        more climate variables below, with data from January 2022 through today.
+        This work was funded by Rhode Island Sea Grant and the Rhode Island
+        Consortium for Coastal Ecology Assessment, Innovation,and Modeling (RI
+        C-AIM).
+      </p>
+    </template>
     <template #content>
       <div class="map-app-container">
         <BuoyMap />
         <!--<DateSlider />-->
       </div>
       {{ store.coordinates }}
+      {{ samples }}
     </template>
   </DashboardCard>
 
@@ -51,6 +62,19 @@ import BuoyMap from "@/components/buoy-telemetry/BuoyMap.vue";
 
 import { BuoyStore } from "../../../store/buoy";
 const store = inject("store") as BuoyStore;
+
+const endDate = store.maxDateRaw;
+const startDate = new Date(endDate.valueOf() - 24 * 60 * 60 * 1000);
+
+const variableStr = ["avgWindDir", "avgWindSpeed", "hydrocatTemperature"];
+const bouyIDs = store.coordinates.map((c) => c.buoyId).join(",");
+
+const samples = await store.fetchBuoyData({
+  ids: bouyIDs,
+  variables: variableStr[2],
+  end: endDate.toISOString(),
+  start: startDate.toISOString(),
+});
 </script>
 
 <style scoped>

@@ -112,10 +112,6 @@ const updateMarkers = () => {
     );
   });
 };
-
-// watch(() => store.maxDate, updateMarkers);
-
-// const formattedDate = computed(() => store.maxDate.toLocaleDateString("sv"));
 </script>
 
 <style lang="scss" scoped>

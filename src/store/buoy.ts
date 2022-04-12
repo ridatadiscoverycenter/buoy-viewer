@@ -66,8 +66,8 @@ interface BuoyState extends BuoyConfig {
   coordinates: Coordinate[];
   summary: Summary[];
   variables: Variable[];
-  minDate: string;
-  maxDate: string;
+  minDateRaw: Date;
+  maxDateRaw: Date;
 }
 
 const createStore = (config: BuoyConfig, bustCache = false) => {
@@ -79,8 +79,8 @@ const createStore = (config: BuoyConfig, bustCache = false) => {
         coordinates: [],
         summary: [],
         variables: [],
-        minDate: localISODate(new Date(0)),
-        maxDate: localISODate(new Date()),
+        minDateRaw: new Date(0),
+        maxDateRaw: new Date(),
       };
     },
     actions: {
@@ -95,8 +95,8 @@ const createStore = (config: BuoyConfig, bustCache = false) => {
 
       // just fetch data, don't save anything
       async fetchBuoyData({ ids, variables, start, end }): Promise<Dataset> {
-        const startDate = start || this.minDate;
-        const endDate = end || this.maxDate;
+        const startDate = start || this.minDateRaw;
+        const endDate = end || this.maxDateRaw;
         return await erddapGet(
           `/${route}/query?ids=${ids}&variables=${variables}&start=${startDate}&end=${endDate}`
         );
@@ -125,8 +125,8 @@ const createStore = (config: BuoyConfig, bustCache = false) => {
       // fetch the min/max date for the dataset
       async fetchTimeRange(): Promise<void> {
         const { min, max } = await erddapGet(`/${route}/timerange`);
-        this.minDate = localISODate(new Date(min));
-        this.maxDate = localISODate(new Date(max));
+        this.minDateRaw = new Date(min);
+        this.maxDateRaw = new Date(max);
       },
 
       // fetch the base data in one call if not already loaded
@@ -149,6 +149,12 @@ const createStore = (config: BuoyConfig, bustCache = false) => {
           .filter((v, i, a) => a.indexOf(v) === i)
           .sort((f, s) => f.valueOf() - s.valueOf());
       },
+      minDate(): string {
+        return localISODate(this.minDateRaw);
+      },
+      maxDate(): string {
+        return localISODate(this.maxDateRaw);
+      },
       siteCoordinates() {
         return function (site: string) {
           const match = this.coordinates.find(
@@ -161,29 +167,16 @@ const createStore = (config: BuoyConfig, bustCache = false) => {
           }
         };
       },
-      activeCoordinates(): Coordinate[] {
-        const activeSites = this.variables.map(
-          ({ station_name }) => station_name
-        );
-        return this.coordinates.filter(({ station_name }) =>
-          activeSites.includes(station_name)
-        );
-      },
-      currentTemp() {
-        return this.variables.map(
-          ({ hydrocatTemperature }) => hydrocatTemperature
-        );
-      },
       selectedSamples() {
-        const daySamples = this.variables.filter(
+        const daySamples = this.samples.filter(
           ({ date }) => date - this.maxDate === 0
         );
 
-        const domain = [0, this.currentTemp];
+        const domain = [0, this.hydrocatTemperature];
         const sqrtScale = scaleSqrt().domain(domain).range([0.2, 1]);
 
         const colorScale = scaleDiverging()
-          .domain([-100, -0.4, 1])
+          .domain([0, 20, 1])
           .interpolator(interpolateTurbo)
           .clamp(true);
 
