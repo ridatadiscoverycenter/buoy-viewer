@@ -19,11 +19,6 @@ $primary-color: $link;
   flex-direction: column;
 }
 
-// utility to isolate stacks
-.is-isolated {
-  isolation: isolate;
-}
-
 /* used by download form and explore form fields */
 .control-item {
   @extend .py-2;

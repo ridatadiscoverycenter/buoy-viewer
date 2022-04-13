@@ -1,5 +1,5 @@
 <template>
-  <div class="layout is-isolated">
+  <div class="layout">
     <a class="logo-container" href="https://ridatadiscovery.org">
       <span class="brand-title">Rhode Island Data Discovery Center</span>
       <BaseLogo />
