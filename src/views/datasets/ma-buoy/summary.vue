@@ -4,13 +4,21 @@
       <p>
         This dataset spans from {{ store.minDate.slice(0, 4) }} to
         {{ store.maxDate.slice(0, 4) }} and was collected by the Narragansett
-        Bay Fixed Station Monitoring Network (NBFSMN) with MassDEP as the lead
-        agency. The heatmap below summarizes the number of observations
-        collected for each month for different variables. Use this heatmap to
-        help you decide what data you want to visualize or download. When you
-        have an idea, go ahead and select the buoys, variables and dates to
-        explore. Or download the data in the most appropriate format for your
-        analyses! To begin, select a variable to see what data is available.
+        Bay Fixed Station Monitoring Network (<a
+          href="http://www.dem.ri.gov/programs/emergencyresponse/bart/stations.php"
+          >NBFSMN</a
+        >) with
+        <a
+          href="https://www.mass.gov/orgs/massachusetts-department-of-environmental-protection"
+          >MassDEP</a
+        >
+        as the lead agency. The heatmap below summarizes the number of
+        observations collected for each month for different variables. Use this
+        heatmap to help you decide what data you want to visualize or download.
+        When you have an idea, go ahead and select the buoys, variables and
+        dates to explore. Or download the data in the most appropriate format
+        for your analyses! To begin, select a variable to see what data is
+        available.
       </p>
       <br />
       <p>
