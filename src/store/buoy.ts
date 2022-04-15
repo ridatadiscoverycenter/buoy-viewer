@@ -95,8 +95,8 @@ const createStore = (config: BuoyConfig, bustCache = false) => {
 
       // just fetch data, don't save anything
       async fetchBuoyData({ ids, variables, start, end }): Promise<Dataset> {
-        const startDate = start || this.minDateRaw;
-        const endDate = end || this.maxDateRaw;
+        const startDate = start || this.minDate;
+        const endDate = end || this.maxDate;
         return await erddapGet(
           `/${route}/query?ids=${ids}&variables=${variables}&start=${startDate}&end=${endDate}`
         );
