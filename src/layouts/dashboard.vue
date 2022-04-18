@@ -1,5 +1,8 @@
 <template>
-  <div :class="[collapsed ? 'dashboard-grid-collapsed' : 'dashboard-grid']">
+  <div
+    :class="[collapsed ? 'dashboard-grid-collapsed' : 'dashboard-grid']"
+    class="is-isolated"
+  >
     <aside class="sidebar">
       <SideBar @toggle="collapsed = !collapsed" />
     </aside>
@@ -41,7 +44,7 @@ const collapsed = ref(false);
   overflow: hidden;
   background-color: whitesmoke;
   min-height: 90vh;
-  @include mobile {
+  @include touch {
     min-height: auto;
   }
 }
@@ -53,7 +56,7 @@ main {
   display: grid;
   grid-template-columns: 2fr 10fr;
   grid-template-areas: "sidebar main";
-  @include mobile {
+  @include touch {
     grid-template-columns: 100vw;
     grid-template-areas:
       "sidebar"
@@ -65,7 +68,7 @@ main {
   display: grid;
   grid-template-columns: 8ch auto;
   grid-template-areas: "sidebar main";
-  @include mobile {
+  @include touch {
     grid-template-columns: 100vw;
     grid-template-rows: auto auto;
     grid-template-areas:
@@ -89,7 +92,7 @@ main {
   justify-content: space-between;
   align-content: start;
   grid-auto-flow: row;
-  @include mobile {
+  @include touch {
     grid-template-columns: 100vw;
     column-gap: 0px;
     padding-left: 0px !important; // overrides @extend px-4
