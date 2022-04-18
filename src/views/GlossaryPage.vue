@@ -128,9 +128,8 @@ const dataAcronyms = [
   },
   {
     variable: "Phycoerythrin",
-    units: "µg L-1",
-    description:
-      "Concentration of phycoerythrin in sea water, Relative Fluorescence Units",
+    units: "µg L-1 or RFU",
+    description: "Concentration of phycoerythrin in sea water",
   },
   {
     variable: "Salinity",
