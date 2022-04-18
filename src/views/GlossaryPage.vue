@@ -99,8 +99,7 @@ const dataAcronyms = [
   {
     variable: "Chlorophyll",
     units: "µg L-1 or RFU",
-    description:
-      "Concentration of chlorophyll in sea water",
+    description: "Concentration of chlorophyll in sea water",
   },
   {
     variable: "Depth",
@@ -151,10 +150,14 @@ const dataAcronyms = [
   {
     variable: "Turbidity",
     units: "NTU",
-    description: "Sea water clarity measured with white light at 90° detection angle",
+    description:
+      "Sea water clarity measured with white light at 90° detection angle",
   },
-  { variable: "FSpercent", 
-    units: "% full scale", description: "Total fluorescence in sea water" },
+  {
+    variable: "FSpercent",
+    units: "% full scale",
+    description: "Total fluorescence of chlorophyll in sea water",
+  },
   {
     variable: "Density",
     units: "g cm-3",
