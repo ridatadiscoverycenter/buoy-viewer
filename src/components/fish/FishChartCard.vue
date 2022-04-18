@@ -17,7 +17,9 @@
             <img :src="info.photoUrl" :alt="'Photo of ' + species" />
           </figure>
           <div>
-            <p><strong>Scientific Name:</strong> {{ info.sciName }}</p>
+            <p>
+              <strong>Scientific Name:</strong> <em>{{ info.sciName }}</em>
+            </p>
             <p v-if="info.sectionData">
               <strong>IUCN Status:</strong> {{ info.sectionData.IUCN }}
             </p>

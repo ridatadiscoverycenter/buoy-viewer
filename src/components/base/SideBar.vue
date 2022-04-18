@@ -6,7 +6,7 @@
         <i v-else class="fas fa-bars" />
       </button>
     </div>
-    <div class="sidebar-body" :class="{ 'is-hidden-mobile': collapsed }">
+    <div class="sidebar-body" :class="{ 'is-hidden-touch': collapsed }">
       <p v-if="!collapsed" class="menu-label">Narragansett Bay Data Explorer</p>
       <p v-else class="menu-label">
         <abbr title="Narragansett Bay Data Explorer">NBDE</abbr>
@@ -110,12 +110,12 @@ const collapsed = ref(false);
 
 const DATASETS = [
   {
-    name: "RI Buoy Data",
+    name: "RI Buoys (NBFSMN)",
     route: "ri-buoy",
     available: true,
   },
   {
-    name: "MA Buoy Data",
+    name: "MA Buoys (MassDEP/NBFSMN)",
     route: "ma-buoy",
     available: true,
   },

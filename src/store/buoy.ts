@@ -80,21 +80,7 @@ const createStore = (config: BuoyConfig) => {
       async fetchSummaryData() {
         // assign to intermediate variable for performance while updating date/time data
         const summary = await erddapGet(`/${route}/summary`);
-        let minDate = new Date();
-        let maxDate = new Date(0);
-        summary.map((d) => {
-          d.date = new Date(d.time);
-          if (d.date < minDate) {
-            minDate = d.date;
-          }
-          if (d.date > maxDate) {
-            maxDate = d.date;
-          }
-          return d;
-        });
-        this.summary = summary;
-        this.minDate = localISODate(minDate);
-        this.maxDate = localISODate(maxDate);
+        this.summary = summary.map((d) => ({ date: new Date(d.time), ...d }));
       },
 
       // just fetch data, don't save anything
@@ -126,6 +112,13 @@ const createStore = (config: BuoyConfig) => {
         this.variables = variables;
       },
 
+      // fetch the min/max date for the dataset
+      async fetchTimeRange(): Promise<void> {
+        const { min, max } = await erddapGet(`/${route}/timerange`);
+        this.minDate = localISODate(new Date(min));
+        this.maxDate = localISODate(new Date(max));
+      },
+
       // fetch the base data in one call if not already loaded
       async fetchBaseData(): Promise<void> {
         if (this.summary.length === 0) {
@@ -133,6 +126,7 @@ const createStore = (config: BuoyConfig) => {
             this.fetchSummaryData(),
             this.fetchBuoyCoordinates(),
             this.fetchBuoyVariables(),
+            this.fetchTimeRange(),
           ]);
         }
       },

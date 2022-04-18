@@ -1,5 +1,8 @@
 <template>
-  <div class="dashboard-card" :class="['is-' + width, 'is-height-' + height]">
+  <div
+    class="dashboard-card is-isolated"
+    :class="['is-' + width, 'is-height-' + height]"
+  >
     <header class="dashboard-card-header">
       <h2 class="title">
         <slot name="title" />
@@ -51,25 +54,25 @@ withDefaults(defineProps<Props>(), {
 }
 .is-one-third {
   grid-column-start: span 2;
-  @include mobile {
+  @include touch {
     grid-column-start: span 1;
   }
 }
 .is-half {
   grid-column-start: span 3;
-  @include mobile {
+  @include touch {
     grid-column-start: span 1;
   }
 }
 .is-full {
   grid-column-start: span 6;
-  @include mobile {
+  @include touch {
     grid-column-start: span 1;
   }
 }
 .is-two-thirds {
   grid-column-start: span 4;
-  @include mobile {
+  @include touch {
     grid-column-start: span 1;
   }
 }
