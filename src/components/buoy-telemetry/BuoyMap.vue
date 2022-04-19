@@ -24,13 +24,40 @@
 </template>
 
 <script setup lang="ts">
-import { inject, onMounted, ref } from "vue";
+import { computed, inject, onMounted, ref } from "vue";
 import mapboxgl from "mapbox-gl";
+import { scaleSqrt, scaleDiverging } from "d3-scale";
+import { interpolateTurbo } from "d3-scale-chromatic";
 
 import BuoyMarker from "@/assets/illustrations/buoy-marker.svg";
-
+import { Data } from "../../utils/erddap";
 import { BuoyStore } from "../../store/buoy";
+
+interface Sample extends Data {
+  date: Date;
+}
+
 const store = inject("store") as BuoyStore;
+
+const props = defineProps<{
+  samples: Sample[];
+}>();
+
+const annotatedSamples = computed(() => {
+  const domain = [0, 20];
+  const sqrtScale = scaleSqrt().domain(domain).range([0.1, 0.8]);
+  const colorScale = scaleDiverging()
+    .domain(domain)
+    .interpolator(interpolateTurbo)
+    .clamp(true);
+  return props.samples.map((row) => {
+    return {
+      ...row,
+      color: colorScale(row.value),
+      size: sqrtScale(row.value),
+    };
+  });
+});
 
 const el = ref<HTMLDivElement>(null);
 const imageEl = ref<HTMLImageElement>(null);
@@ -93,7 +120,7 @@ const updateMarkers = () => {
   });
   markers = [];
 
-  store.selectedSamples.forEach(({ color, size, station_name }) => {
+  annotatedSamples.value.forEach(({ color, size, station_name }) => {
     // create circle elements to display
     const elementSize = `${100 * size}px`;
     const el = document.createElement("div");

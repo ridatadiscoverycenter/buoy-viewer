@@ -14,11 +14,9 @@
     </template>
     <template #content>
       <div class="map-app-container">
-        <BuoyMap />
+        <BuoyMap :samples="selectedSamples" />
         <!--<DateSlider />-->
       </div>
-      {{ store.coordinates }}
-      {{ samples }}
     </template>
   </DashboardCard>
 
@@ -52,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from "vue";
+import { computed, inject, ref } from "vue";
 
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import DownloadForm from "@/components/buoy/DownloadForm.vue";
@@ -61,6 +59,7 @@ import ExploreForm from "@/components/buoy/ExploreForm.vue";
 import BuoyMap from "@/components/buoy-telemetry/BuoyMap.vue";
 
 import { BuoyStore } from "../../../store/buoy";
+
 const store = inject("store") as BuoyStore;
 
 const endDate = store.maxDateRaw;
@@ -69,11 +68,23 @@ const startDate = new Date(endDate.valueOf() - 24 * 60 * 60 * 1000);
 const variableStr = ["avgWindDir", "avgWindSpeed", "hydrocatTemperature"];
 const bouyIDs = store.coordinates.map((c) => c.buoyId).join(",");
 
-const samples = await store.fetchBuoyData({
+const samplesRaw = await store.fetchBuoyData({
   ids: bouyIDs,
   variables: variableStr[2],
   end: endDate.toISOString(),
   start: startDate.toISOString(),
+});
+
+const samples = samplesRaw.data.map((s) => {
+  return { ...s, date: new Date(s.time) };
+});
+
+const selectedDate = ref(endDate);
+
+const selectedSamples = computed(() => {
+  return samples.filter(
+    (s) => s.date.valueOf() === selectedDate.value.valueOf()
+  );
 });
 </script>
 
