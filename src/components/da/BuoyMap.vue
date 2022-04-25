@@ -145,7 +145,7 @@ onUnmounted(
   position: relative;
 
   @include tablet {
-    height: max(70vh, 600px);
+    height: max(70vh, 37rem);
   }
 }
 .date {
