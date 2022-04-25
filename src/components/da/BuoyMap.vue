@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import mapboxgl from "mapbox-gl";
 
 import BuoyMarker from "@/assets/illustrations/buoy-marker.svg";
@@ -118,13 +118,35 @@ watch(() => store.selectedDate, updateMarkers);
 const formattedDate = computed(() =>
   store.selectedDate.toLocaleDateString("sv")
 );
+
+// when the parent element size changes, resize the map
+const resizeObserver = new ResizeObserver(() => {
+  if (map.value) {
+    map.value.resize();
+  }
+});
+
+onMounted(
+  () =>
+    el.value?.parentElement && resizeObserver.observe(el.value.parentElement)
+);
+onUnmounted(
+  () =>
+    el.value?.parentElement && resizeObserver.unobserve(el.value.parentElement)
+);
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/main.scss";
+
 .mapboxgl-map-container {
   height: 70vh;
   width: 100%;
   position: relative;
+
+  @include tablet {
+    height: max(70vh, 600px);
+  }
 }
 .date {
   font-size: 2.5rem;
