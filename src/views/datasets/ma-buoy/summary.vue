@@ -6,10 +6,14 @@
         {{ store.maxDate.slice(0, 4) }} and was collected by the Narragansett
         Bay Fixed Station Monitoring Network (<a
           href="http://www.dem.ri.gov/programs/emergencyresponse/bart/stations.php"
+          target="_blank"
+          rel="noreferrer noopener"
           >NBFSMN</a
         >) with
         <a
           href="https://www.mass.gov/orgs/massachusetts-department-of-environmental-protection"
+          target="_blank"
+          rel="noreferrer noopener"
           >MassDEP</a
         >
         as the lead agency. The heatmap below summarizes the number of
@@ -40,6 +44,8 @@
         The historical data available on this site has been compiled from the
         <a
           href="https://www.mass.gov/info-details/mount-hope-bay-marine-buoy-continuous-probe-data#data-files-for-mount-hope-bay-marine-buoys"
+          target="_blank"
+          rel="noreferrer noopener"
           >Massachusetts Department of Environmental Protection</a
         >. The seasonal monitoring program is part of the Narragansett Bay
         Fixed-Site Monitoring Network.
@@ -51,6 +57,8 @@
         adjustments made. See
         <a
           href="https://pricaimcit.services.brown.edu/erddap/tabledap/ma_buoy_data_a6c9_12eb_1ec5.html"
+          target="_blank"
+          rel="noreferrer noopener"
           >ERDDAP</a
         >
         for the full dataset with qualifiers.

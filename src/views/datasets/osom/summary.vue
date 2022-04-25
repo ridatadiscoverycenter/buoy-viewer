@@ -24,6 +24,8 @@
       history, current status, publications, and how to use the data with the
       <a
         href="https://riddc-jupyter-book.web.app/notebooks/fox-kemper/osom_intro.html"
+        target="_blank"
+        rel="noreferrer noopener"
         >RIDDC Data Articles</a
       >.
     </template>
