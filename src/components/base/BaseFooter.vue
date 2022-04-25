@@ -18,7 +18,7 @@
       </div>
     </section>
     <section class="footer-grid-section-b footer-right">
-      <p class="container content">
+      <p class="container content mb-0">
         This material is based upon work conducted by the Rhode Island
         Consortium for Coastal Ecology Assessment, Innovation & Modeling (RI
         C-AIM), and supported in full by the National Science Foundation EPSCoR
@@ -36,8 +36,8 @@
     </section>
     <section class="footer-grid-bottom">
       <i class="far fa-copyright" />
-      <span class="copyright-span">{{ year }}</span>
-      <span class="copyright-span">RI Data Discovery Center</span>
+      <span>{{ year }}{{ " " }}</span>
+      <span>RI Data Discovery Center</span>
     </section>
   </footer>
 </template>
@@ -52,7 +52,7 @@ const year = new Date().getFullYear();
 .footer-grid {
   display: grid;
   grid-template-areas: "section-a" "section-b" "bottom";
-  grid-gap: 1rem;
+  grid-gap: 2rem;
   &-section-a {
     grid-area: section-a;
   }
@@ -64,47 +64,40 @@ const year = new Date().getFullYear();
     text-align: center;
   }
   @include tablet {
-    grid-template-areas: " . . " "section-a section-b" "bottom bottom";
+    grid-template-areas: "section-a section-b" "bottom bottom";
     grid-template-columns: 6fr 6fr;
-    grid-template-rows: 2rem 13rem 2rem;
+    grid-template-rows: 13rem 2rem;
   }
 }
-.copyright-span {
-  @include desktop {
-    margin-left: 1rem;
-  }
-}
+
 .footer-container {
+  font-size: 0.8rem;
   background-color: $info;
-  padding: 1rem 1.5rem 3rem;
+  padding: 3rem clamp(2rem, 8vw, 8rem) 3rem;
 }
+
 .footer-left {
-  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
-.envelope-icon {
-  margin-right: 1rem;
-}
+
 .footer-right {
   display: flex;
   flex-direction: column;
-  @include desktop {
+  @include tablet {
     flex-direction: row;
   }
+  gap: 1rem;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
   .container {
     flex-basis: 70%;
   }
 }
+
 .logo-container {
-  width: 4rem;
-  @include desktop {
-    width: 8rem;
-  }
+  width: clamp(4rem, 10vw, 10rem);
 }
 </style>
