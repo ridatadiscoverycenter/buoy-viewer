@@ -3,13 +3,15 @@
     <template #available-data>
       <p>
         This dataset spans from {{ store.minDate.slice(0, 4) }} to
-        {{ store.maxDate.slice(0, 4) }} and was collected by the Narragansett
-        Bay Fixed Station Monitoring Network (<a
+        {{ store.maxDate.slice(0, 4) }} and was collected by the
+        <a
           href="http://www.dem.ri.gov/programs/emergencyresponse/bart/stations.php"
           target="_blank"
           rel="noreferrer noopener"
-          >NBFSMN</a
-        >) with
+        >
+          Narragansett Bay Fixed Station Monitoring Network (NBFSMN)</a
+        >
+        with
         <a
           href="https://www.mass.gov/orgs/massachusetts-department-of-environmental-protection"
           target="_blank"
