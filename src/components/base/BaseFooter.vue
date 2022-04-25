@@ -63,7 +63,7 @@ const year = new Date().getFullYear();
     grid-area: bottom;
     text-align: center;
   }
-  @include tablet {
+  @include desktop {
     grid-template-areas: "section-a section-b" "bottom bottom";
     grid-template-columns: 6fr 6fr;
     grid-template-rows: 13rem 2rem;
@@ -86,7 +86,7 @@ const year = new Date().getFullYear();
 .footer-right {
   display: flex;
   flex-direction: column;
-  @include tablet {
+  @include desktop {
     flex-direction: row;
   }
   gap: 1rem;
