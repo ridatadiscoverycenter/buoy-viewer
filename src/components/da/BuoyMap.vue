@@ -24,10 +24,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import mapboxgl from "mapbox-gl";
 
 import BuoyMarker from "@/assets/illustrations/buoy-marker.svg";
+import { useResizeObserver } from "../../composables/useResizeObserver";
 
 import { useDAStore } from "../../store/domoic-acid";
 const store = useDAStore();
@@ -120,20 +121,11 @@ const formattedDate = computed(() =>
 );
 
 // when the parent element size changes, resize the map
-const resizeObserver = new ResizeObserver(() => {
+useResizeObserver(el, () => {
   if (map.value) {
     map.value.resize();
   }
 });
-
-onMounted(
-  () =>
-    el.value?.parentElement && resizeObserver.observe(el.value.parentElement)
-);
-onUnmounted(
-  () =>
-    el.value?.parentElement && resizeObserver.unobserve(el.value.parentElement)
-);
 </script>
 
 <style lang="scss" scoped>
