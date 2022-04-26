@@ -23,7 +23,7 @@
       <a
         href="http://www.dem.ri.gov/programs/emergencyresponse/bart/stations.php"
         >Narragansett Bay Fixed-Site Monitoring Network</a
-      >. See <a href="nbfsmn_disclaimer.pdf">the disclaimer</a> for more
+      >. See <a href="/nbfsmn_disclaimer.pdf">the disclaimer</a> for more
       information on the data as well as how to cite it.
     </template>
   </BuoyDashboard>
