@@ -103,6 +103,7 @@ const initials = (str) => {
   return str
     .split(" ")
     .map((s) => s[0].toUpperCase())
+    .filter((s) => s.match(/[A-Z]/))
     .join("");
 };
 

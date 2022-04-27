@@ -1,5 +1,5 @@
 <template>
-  <div class="slider-container">
+  <div ref="el" class="slider-container">
     <label class="x-axis" for="slider"></label>
     <input
       id="slider"
@@ -15,17 +15,19 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 import { scaleTime } from "d3-scale";
 import { select } from "d3-selection";
 import { axisBottom } from "d3-axis";
 
+import { useResizeObserver } from "../../composables/useResizeObserver";
+
 import { useDAStore } from "../../store/domoic-acid";
 const store = useDAStore();
 
 const value = ref(0);
-const timeout = ref(null);
+const el = ref(null);
 
 const updatedDate = computed(() => {
   const selectedDate = new Date(
@@ -56,19 +58,11 @@ const changeDate = () => {
   store.selectedDate = updatedDate.value;
 };
 
-const onResize = () => {
-  // debounce re-drawing axis
-  if (timeout.value) clearTimeout(timeout.value);
-  timeout.value = setTimeout(() => {
-    generateAxis();
-  }, 300);
-};
+useResizeObserver(el, generateAxis);
 
 onMounted(() => {
   generateAxis();
-  window.addEventListener("resize", onResize);
 });
-onBeforeUnmount(() => window.removeEventListener("resize", onResize));
 </script>
 
 <style lang="scss" scoped>
