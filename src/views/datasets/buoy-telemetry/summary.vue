@@ -8,7 +8,7 @@
         there may be up to a 6-hour lag in available data. Explore and download
         more climate variables below, with data from January 2022 through today.
         This work was funded by Rhode Island Sea Grant and the Rhode Island
-        Consortium for Coastal Ecology Assessment, Innovation,and Modeling (RI
+        Consortium for Coastal Ecology Assessment, Innovation, and Modeling (RI
         C-AIM).
       </p>
     </template>
@@ -25,7 +25,6 @@
     <template #subtitle>
       Here you can generate a line plot comparing one variable for multiple
       buoys over time. Just select the variable, the buoys, and the time range.
-      Use the heatmap above to check what data are available.
     </template>
     <template #content>
       <ExploreForm />
@@ -65,12 +64,12 @@ const store = inject("store") as BuoyStore;
 const endDate = store.maxDateRaw;
 const startDate = new Date(endDate.valueOf() - 24 * 60 * 60 * 1000);
 
-const variableStr = ["avgWindDir", "avgWindSpeed", "hydrocatTemperature"];
+const variableStr = ["hydrocatTemperature"]; //check wind vars "avgWindDir", "avgWindSpeed",
 const bouyIDs = store.coordinates.map((c) => c.buoyId).join(",");
 
 const samplesRaw = await store.fetchBuoyData({
   ids: bouyIDs,
-  variables: variableStr[2],
+  variables: variableStr[0],
   end: endDate.toISOString(),
   start: startDate.toISOString(),
 });
@@ -82,9 +81,71 @@ const samples = samplesRaw.data.map((s) => {
 const selectedDate = ref(endDate);
 
 const selectedSamples = computed(() => {
-  return samples.filter(
-    (s) => s.date.valueOf() === selectedDate.value.valueOf()
-  );
+  // initialize samples array first
+  const res = [];
+  // for each buoy
+  store.coordinates.forEach((coordinate) => {
+    console.log(coordinate);
+    variableStr.forEach((variable) => {
+      console.log(variable);
+      const foundSample = samples.find((sample) => {
+        return (
+          sample.date.valueOf() === selectedDate.value.valueOf() &&
+          sample.variable === variable &&
+          sample.station_name === coordinate.station_name &&
+          sample.value !== null
+        );
+      });
+      console.log(foundSample);
+      if (foundSample) {
+        res.push(foundSample);
+        return;
+      }
+
+      const nextSample = samples.find((sample) => {
+        return (
+          sample.date.valueOf() > selectedDate.value.valueOf() &&
+          sample.variable === variable &&
+          sample.station_name === coordinate.station_name &&
+          sample.value !== null
+        );
+      });
+
+      const reversedSamples = [...samples].reverse();
+
+      const prevSample = reversedSamples.find((sample) => {
+        return (
+          sample.date.valueOf() < selectedDate.value.valueOf() &&
+          sample.variable === variable &&
+          sample.station_name === coordinate.station_name &&
+          sample.value !== null
+        );
+      });
+      console.log(prevSample, nextSample);
+
+      if (!nextSample && !prevSample) {
+        return;
+      }
+
+      if (!nextSample) {
+        res.push(prevSample);
+        return;
+      }
+
+      if (!prevSample) {
+        res.push(nextSample);
+        return;
+      }
+      // placeholder - interpolation
+      res.push(nextSample);
+    });
+    // find values at selectedDate (if exist)
+
+    // else find last value before and first value after timepoint
+    // if only before or after, return value that is there
+    // if both present, interpolate
+  });
+  return res;
 });
 </script>
 

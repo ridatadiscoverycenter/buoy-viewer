@@ -69,7 +69,7 @@ onMounted(() => {
     container: el.value,
     style: "mapbox://styles/ccv-bot/ckmxra8oi0rsw17mzcbqrktzi",
     center: [-71.39, 41.6],
-    zoom: 9.9,
+    zoom: 10.2,
     doubleClickZoom: false,
     scrollZoom: false,
   });

@@ -1,67 +1,70 @@
-<template>
+<!-- <template>
   <div class="slider-container">
     <label class="x-axis" for="slider"></label>
-    <input id="slider" class="slider mb-2" step="1" min="0" type="range" />
+    <input id="slider" class="slider mb-2" step="1" min="0" type="range"  
+    @input="changeDate" 
+    :max="store.dateLength - 1"
+    v-model="value"
+    />
   </div>
 </template>
-<!-- @input="changeDate" put back in div when needed -->
-<!-- :max="store.dateLength - 1" -->
-<!-- v-model="value" -->
+
+
+v-model="value"
 <script setup lang="ts">
-// import { inject, onBeforeUnmount, onMounted, ref } from "vue";
-// computed,
-// import { scaleTime } from "d3-scale";
-// import { select } from "d3-selection";
-// import { axisBottom } from "d3-axis";
+import { inject, computed, onBeforeUnmount, onMounted, ref } from "vue";
+import { scaleTime } from "d3-scale";
+import { select } from "d3-selection";
+import { axisBottom } from "d3-axis";
 
-// import { BuoyStore } from "../../store/buoy";
-// const store = inject("store") as BuoyStore;
+import { BuoyStore } from "../../store/buoy";
+const store = inject("store") as BuoyStore;
 
-// const value = ref(0);
-// const timeout = ref(null);
+const value = ref(0);
+const timeout = ref(null);
 
-// const updatedDate = computed(() => {
-//   const selectedDate = new Date(
-//     store.startDate.valueOf() + value.value * 1000 * 60 * 60 * 24
-//   );
+const updatedDate = computed(() => {
+  const selectedDate = new Date(
+    store.startDate.valueOf() + value.value * 1000 * 60 * 60 * 24
+  );
 
-//   return store.dates.find((d) => d >= selectedDate);
-// });
+  return store.dates.find((d) => d >= selectedDate);
+});
 
-// const domainArray = computed(() => [store.startDate, store.endDate]);
+const domainArray = computed(() => [store.startDate, store.endDate]);
 
-// const generateAxis = () => {
-//   try {
-//     // remove the old axis if it exists
-//     select(".x-axis svg").remove();
-//   } catch {}
-//   const svg = select(".x-axis").append("svg").attr("width", "calc(100%)");
-//   const scale = scaleTime()
-//     // .domain(domainArray.value)
-//     .range([0, svg.node().getBoundingClientRect().width - 40]);
-//   const xAxis = axisBottom()
-//     .scale(scale)
-//     .ticks(Math.round(svg.node().getBoundingClientRect().width / 100));
-//   svg.append("g").attr("transform", "translate(20, 20)").call(xAxis);
-// };
+const generateAxis = () => {
+  try {
+    // remove the old axis if it exists
+    select(".x-axis svg").remove();
+  } catch {}
+  const svg = select(".x-axis").append("svg").attr("width", "calc(100%)");
+  const scale = scaleTime()
+    .domain(domainArray.value)
+    .range([0, svg.node().getBoundingClientRect().width - 40]);
+  const xAxis = axisBottom()
+    .scale(scale)
+    .ticks(Math.round(svg.node().getBoundingClientRect().width / 100));
+  svg.append("g").attr("transform", "translate(20, 20)").call(xAxis);
+};
 
-// const changeDate = () => {
-// store.selectedDate = updatedDate.value;
-// };
+const changeDate = () => {
+store.selectedDate = updatedDate.value;
+};
 
-// const onResize = () => {
-//   // debounce re-drawing axis
-//   if (timeout.value) clearTimeout(timeout.value);
-//   timeout.value = setTimeout(() => {
-//     generateAxis();
-//   }, 300);
-// };
+const onResize = () => {
+  // debounce re-drawing axis
+  if (timeout.value) clearTimeout(timeout.value);
+  timeout.value = setTimeout(() => {
+    generateAxis();
+  }, 300);
+};
 
-// onMounted(() => {
-//   generateAxis();
-//   window.addEventListener("resize", onResize);
-// });
-// onBeforeUnmount(() => window.removeEventListener("resize", onResize));
+onMounted(() => {
+  generateAxis();
+  window.addEventListener("resize", onResize);
+});
+onBeforeUnmount(() => window.removeEventListener("resize", onResize));
 </script>
 
 <style lang="scss" scoped>
@@ -90,4 +93,4 @@ input[type="range"].slider {
   z-index: 1000;
   width: calc(100% - 40px);
 }
-</style>
+</style> -->
