@@ -1,37 +1,49 @@
-<!-- <template>
+<template>
   <div class="slider-container">
     <label class="x-axis" for="slider"></label>
-    <input id="slider" class="slider mb-2" step="1" min="0" type="range"  
-    @input="changeDate" 
-    :max="store.dateLength - 1"
-    v-model="value"
+    <input
+      id="slider"
+      class="slider mb-2"
+      step="1"
+      min="0"
+      type="range"
+      :max="numIntervals"
+      :value="currentInterval"
+      @input="changeDate"
     />
   </div>
 </template>
 
-
 v-model="value"
 <script setup lang="ts">
-import { inject, computed, onBeforeUnmount, onMounted, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { scaleTime } from "d3-scale";
 import { select } from "d3-selection";
 import { axisBottom } from "d3-axis";
 
-import { BuoyStore } from "../../store/buoy";
-const store = inject("store") as BuoyStore;
-
-const value = ref(0);
 const timeout = ref(null);
 
-const updatedDate = computed(() => {
-  const selectedDate = new Date(
-    store.startDate.valueOf() + value.value * 1000 * 60 * 60 * 24
-  );
+const FIFTEEN_MINUTE = 1000 * 60 * 15;
 
-  return store.dates.find((d) => d >= selectedDate);
+const props = defineProps<{
+  endDate: Date;
+  startDate: Date;
+  selectedDate: Date;
+}>();
+
+const numIntervals = computed(() => {
+  return (props.endDate.valueOf() - props.startDate.valueOf()) / FIFTEEN_MINUTE;
 });
 
-const domainArray = computed(() => [store.startDate, store.endDate]);
+const currentInterval = computed(() => {
+  return (
+    (props.selectedDate.valueOf() - props.startDate.valueOf()) / FIFTEEN_MINUTE
+  );
+});
+
+const domainArray = computed(() => [props.startDate, props.endDate]);
+
+const emit = defineEmits(["new-selected-date"]);
 
 const generateAxis = () => {
   try {
@@ -48,8 +60,14 @@ const generateAxis = () => {
   svg.append("g").attr("transform", "translate(20, 20)").call(xAxis);
 };
 
-const changeDate = () => {
-store.selectedDate = updatedDate.value;
+const changeDate = (event) => {
+  const interval = event.target.value;
+  const newDate = new Date(
+    props.startDate.valueOf() + interval * FIFTEEN_MINUTE
+  );
+  emit("new-selected-date", newDate);
+  console.log(newDate);
+  console.log(interval);
 };
 
 const onResize = () => {
@@ -93,4 +111,4 @@ input[type="range"].slider {
   z-index: 1000;
   width: calc(100% - 40px);
 }
-</style> -->
+</style>

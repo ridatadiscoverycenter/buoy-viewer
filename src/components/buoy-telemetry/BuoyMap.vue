@@ -1,10 +1,10 @@
 <template>
   <div class="mapboxgl-map-container">
     <div class="date is-hidden-touch">
-      <span>{{ store.maxDate }}</span>
+      <span>{{ selectedDate }}</span>
     </div>
     <div class="date-mobile is-hidden-desktop">
-      <span>{{ store.maxDate }}</span>
+      <span>{{ selectedDate }}</span>
     </div>
     <div ref="el" class="mapbox-container" />
   </div>
@@ -41,6 +41,7 @@ const store = inject("store") as BuoyStore;
 
 const props = defineProps<{
   samples: Sample[];
+  selectedDate: Date;
 }>();
 
 const annotatedSamples = computed(() => {
