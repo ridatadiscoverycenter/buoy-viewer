@@ -1,9 +1,9 @@
 <template>
   <div class="mapboxgl-map-container">
-    <div class="date is-hidden-touch">
+    <div class="date is-hidden-touch is-size-4">
       <span>{{ formattedDate }}</span>
     </div>
-    <div class="date-mobile is-hidden-desktop">
+    <div class="date-mobile is-hidden-desktop is-size-5">
       <span>{{ formattedDate }}</span>
     </div>
     <div ref="el" class="mapbox-container" />
@@ -28,6 +28,7 @@ import { computed, inject, onMounted, ref } from "vue";
 import mapboxgl from "mapbox-gl";
 import { scaleSqrt, scaleDiverging } from "d3-scale";
 import { interpolateTurbo } from "d3-scale-chromatic";
+
 import BuoyMarker from "@/assets/illustrations/buoy-marker.svg";
 import { Data } from "../../utils/erddap";
 import { BuoyStore } from "../../store/buoy";
@@ -44,14 +45,13 @@ const props = defineProps<{
 }>();
 
 const formattedDate = computed(() => {
-  const newDate = new Intl.DateTimeFormat("en-US", {
+  return new Intl.DateTimeFormat("en-US", {
     day: "2-digit",
     month: "2-digit",
     year: "2-digit",
     hour: "2-digit",
     minute: "2-digit",
   }).format(props.selectedDate);
-  return newDate;
 });
 
 const annotatedSamples = computed(() => {
