@@ -1,10 +1,10 @@
 <template>
   <div class="mapboxgl-map-container">
-    <div class="date is-hidden-touch">
-      <span>{{ selectedDate }}</span>
+    <div class="date is-hidden-touch is-size-4">
+      <span>{{ formattedDate }}</span>
     </div>
-    <div class="date-mobile is-hidden-desktop">
-      <span>{{ selectedDate }}</span>
+    <div class="date-mobile is-hidden-desktop is-size-5">
+      <span>{{ formattedDate }}</span>
     </div>
     <div ref="el" class="mapbox-container" />
   </div>
@@ -43,6 +43,16 @@ const props = defineProps<{
   samples: Sample[];
   selectedDate: Date;
 }>();
+
+const formattedDate = computed(() => {
+  return new Intl.DateTimeFormat("en-US", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(props.selectedDate);
+});
 
 const annotatedSamples = computed(() => {
   const domain = [0, 20];

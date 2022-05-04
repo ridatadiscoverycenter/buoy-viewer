@@ -69,7 +69,7 @@ const store = inject("store") as BuoyStore;
 const endDate = store.maxDateRaw;
 const startDate = new Date(endDate.valueOf() - 24 * 60 * 60 * 1000);
 
-const variableStr = ["hydrocatTemperature"]; //check wind vars "avgWindDir", "avgWindSpeed",
+const variableStr = ["WaterTempSurface"]; //check wind vars "WindDirectionFrom", "WindSpeedAverage",
 const bouyIDs = store.coordinates.map((c) => c.buoyId).join(",");
 
 const samplesRaw = await store.fetchBuoyData({
