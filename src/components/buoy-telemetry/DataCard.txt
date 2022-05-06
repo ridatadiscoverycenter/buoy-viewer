@@ -1,0 +1,79 @@
+<template>
+  <div class="data-card card-content content is-hidden-mobile">
+    <div
+      v-for="(item, index) in store.coordinates"
+      :key="index"
+      class="data-card-item"
+    >
+      <h6 class="mb-0">{{ item.station_name }}</h6>
+      <p class="mb-0 is-size-7-half">
+        {{ sampleText(item.station_name) }}
+      </p>
+      <svg height="10" :width="280 - 20 * 2">
+        <rect
+          :width="
+            Math.max(0, sampleNormDA(item.station_name) * (280 - 20 * 2) + 2)
+          "
+          height="10"
+          :style="'fill:' + sampleColor(item.station_name)"
+        />
+      </svg>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { inject } from "vue";
+
+import { BuoyStore } from "../../store/buoy";
+// import { Data } from "../../utils/erddap";
+
+const store = inject("store") as BuoyStore;
+// interface for Data
+// interface Sample extends Data {
+// }
+
+const props = defineProps<{
+  selectedSamples: Array<any>; // update type from interface
+}>();
+
+const sampleText = (site) => {
+  console.log(props.selectedSamples);
+  const match = props.selectedSamples.find((s) => s.station_name === site);
+  //  s.variables === variables && s.station_name === coordinate.station_name);
+  if (match !== undefined) {
+    return match === 0
+      ? "Temp not detected"
+      : `${parseInt(match.value)} degrees C`;
+  } else {
+    return "No sample";
+  }
+};
+
+const sampleColor = (site) =>
+  props.selectedSamples.find(({ station_name }) => station_name === site)
+    ?.color ?? "white";
+
+const sampleNormDA = (site) =>
+  props.selectedSamples.find(({ station_name }) => station_name === site)
+    ?.normDA ?? -1;
+</script>
+
+<style lang="scss" scoped>
+.data-card {
+  z-index: 10000;
+  position: absolute;
+  background-color: white;
+  width: 280px;
+  margin: 20px;
+  border-radius: 1rem;
+  box-shadow: 3px 3px rgba(1, 1, 1, 0.1);
+}
+.is-size-7-half {
+  font-size: 0.85rem;
+}
+svg {
+  display: block;
+  margin-bottom: 10px;
+}
+</style>
