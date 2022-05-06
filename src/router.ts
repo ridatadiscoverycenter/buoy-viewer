@@ -4,6 +4,7 @@ import { isEqual } from "lodash/lang";
 
 import HomePage from "@/views/HomePage.vue";
 import AboutPage from "@/views/AboutPage.vue";
+import GlossaryPage from "@/views/GlossaryPage.vue";
 import DatasetPage from "@/views/datasets/index.vue";
 
 type Dataset =
@@ -79,6 +80,11 @@ const routes: RouteRecordRaw[] = [
     path: "/about",
     name: "About",
     component: AboutPage,
+  },
+  {
+    path: "/glossary",
+    name: "Glossary",
+    component: GlossaryPage,
   },
   {
     path: "/dataset",
