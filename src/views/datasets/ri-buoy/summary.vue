@@ -2,16 +2,48 @@
   <BuoyDashboard :scenarios="scenarios">
     <template #available-data>
       This dataset spans from {{ store.minDate.slice(0, 4) }} to
-      {{ store.maxDate.slice(0, 4) }} and was collected by the Narragansett Bay
-      Fixed Station Monitoring Network (NBFSMN) with RIDEM-OWR as the lead
-      agency. Agencies involved in collection and maintenance of the data are:
-      RIDEM-OWR, URI/GSO MERL, NBC, NBNERR, and MassDEP. The heatmap below
-      summarizes the number of observations collected for each month for
-      different variables. Use this heatmap to help you decide what data you
-      want to visualize or download. When you have an idea, go ahead and select
-      the buoys, variables and dates to explore. Or download the data in the
-      most appropriate format for your analyses! To begin, select a variable to
-      see what data is available.
+      {{ store.maxDate.slice(0, 4) }} and was collected by the
+      <a
+        href="http://www.dem.ri.gov/programs/emergencyresponse/bart/stations.php"
+        target="_blank"
+        rel="noreferrer noopener"
+        >Narragansett Bay Fixed Station Monitoring Network (NBFSMN)</a
+      >
+      with
+      <a
+        href="http://www.dem.ri.gov/programs/water/"
+        target="_blank"
+        rel="noreferrer noopener"
+        >RIDEM-OWR</a
+      >
+      as the lead agency. Agencies involved in collection and maintenance of the
+      data are: RIDEM-OWR,
+      <a
+        href="https://web.uri.edu/gso/research/marine-ecosystems-research-laboratory/"
+        target="_blank"
+        rel="noreferrer noopener"
+        >URI/GSO MERL</a
+      >,
+      <a
+        href="https://www.narrabay.com/"
+        target="_blank"
+        rel="noreferrer noopener"
+        >NBC</a
+      >,
+      <a href="http://nbnerr.org/" target="_blank" rel="noreferrer noopener"
+        >NBNERR</a
+      >, and
+      <a
+        href="https://www.mass.gov/orgs/massachusetts-department-of-environmental-protection"
+        target="_blank"
+        rel="noreferrer noopener"
+        >MassDEP</a
+      >. The heatmap below summarizes the number of observations collected for
+      each month for different variables. Use this heatmap to help you decide
+      what data you want to visualize or download. When you have an idea, go
+      ahead and select the buoys, variables and dates to explore. Or download
+      the data in the most appropriate format for your analyses! To begin,
+      select a variable to see what data is available.
     </template>
 
     <template #heatmap>
@@ -22,6 +54,8 @@
       The historical data available on this site has been compiled from the
       <a
         href="http://www.dem.ri.gov/programs/emergencyresponse/bart/stations.php"
+        target="_blank"
+        rel="noreferrer noopener"
         >Narragansett Bay Fixed-Site Monitoring Network</a
       >. See <a href="/nbfsmn_disclaimer.pdf">the disclaimer</a> for more
       information on the data as well as how to cite it.
