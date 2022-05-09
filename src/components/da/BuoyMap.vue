@@ -28,6 +28,7 @@ import { computed, onMounted, ref, watch } from "vue";
 import mapboxgl from "mapbox-gl";
 
 import BuoyMarker from "@/assets/illustrations/buoy-marker.svg";
+import { useResizeObserver } from "../../composables/useResizeObserver";
 
 import { useDAStore } from "../../store/domoic-acid";
 const store = useDAStore();
@@ -118,13 +119,26 @@ watch(() => store.selectedDate, updateMarkers);
 const formattedDate = computed(() =>
   store.selectedDate.toLocaleDateString("sv")
 );
+
+// when the parent element size changes, resize the map
+useResizeObserver(el, () => {
+  if (map.value) {
+    map.value.resize();
+  }
+});
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/main.scss";
+
 .mapboxgl-map-container {
   height: 70vh;
   width: 100%;
   position: relative;
+
+  @include tablet {
+    height: max(70vh, 37rem);
+  }
 }
 .date {
   font-size: 2.5rem;

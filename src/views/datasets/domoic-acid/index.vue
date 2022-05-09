@@ -3,9 +3,20 @@
     <template #title>Exploration Map</template>
     <template #content>
       <div class="map-app-container">
-        <DataCard />
+        <div class="data-card-float p-4 is-hidden-mobile">
+          <DataCard />
+        </div>
         <BuoyMap />
         <DateSlider />
+      </div>
+    </template>
+  </DashboardCard>
+
+  <DashboardCard width="full" class="is-hidden-tablet">
+    <template #title>Selected Data</template>
+    <template #content>
+      <div class="px-4">
+        <DataCard />
       </div>
     </template>
   </DashboardCard>
@@ -155,5 +166,15 @@ await store.fetchBaseData();
 <style scoped>
 .map-app-container {
   position: relative;
+}
+
+.data-card-float {
+  z-index: 10000;
+  position: absolute;
+  background-color: white;
+  width: 280px;
+  margin: 20px;
+  border-radius: 1rem;
+  box-shadow: 3px 3px rgba(1, 1, 1, 0.1);
 }
 </style>

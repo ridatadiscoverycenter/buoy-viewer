@@ -54,7 +54,7 @@ main {
 .dashboard-grid {
   background-image: linear-gradient(to top left, whitesmoke, white);
   display: grid;
-  grid-template-columns: 2fr 10fr;
+  grid-template-columns: minmax(13rem, 1fr) 5fr;
   grid-template-areas: "sidebar main";
   @include touch {
     grid-template-columns: 100vw;

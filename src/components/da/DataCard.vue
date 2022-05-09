@@ -1,5 +1,5 @@
 <template>
-  <div class="data-card card-content content is-hidden-mobile">
+  <div class="content">
     <div
       v-for="(item, index) in store.activeCoordinates"
       :key="index"
@@ -47,15 +47,6 @@ const sampleNormDA = (site) =>
 </script>
 
 <style lang="scss" scoped>
-.data-card {
-  z-index: 10000;
-  position: absolute;
-  background-color: white;
-  width: 280px;
-  margin: 20px;
-  border-radius: 1rem;
-  box-shadow: 3px 3px rgba(1, 1, 1, 0.1);
-}
 .is-size-7-half {
   font-size: 0.85rem;
 }
