@@ -11,6 +11,8 @@ import embed from "vega-embed";
 import { View } from "vega";
 import { cloneDeep } from "lodash/lang";
 
+import { useResizeObserver } from "./useResizeObserver";
+
 // TODO-IMPROVEMENT: have this use suspense so we get loading on the plot updates?
 // TODO-IMPROVEMENT: how to handle/supress voronoi error after unmount?
 
@@ -52,18 +54,7 @@ export function useVega({
     }
   };
 
-  let timeout: number;
-
-  const resizeObserver = new ResizeObserver(() => {
-    // If there's a timer, cancel it
-    if (timeout) {
-      window.clearTimeout(timeout);
-    }
-    timeout = window.setTimeout(() => {
-      // Run our resize functions
-      resizePlot();
-    }, 100);
-  });
+  useResizeObserver(el, resizePlot);
 
   const updatePlot = () => {
     if (view.value) {
@@ -99,17 +90,10 @@ export function useVega({
     if (view.value) {
       view.value.finalize();
     }
-    if (el.value?.parentElement) {
-      resizeObserver.unobserve(el.value.parentElement);
-    }
   };
 
   // lifecycle hooks
   onMounted(updatePlot);
-  onMounted(
-    () =>
-      el.value?.parentElement && resizeObserver.observe(el.value.parentElement)
-  );
   watch(spec, updatePlot);
   onUnmounted(finalize);
 
