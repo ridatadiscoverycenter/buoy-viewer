@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onMounted, ref } from "vue";
+import { computed, inject, onMounted, ref, watch } from "vue";
 import mapboxgl from "mapbox-gl";
 import { scaleSqrt, scaleDiverging } from "d3-scale";
 import { interpolateTurbo } from "d3-scale-chromatic";
@@ -41,22 +41,12 @@ const store = inject("store") as BuoyStore;
 
 const props = defineProps<{
   samples: Sample[];
-  selectedDate: Date;
+  formattedDate: string;
 }>();
 
-const formattedDate = computed(() => {
-  return new Intl.DateTimeFormat("en-US", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(props.selectedDate);
-});
-
 const annotatedSamples = computed(() => {
-  const domain = [0, 20];
-  const sqrtScale = scaleSqrt().domain(domain).range([0.1, 0.8]);
+  const domain = [0, 35];
+  const sqrtScale = scaleSqrt().domain(domain).range([0.2, 0.7]);
   const colorScale = scaleDiverging()
     .domain(domain)
     .interpolator(interpolateTurbo)
@@ -79,8 +69,8 @@ onMounted(() => {
   map.value = new mapboxgl.Map({
     container: el.value,
     style: "mapbox://styles/ccv-bot/ckmxra8oi0rsw17mzcbqrktzi",
-    center: [-71.39, 41.6],
-    zoom: 10.2,
+    center: [-71.35, 41.59],
+    zoom: 10.1,
     doubleClickZoom: false,
     scrollZoom: false,
   });
@@ -139,7 +129,7 @@ const updateMarkers = () => {
     el.style.width = elementSize;
     el.style.height = elementSize;
     el.style.backgroundColor = color;
-    el.style.opacity = "0.8";
+    el.style.opacity = "0.33";
     el.style.borderRadius = "100%";
 
     markers.push(
@@ -150,11 +140,12 @@ const updateMarkers = () => {
     );
   });
 };
+watch(() => props.formattedDate, updateMarkers);
 </script>
 
 <style lang="scss" scoped>
 .mapboxgl-map-container {
-  height: 70vh;
+  height: min(70vh, 400px);
   width: 100%;
   position: relative;
 }
