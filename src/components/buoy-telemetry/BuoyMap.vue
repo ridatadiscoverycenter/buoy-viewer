@@ -41,18 +41,8 @@ const store = inject("store") as BuoyStore;
 
 const props = defineProps<{
   samples: Sample[];
-  selectedDate: Date;
+  formattedDate: string;
 }>();
-
-const formattedDate = computed(() => {
-  return new Intl.DateTimeFormat("en-US", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(props.selectedDate);
-});
 
 const annotatedSamples = computed(() => {
   const domain = [0, 20];
@@ -79,8 +69,8 @@ onMounted(() => {
   map.value = new mapboxgl.Map({
     container: el.value,
     style: "mapbox://styles/ccv-bot/ckmxra8oi0rsw17mzcbqrktzi",
-    center: [-71.39, 41.6],
-    zoom: 10.2,
+    center: [-71.35, 41.59],
+    zoom: 10.1,
     doubleClickZoom: false,
     scrollZoom: false,
   });
@@ -154,7 +144,7 @@ const updateMarkers = () => {
 
 <style lang="scss" scoped>
 .mapboxgl-map-container {
-  height: 70vh;
+  height: min(70vh, 400px);
   width: 100%;
   position: relative;
 }

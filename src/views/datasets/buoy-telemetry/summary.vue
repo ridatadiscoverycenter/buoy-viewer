@@ -1,20 +1,24 @@
 <template>
-  <DashboardCard width="two-thirds">
+  <DashboardCard width="full">
     <template #title>Current Conditions</template>
     <template #subtitle>
-      <p>
-        This map contains selected real-time climate data from two buoys in
-        Narragansett Bay (NB). Data are collected every 15 minutes, although
-        there may be up to a 6-hour lag in available data. Explore and download
-        more climate variables below, with data from January 2022 through today.
-        This work was funded by Rhode Island Sea Grant and the Rhode Island
-        Consortium for Coastal Ecology Assessment, Innovation, and Modeling (RI
-        C-AIM).
-      </p>
+      This dashboard contains selected real-time climate data from buoys in
+      Narragansett Bay (NB). There may be up to a 12-hour lag in available data.
+      Explore and download more climate variables below, with data from the past
+      three months. This work was funded by Rhode Island Sea Grant and the Rhode
+      Island Consortium for Coastal Ecology Assessment, Innovation, and Modeling
+      (RI C-AIM).
+    </template>
+  </DashboardCard>
+  <DashboardCard width="half">
+    <template #title>Current Conditions: Map</template>
+    <template #subtitle>
+      Use the date slider to go back in 15 minute intervals for the past 24
+      hours.
     </template>
     <template #content>
       <div class="map-app-container">
-        <BuoyMap :samples="selectedSamples" :selected-date="selectedDate" />
+        <BuoyMap :samples="selectedSamples" :formatted-date="formattedDate" />
         <DateSlider
           :start-date="startDate"
           :end-date="endDate"
@@ -25,19 +29,17 @@
     </template>
   </DashboardCard>
 
-  <DashboardCard width="one-third">
+  <DashboardCard width="half">
+    <template #title>Current Conditions: Data</template>
     <template #subtitle>
       This table shows weather data for the timepoint selected with the date
-      slider on the map. Try going back in time to get weather data for the past
-      24 hours.
+      slider on the map.
     </template>
     <template #content>
       <div class="is-size-4 pl-4">
         <span>{{ formattedDate }}</span>
       </div>
-      <table
-        class="table mx-auto is-striped is-narrow-mobile is-size-5-desktop"
-      >
+      <table class="table mx-auto is-striped is-narrow-mobile">
         <thead>
           <tr>
             <td></td>
@@ -227,5 +229,4 @@ const selectedSamples = computed(() => {
 .map-app-container {
   position: relative;
 }
-
 </style>
