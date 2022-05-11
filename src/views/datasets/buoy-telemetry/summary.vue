@@ -47,12 +47,19 @@
             <th v-for="buoy in store.coordinates" :key="buoy.buoyId">
               {{ buoy.station_name }}
             </th>
-            <th>Units</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="variable in variableStr" :key="variable">
-            <th>{{ variable }}</th>
+          <tr
+            v-for="variable in variableStr"
+            :key="variable"
+            :custom-label="formatVariable"
+          >
+            <th>
+              {{
+                formatVariable(store.variables.find((v) => v.name === variable))
+              }}
+            </th>
             <td v-for="buoy in store.coordinates" :key="buoy.buoyId">
               {{
                 selectedSamples
@@ -64,7 +71,6 @@
                   ?.value.toFixed(1) ?? "NA"
               }}
             </td>
-            <td>{{ selectedSamples.find((sample) => sample)?.units }}</td>
           </tr>
         </tbody>
       </table>
@@ -108,6 +114,7 @@ import ExploreForm from "@/components/buoy/ExploreForm.vue";
 import DateSlider from "@/components/buoy-telemetry/DateSlider.vue";
 import BuoyMap from "@/components/buoy-telemetry/BuoyMap.vue";
 
+import { formatVariable } from "../../../utils/utils";
 import { BuoyStore } from "../../../store/buoy";
 
 const store = inject("store") as BuoyStore;
