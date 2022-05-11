@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onMounted, ref } from "vue";
+import { computed, inject, onMounted, ref, watch } from "vue";
 import mapboxgl from "mapbox-gl";
 import { scaleSqrt, scaleDiverging } from "d3-scale";
 import { interpolateTurbo } from "d3-scale-chromatic";
@@ -45,8 +45,8 @@ const props = defineProps<{
 }>();
 
 const annotatedSamples = computed(() => {
-  const domain = [0, 20];
-  const sqrtScale = scaleSqrt().domain(domain).range([0.1, 0.8]);
+  const domain = [0, 35];
+  const sqrtScale = scaleSqrt().domain(domain).range([0.2, 0.7]);
   const colorScale = scaleDiverging()
     .domain(domain)
     .interpolator(interpolateTurbo)
@@ -129,7 +129,7 @@ const updateMarkers = () => {
     el.style.width = elementSize;
     el.style.height = elementSize;
     el.style.backgroundColor = color;
-    el.style.opacity = "0.8";
+    el.style.opacity = "0.33";
     el.style.borderRadius = "100%";
 
     markers.push(
@@ -140,6 +140,7 @@ const updateMarkers = () => {
     );
   });
 };
+watch(() => props.formattedDate, updateMarkers);
 </script>
 
 <style lang="scss" scoped>

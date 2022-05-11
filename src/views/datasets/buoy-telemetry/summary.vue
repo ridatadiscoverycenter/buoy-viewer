@@ -5,16 +5,20 @@
       This dashboard contains selected real-time climate data from buoys in
       Narragansett Bay (NB). There may be up to a 12-hour lag in available data.
       Explore and download more climate variables below, with data from the past
-      three months. This work was funded by Rhode Island Sea Grant and the Rhode
-      Island Consortium for Coastal Ecology Assessment, Innovation, and Modeling
-      (RI C-AIM).
+      three months. This work was funded by the
+      <a href="https://seagrant.gso.uri.edu/">Rhode Island Sea Grant</a> and the
+      <a href="https://web.uri.edu/rinsfepscor/welcome/"
+        >Rhode Island Consortium for Coastal Ecology Assessment, Innovation, and
+        Modeling (RI C-AIM)</a
+      >.
     </template>
   </DashboardCard>
   <DashboardCard width="half">
     <template #title>Current Conditions: Map</template>
     <template #subtitle>
-      Use the date slider to go back in 15 minute intervals for the past 24
-      hours.
+      Use the date slider to look back in 15 minute intervals for the past 5
+      days. After clicking on the slider, use left/right arrow keys to move
+      between intervals.
     </template>
     <template #content>
       <div class="map-app-container">
@@ -100,7 +104,27 @@
 
   <DashboardCard width="one-third" :height="1">
     <template #title>Learn more</template>
-    <template #subtitle>Detailed prose about the project here</template>
+    <template #subtitle
+      >Check out this <a href="">video</a> of researchers deploying a buoy!
+      <br />
+      <br />
+      Learn more about the NSF-funded RI-C-AIM program
+      <a href="https://web.uri.edu/rinsfepscor/research/">here</a>.
+      <br />
+      <br />
+      The full dataset used to power this app is available on
+      <a
+        href="https://pricaimcit.services.brown.edu/erddap/search/index.html?page=1&itemsPerPage=1000&searchFor=Buoy+Telemetry"
+        >ERDDAP</a
+      >.
+      <br />
+      <br />
+
+      <img
+        src="../../../../public/buoy_400x250.jpeg"
+        alt="Buoy deployment in Narragansett Bay"
+      />
+    </template>
   </DashboardCard>
 </template>
 
@@ -119,7 +143,7 @@ import { BuoyStore } from "../../../store/buoy";
 const store = inject("store") as BuoyStore;
 
 const endDate = store.maxDateRaw;
-const startDate = new Date(endDate.valueOf() - 24 * 60 * 60 * 1000);
+const startDate = new Date(endDate.valueOf() - 5 * 24 * 60 * 60 * 1000);
 
 const variableStr = [
   "AirTemp",
