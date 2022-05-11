@@ -32,10 +32,7 @@
       24 hours.
     </template>
     <template #content>
-      <div class="date is-hidden-touch is-size-4">
-        <span>{{ formattedDate }}</span>
-      </div>
-      <div class="date-mobile is-hidden-desktop is-size-5">
+      <div class="is-size-4 pl-4">
         <span>{{ formattedDate }}</span>
       </div>
       <table
@@ -119,16 +116,6 @@ import { BuoyStore } from "../../../store/buoy";
 
 const store = inject("store") as BuoyStore;
 
-const formattedDate = computed(() => {
-  return new Intl.DateTimeFormat("en-US", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(DateSlider.selectedDate);
-});
-
 const endDate = store.maxDateRaw;
 const startDate = new Date(endDate.valueOf() - 24 * 60 * 60 * 1000);
 
@@ -155,6 +142,16 @@ const samples = samplesRaw.data.map((s) => {
 });
 
 const selectedDate = ref(endDate);
+
+const formattedDate = computed(() => {
+  return new Intl.DateTimeFormat("en-US", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(selectedDate.value);
+});
 
 const selectedSamples = computed(() => {
   // initialize samples array first
@@ -230,24 +227,5 @@ const selectedSamples = computed(() => {
 .map-app-container {
   position: relative;
 }
-.date {
-  font-size: 2.5rem;
-  font-weight: bold;
-  padding: 2rem;
-  position: relative;
-  text-align: left;
-  width: 100%;
-  z-index: 10;
-  box-sizing: border-box;
-}
-.date-mobile {
-  font-size: 1.25rem;
-  font-weight: bold;
-  padding: 1rem;
-  position: relative;
-  text-align: left;
-  width: 100%;
-  z-index: 10;
-  box-sizing: border-box;
-}
+
 </style>
