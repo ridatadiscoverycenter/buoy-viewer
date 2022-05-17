@@ -2,27 +2,43 @@
   <DashboardCard width="full">
     <template #title>Current Conditions</template>
     <template #subtitle>
-      This dashboard contains selected real-time climate data from buoys in
-      Narragansett Bay (NB). There may be up to a 12-hour lag in available data.
-      Explore and download more climate variables below, with data from the past
-      three months. This work was funded by the
-      <a href="https://seagrant.gso.uri.edu/">Rhode Island Sea Grant</a> and the
-      <a href="https://web.uri.edu/rinsfepscor/welcome/"
-        >Rhode Island Consortium for Coastal Ecology Assessment, Innovation, and
-        Modeling (RI C-AIM)</a
-      >.
+      <div class="content-container">
+        <div class="content">
+          This dashboard contains selected real-time climate data from buoys in
+          Narragansett Bay (NB). There may be up to a 12-hour lag in available
+          data. Explore and download more climate variables below, with data
+          from the past three months. This work was funded by the
+          <a href="https://seagrant.gso.uri.edu/">Rhode Island Sea Grant</a> and
+          the
+          <a href="https://web.uri.edu/rinsfepscor/welcome/"
+            >Rhode Island Consortium for Coastal Ecology Assessment, Innovation,
+            and Modeling (RI C-AIM)</a
+          >. More text here from URI researchers.
+        </div>
+
+        <img
+          src="/images/buoy_400x250.jpeg"
+          alt="Buoy deployment in Narragansett Bay"
+        />
+      </div>
     </template>
   </DashboardCard>
+
   <DashboardCard width="half">
-    <template #title>Current Conditions: Map</template>
+    <template #title>Current Conditions &mdash; Map</template>
     <template #subtitle>
       Use the date slider to look back in 15 minute intervals for the past 5
       days. After clicking on the slider, use left/right arrow keys to move
-      between intervals.
+      between intervals. Color markers indicate air temperature at buoys, with
+      cooler temperatures in the blues, and warmer temperatures in the reds.
     </template>
     <template #content>
       <div class="map-app-container">
-        <BuoyMap :samples="selectedSamples" :formatted-date="formattedDate" />
+        <BuoyMap
+          :samples="selectedSamples"
+          :formatted-date="formattedDate"
+          variable="AirTemp"
+        />
         <DateSlider
           :start-date="startDate"
           :end-date="endDate"
@@ -104,32 +120,39 @@
 
   <DashboardCard width="one-third" :height="1">
     <template #title>Learn more</template>
-    <template #subtitle
-      >Check out this <a href="">video</a> of researchers deploying a buoy!
-      <br />
-      <br />
-      Learn more about the NSF-funded RI-C-AIM program
-      <a href="https://web.uri.edu/rinsfepscor/research/">here</a>.
-      <br />
-      <br />
-      The full dataset used to power this app is available on
-      <a
-        href="https://pricaimcit.services.brown.edu/erddap/search/index.html?page=1&itemsPerPage=1000&searchFor=Buoy+Telemetry"
-        >ERDDAP</a
-      >.
-      <br />
-      <br />
 
-      <img
-        src="../../../../public/buoy_400x250.jpeg"
-        alt="Buoy deployment in Narragansett Bay"
-      />
+    <template #content>
+      <div class="content px-4 is-size-5">
+        <div class="video-wrapper mb-3">
+          <iframe
+            src="https://www.youtube.com/embed/uPXvtlrC7Rs"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <p>
+          Learn more about the
+          <a href="https://web.uri.edu/rinsfepscor/research/"
+            >NSF-funded RI-C-AIM program</a
+          >.
+        </p>
+        <p>
+          The full dataset used to power this app is available on
+          <a
+            href="https://pricaimcit.services.brown.edu/erddap/search/index.html?page=1&itemsPerPage=1000&searchFor=Buoy+Telemetry"
+            >ERDDAP</a
+          >.
+        </p>
+      </div>
     </template>
   </DashboardCard>
 </template>
 
 <script setup lang="ts">
 import { computed, inject, ref } from "vue";
+import { scaleLinear } from "d3-scale";
 
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import DownloadForm from "@/components/buoy/DownloadForm.vue";
@@ -184,19 +207,15 @@ const selectedSamples = computed(() => {
   const res = [];
   // for each buoy
   store.coordinates.forEach((coordinate) => {
-    console.log(coordinate);
     variableStr.forEach((variable) => {
-      console.log(variable);
       const foundSample = samples.find((sample) => {
         return (
           sample.date.valueOf() === selectedDate.value.valueOf() &&
           sample.variable === variable &&
           sample.station_name === coordinate.station_name &&
-          sample.value !== null &&
-          sample.units
+          sample.value !== null
         );
       });
-      console.log(foundSample);
       if (foundSample) {
         res.push(foundSample);
         return;
@@ -221,7 +240,6 @@ const selectedSamples = computed(() => {
           sample.value !== null
         );
       });
-      console.log(prevSample, nextSample);
 
       if (!nextSample && !prevSample) {
         return;
@@ -236,21 +254,57 @@ const selectedSamples = computed(() => {
         res.push(nextSample);
         return;
       }
-      // placeholder - interpolation
-      res.push(nextSample);
-    });
-    // find values at selectedDate (if exist)
 
-    // else find last value before and first value after timepoint
-    // if only before or after, return value that is there
-    // if both present, interpolate
+      const interpolator = scaleLinear(
+        [prevSample.date.valueOf(), nextSample.date.valueOf()],
+        [prevSample.value, nextSample.value]
+      );
+
+      const newValue = interpolator(selectedDate.value.valueOf());
+      const newSample = {
+        ...nextSample,
+        date: selectedDate.value,
+        value: newValue,
+      };
+      res.push(newSample);
+    });
   });
   return res;
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "@/assets/styles/main.scss";
 .map-app-container {
   position: relative;
+}
+
+.content-container {
+  display: flex;
+  gap: 1rem;
+  flex-direction: row;
+  @include touch {
+    flex-wrap: wrap;
+  }
+  img {
+    align-self: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  /* 16:9 */
+  padding-top: 25px;
+  height: 0;
+}
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>

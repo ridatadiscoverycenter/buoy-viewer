@@ -66,8 +66,6 @@ const changeDate = (event) => {
     props.startDate.valueOf() + interval * FIFTEEN_MINUTE
   );
   emit("new-selected-date", newDate);
-  console.log(newDate);
-  console.log(interval);
 };
 
 const onResize = () => {
