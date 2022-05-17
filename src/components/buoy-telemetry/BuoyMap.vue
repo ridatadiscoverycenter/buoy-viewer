@@ -45,11 +45,11 @@ const props = defineProps<{
 }>();
 
 const annotatedSamples = computed(() => {
-  const domain = [-10, 27];
+  const domain = [-5, 27];
   const sqrtScale = scaleSqrt().domain(domain).range([0.2, 0.7]);
   const colorScale = scaleLinear()
     .domain(domain)
-    .range(["#4682B4", "#E30B5C", "#880808"])
+    .range(["#4682B4", "#E30B5C", "#880808"]) //steel blue, raspberry, dark burgundy
     .clamp(true);
   return props.samples
     .filter((row) => row.variable === props.variable)

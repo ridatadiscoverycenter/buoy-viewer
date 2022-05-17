@@ -50,7 +50,7 @@
   </DashboardCard>
 
   <DashboardCard width="half">
-    <template #title>Current Conditions: Data</template>
+    <template #title>Current Conditions &mdash; Data</template>
     <template #subtitle>
       This table shows weather data for the timepoint selected with the date
       slider on the map.
