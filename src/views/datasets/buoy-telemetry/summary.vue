@@ -145,6 +145,14 @@
             >ERDDAP</a
           >.
         </p>
+        <p>
+          Additional information about the data variables and QC tests can be
+          found in the
+          <a
+            href="https://pricaimcit.services.brown.edu/erddap/info/buoy_telemetry_0ffe_2dc0_916e/index.html"
+            >ERDDAP dataset info page</a
+          >.
+        </p>
       </div>
     </template>
   </DashboardCard>
