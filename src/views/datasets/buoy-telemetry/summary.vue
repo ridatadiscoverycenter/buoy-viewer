@@ -5,15 +5,18 @@
       <div class="content-container">
         <div class="content">
           This dashboard contains selected real-time climate data from buoys in
-          Narragansett Bay (NB). There may be up to a 12-hour lag in available
-          data. Explore and download more climate variables below, with data
-          from the past three months. This work was funded by the
+          Narragansett Bay (NB). There are three sensor groups deployed on these
+          buoys to measure changes in surface water and air conditions every
+          10–15 minutes. There may be up to a 12-hour lag in available data as
+          data stream into ERDDAP and through an automated QC process. Explore
+          and download more climate variables below, with data available from
+          the past three months. This work was funded by the
           <a href="https://seagrant.gso.uri.edu/">Rhode Island Sea Grant</a> and
           the
           <a href="https://web.uri.edu/rinsfepscor/welcome/"
             >Rhode Island Consortium for Coastal Ecology Assessment, Innovation,
             and Modeling (RI C-AIM)</a
-          >. More text here from URI researchers.
+          >.
         </div>
 
         <img
