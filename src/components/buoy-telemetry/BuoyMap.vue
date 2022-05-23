@@ -26,8 +26,7 @@
 <script setup lang="ts">
 import { computed, inject, onMounted, ref, watch } from "vue";
 import mapboxgl from "mapbox-gl";
-import { scaleSqrt, scaleDiverging } from "d3-scale";
-import { interpolateTurbo } from "d3-scale-chromatic";
+import { scaleSqrt, scaleLinear } from "d3-scale";
 
 import BuoyMarker from "@/assets/illustrations/buoy-marker.svg";
 import { Data } from "../../utils/erddap";
@@ -42,22 +41,25 @@ const store = inject("store") as BuoyStore;
 const props = defineProps<{
   samples: Sample[];
   formattedDate: string;
+  variable: string;
 }>();
 
 const annotatedSamples = computed(() => {
-  const domain = [0, 35];
+  const domain = [-5, 27];
   const sqrtScale = scaleSqrt().domain(domain).range([0.2, 0.7]);
-  const colorScale = scaleDiverging()
+  const colorScale = scaleLinear()
     .domain(domain)
-    .interpolator(interpolateTurbo)
+    .range(["#4682B4", "#E30B5C", "#880808"]) //steel blue, raspberry, dark burgundy
     .clamp(true);
-  return props.samples.map((row) => {
-    return {
-      ...row,
-      color: colorScale(row.value),
-      size: sqrtScale(row.value),
-    };
-  });
+  return props.samples
+    .filter((row) => row.variable === props.variable)
+    .map((row) => {
+      return {
+        ...row,
+        color: colorScale(row.value),
+        size: sqrtScale(row.value),
+      };
+    });
 });
 
 const el = ref<HTMLDivElement>(null);
@@ -69,8 +71,8 @@ onMounted(() => {
   map.value = new mapboxgl.Map({
     container: el.value,
     style: "mapbox://styles/ccv-bot/ckmxra8oi0rsw17mzcbqrktzi",
-    center: [-71.35, 41.59],
-    zoom: 10.1,
+    center: [-71.35, 41.517],
+    zoom: 9.1,
     doubleClickZoom: false,
     scrollZoom: false,
   });
@@ -129,7 +131,7 @@ const updateMarkers = () => {
     el.style.width = elementSize;
     el.style.height = elementSize;
     el.style.backgroundColor = color;
-    el.style.opacity = "0.33";
+    el.style.opacity = "0.5";
     el.style.borderRadius = "100%";
 
     markers.push(
