@@ -21,7 +21,7 @@
         </div>
 
         <img
-          src="/images/buoy_400x250.jpeg"
+          src="/images/buoy-image.png"
           alt="Buoy deployment in Narragansett Bay"
         />
       </div>
