@@ -5,12 +5,13 @@
       <div class="content-container">
         <div class="content">
           This dashboard contains selected real-time climate data from buoys in
-          Narragansett Bay (NB). There are three sensor groups deployed on these
-          buoys to measure changes in surface water and air conditions every
-          10–15 minutes. There may be up to a 12-hour lag in available data as
-          data stream into ERDDAP and through an automated QC process. Explore
-          and download more climate variables below, with data available from
-          the past three months. This work was funded by the
+          Narragansett Bay (NB). Measurements are collected using a suite of
+          sensors, collecting on 10 minute (Gill Maximet weather station, PAR),
+          15 minute (Seabird Hydrocat and ECO), and 3 hour intervals (Seabird
+          Hydrocycle and SUNA). There may be up to a 12-hour lag in available
+          data as data stream into ERDDAP and through an automated QC process.
+          Explore and download more climate variables below, with data available
+          from the past three months. This work was funded by the
           <a href="https://seagrant.gso.uri.edu/">Rhode Island Sea Grant</a> and
           the
           <a href="https://web.uri.edu/rinsfepscor/welcome/"
