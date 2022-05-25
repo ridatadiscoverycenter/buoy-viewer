@@ -58,7 +58,8 @@
     <template #subtitle>
       This table shows Chlorophyll, Nitrate, and Phosphate along with selected
       weather data for the timepoint selected with the date slider on the map.
-      Values update will changes in the map slider.
+      Values update will changes in the map slider. Explore other variables and
+      QC data below!
     </template>
     <template #content>
       <div class="is-size-4 pl-4">
