@@ -142,6 +142,8 @@
           The full dataset used to power this app is available on
           <a
             href="https://pricaimcit.services.brown.edu/erddap/tabledap/da_4566_36f0_124a.html"
+            target="_blank"
+            rel="noreferrer noopener"
             >ERDDAP</a
           >. If using this data, please cite the ERDDAP dataset.
         </p>
