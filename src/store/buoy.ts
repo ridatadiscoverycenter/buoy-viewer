@@ -64,8 +64,8 @@ interface BuoyState extends BuoyConfig {
   coordinates: Coordinate[];
   summary: Summary[];
   variables: Variable[];
-  minDate: string;
-  maxDate: string;
+  minDateRaw: Date;
+  maxDateRaw: Date;
 }
 
 const createStore = (config: BuoyConfig, bustCache = false) => {
@@ -77,8 +77,8 @@ const createStore = (config: BuoyConfig, bustCache = false) => {
         coordinates: [],
         summary: [],
         variables: [],
-        minDate: localISODate(new Date(0)),
-        maxDate: localISODate(new Date()),
+        minDateRaw: new Date(0),
+        maxDateRaw: new Date(),
       };
     },
     actions: {
@@ -123,8 +123,8 @@ const createStore = (config: BuoyConfig, bustCache = false) => {
       // fetch the min/max date for the dataset
       async fetchTimeRange(): Promise<void> {
         const { min, max } = await erddapGet(`/${route}/timerange`);
-        this.minDate = localISODate(new Date(min));
-        this.maxDate = localISODate(new Date(max));
+        this.minDateRaw = new Date(min);
+        this.maxDateRaw = new Date(max);
       },
 
       // fetch the base data in one call if not already loaded
@@ -137,6 +137,26 @@ const createStore = (config: BuoyConfig, bustCache = false) => {
             this.fetchTimeRange(),
           ]);
         }
+      },
+    },
+    getters: {
+      minDate(): string {
+        return localISODate(this.minDateRaw);
+      },
+      maxDate(): string {
+        return localISODate(this.maxDateRaw);
+      },
+      siteCoordinates() {
+        return function (site: string) {
+          const match = this.coordinates.find(
+            ({ station_name }) => station_name === site
+          );
+          if (match) {
+            return [match.longitude, match.latitude];
+          } else {
+            return [0, 0];
+          }
+        };
       },
     },
   });
