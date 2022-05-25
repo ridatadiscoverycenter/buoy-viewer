@@ -29,19 +29,19 @@
   </DashboardCard>
 
   <DashboardCard width="half">
-    <template #title>Current Conditions &mdash; Map</template>
+    <template #title>Current Conditions &mdash; Summary Map</template>
     <template #subtitle>
       Use the date slider to look back in 15 minute intervals for the past 5
       days. After clicking on the slider, use left/right arrow keys to move
-      between intervals. Color markers indicate air temperature at buoys, with
-      cooler temperatures in the blues, and warmer temperatures in the reds.
+      between intervals. Color markers indicate Chlorophyll at buoys, with
+      values ranging from light to dark green (0&ndash;60 ug L-1).
     </template>
     <template #content>
       <div class="map-app-container">
         <BuoyMap
           :samples="selectedSamples"
           :formatted-date="formattedDate"
-          variable="AirTemp"
+          variable="ChlorophyllSurface"
         />
         <DateSlider
           :start-date="startDate"
@@ -54,10 +54,11 @@
   </DashboardCard>
 
   <DashboardCard width="half">
-    <template #title>Current Conditions &mdash; Data</template>
+    <template #title>Current Conditions &mdash; Summary Data</template>
     <template #subtitle>
-      This table shows weather data for the timepoint selected with the date
-      slider on the map.
+      This table shows Chlorophyll, Nitrate, and Phosphate along with selected
+      weather data for the timepoint selected with the date slider on the map.
+      Values update will changes in the map slider.
     </template>
     <template #content>
       <div class="is-size-4 pl-4">
@@ -181,6 +182,9 @@ const endDate = store.maxDateRaw;
 const startDate = new Date(endDate.valueOf() - 5 * 24 * 60 * 60 * 1000);
 
 const variableStr = [
+  "ChlorophyllSurface",
+  "NitrateNSurface",
+  "PhosphateSurface",
   "AirTemp",
   "AirPressure",
   "HumiditySurface",
