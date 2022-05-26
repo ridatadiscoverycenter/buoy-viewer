@@ -33,8 +33,8 @@
     <template #subtitle>
       Use the date slider to look back in 15 minute intervals for the past 5
       days. After clicking on the slider, use left/right arrow keys to move
-      between intervals. Color markers indicate Chlorophyll at buoys, with
-      values ranging from light to dark green (0&ndash;60 ug L-1).
+      between intervals. Color markers indicate Chlorophyll levels at buoys,
+      with values ranging from light to dark green (0&ndash;60 ug L-1).
     </template>
     <template #content>
       <div class="map-app-container">
@@ -56,10 +56,10 @@
   <DashboardCard width="half">
     <template #title>Current Conditions &mdash; Summary Data</template>
     <template #subtitle>
-      This table shows Chlorophyll, Nitrate, and Phosphate along with selected
-      weather data for the timepoint selected with the date slider on the map.
-      Values update will changes in the map slider. Explore other variables and
-      QC data below!
+      This table shows Chlorophyll, Nitrate, and Phosphate levels along with
+      selected weather data for the timepoint selected with the date slider on
+      the map. Values update with changes in the map slider. Explore other
+      variables and QC data below!
     </template>
     <template #content>
       <div class="is-size-4 pl-4">
