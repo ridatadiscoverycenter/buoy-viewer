@@ -73,6 +73,7 @@ onMounted(() => {
     style: "mapbox://styles/ccv-bot/ckmxra8oi0rsw17mzcbqrktzi",
     center: [-71.35, 41.517],
     zoom: 9.1,
+    // centered with anticipation of the third buoy south of Newport
     doubleClickZoom: false,
     scrollZoom: false,
   });

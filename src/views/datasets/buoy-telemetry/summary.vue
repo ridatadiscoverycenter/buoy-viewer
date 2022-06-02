@@ -12,9 +12,17 @@
           available data as data stream into ERDDAP and through an automated QC
           process. Explore and download more climate variables below, with data
           available from the past three months. This work was funded by the
-          <a href="https://seagrant.gso.uri.edu/">Rhode Island Sea Grant</a> and
-          the
-          <a href="https://web.uri.edu/rinsfepscor/welcome/"
+          <a
+            href="https://seagrant.gso.uri.edu"
+            target="_blank"
+            rel="noreferrer noopener"
+            >Rhode Island Sea Grant</a
+          >
+          and the
+          <a
+            href="https://web.uri.edu/rinsfepscor/welcome/"
+            target="_blank"
+            rel="noreferrer noopener"
             >Rhode Island Consortium for Coastal Ecology Assessment, Innovation,
             and Modeling (RI C-AIM)</a
           >.
@@ -62,7 +70,7 @@
       variables and QC data below!
     </template>
     <template #content>
-      <div class="is-size-4 pl-4">
+      <div class="is-size-5 pl-4">
         <span>{{ formattedDate }}</span>
       </div>
       <table class="table mx-auto is-striped is-narrow-mobile">
@@ -140,7 +148,10 @@
         </div>
         <p>
           Learn more about the
-          <a href="https://web.uri.edu/rinsfepscor/research/"
+          <a
+            href="https://web.uri.edu/rinsfepscor/research/"
+            target="_blank"
+            rel="noreferrer noopener"
             >NSF-funded RI-C-AIM program</a
           >.
         </p>
@@ -148,6 +159,8 @@
           The full dataset used to power this app is available on
           <a
             href="https://pricaimcit.services.brown.edu/erddap/search/index.html?page=1&itemsPerPage=1000&searchFor=Buoy+Telemetry"
+            target="_blank"
+            rel="noreferrer noopener"
             >ERDDAP</a
           >.
         </p>
@@ -156,6 +169,8 @@
           found in the
           <a
             href="https://pricaimcit.services.brown.edu/erddap/info/buoy_telemetry_0ffe_2dc0_916e/index.html"
+            target="_blank"
+            rel="noreferrer noopener"
             >ERDDAP dataset info page</a
           >.
         </p>
@@ -233,6 +248,7 @@ const selectedSamples = computed(() => {
           sample.value !== null
         );
       });
+
       if (foundSample) {
         res.push(foundSample);
         return;
