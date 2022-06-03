@@ -142,10 +142,7 @@
         </div>
         <p>
           Learn more about the
-          <ExternalLink
-            href="https://web.uri.edu/rinsfepscor/research/"
-            target="_blank"
-            rel="noreferrer noopener"
+          <ExternalLink href="https://web.uri.edu/rinsfepscor/research/"
             >NSF-funded RI-C-AIM program</ExternalLink
           >.
         </p>
@@ -153,8 +150,6 @@
           The full dataset used to power this app is available on
           <ExternalLink
             href="https://pricaimcit.services.brown.edu/erddap/search/index.html?page=1&itemsPerPage=1000&searchFor=Buoy+Telemetry"
-            target="_blank"
-            rel="noreferrer noopener"
             >ERDDAP</ExternalLink
           >.
         </p>
@@ -163,8 +158,6 @@
           found in the
           <ExternalLink
             href="https://pricaimcit.services.brown.edu/erddap/info/buoy_telemetry_0ffe_2dc0_916e/index.html"
-            target="_blank"
-            rel="noreferrer noopener"
             >ERDDAP dataset info page</ExternalLink
           >.
         </p>

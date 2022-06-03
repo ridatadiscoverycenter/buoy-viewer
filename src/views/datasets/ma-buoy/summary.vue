@@ -4,19 +4,16 @@
       <p>
         This dataset spans from {{ store.minDate.slice(0, 4) }} to
         {{ store.maxDate.slice(0, 4) }} and was collected by the
-        <a
+        <ExternalLink
           href="http://www.dem.ri.gov/programs/emergencyresponse/bart/stations.php"
-          target="_blank"
-          rel="noreferrer noopener"
         >
-          Narragansett Bay Fixed Station Monitoring Network (NBFSMN)</a
+          Narragansett Bay Fixed Station Monitoring Network
+          (NBFSMN)</ExternalLink
         >
         with
-        <a
+        <ExternalLink
           href="https://www.mass.gov/orgs/massachusetts-department-of-environmental-protection"
-          target="_blank"
-          rel="noreferrer noopener"
-          >MassDEP</a
+          >MassDEP</ExternalLink
         >
         as the lead agency. The heatmap below summarizes the number of
         observations collected for each month for different variables. Use this
@@ -44,11 +41,9 @@
     <template #learn-more>
       <p>
         The historical data available on this site has been compiled from the
-        <a
+        <ExternalLink
           href="https://www.mass.gov/info-details/mount-hope-bay-marine-buoy-continuous-probe-data#data-files-for-mount-hope-bay-marine-buoys"
-          target="_blank"
-          rel="noreferrer noopener"
-          >Massachusetts Department of Environmental Protection</a
+          >Massachusetts Department of Environmental Protection</ExternalLink
         >. The seasonal monitoring program is part of the Narragansett Bay
         Fixed-Site Monitoring Network.
       </p>
@@ -57,11 +52,9 @@
         Each data column in this dataset has a matching
         <em>Qualifiers</em> column with notes on the data collection and
         adjustments made. See
-        <a
+        <ExternalLink
           href="https://pricaimcit.services.brown.edu/erddap/tabledap/ma_buoy_data_a6c9_12eb_1ec5.html"
-          target="_blank"
-          rel="noreferrer noopener"
-          >ERDDAP</a
+          >ERDDAP</ExternalLink
         >
         for the full dataset with qualifiers.
       </p>
@@ -76,6 +69,7 @@ import StationHeatmap from "@/components/buoy/StationHeatmap.vue";
 import BuoyDashboard from "@/components/buoy/SummaryDashboard.vue";
 
 import { BuoyStore } from "../../../store/buoy";
+import ExternalLink from "../../../components/base/ExternalLink.vue";
 const store = inject("store") as BuoyStore;
 
 const scenarios = [
