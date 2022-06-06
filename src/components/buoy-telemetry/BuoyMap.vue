@@ -44,12 +44,21 @@ const props = defineProps<{
   variable: string;
 }>();
 
+const config = {
+  chlorophyll: {
+    varDomain: [0, 45],
+    markerSize: [0.25, 0.65],
+    markerColors: ["#93C572", "#32CD32", "#355E3B"], // pistachio, lime green, hunter green
+  },
+};
+
 const annotatedSamples = computed(() => {
-  const domain = [0, 45];
-  const sqrtScale = scaleSqrt().domain(domain).range([0.2, 0.65]);
+  const { varDomain, markerSize, markerColors } = config.chlorophyll;
+  const domain = varDomain;
+  const sqrtScale = scaleSqrt().domain(domain).range(markerSize);
   const colorScale = scaleLinear()
     .domain(domain)
-    .range(["#93C572", "#32CD32", "#355E3B"]) // pistachio, lime green, hunter green
+    .range(markerColors)
     .clamp(true);
   return props.samples
     .filter((row) => row.variable === props.variable)
@@ -73,6 +82,7 @@ onMounted(() => {
     style: "mapbox://styles/ccv-bot/ckmxra8oi0rsw17mzcbqrktzi",
     center: [-71.35, 41.517],
     zoom: 9.1,
+    // centered with anticipation of the third buoy south of Newport
     doubleClickZoom: false,
     scrollZoom: false,
   });

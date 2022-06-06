@@ -12,11 +12,13 @@
           available data as data stream into ERDDAP and through an automated QC
           process. Explore and download more climate variables below, with data
           available from the past three months. This work was funded by the
-          <a href="https://seagrant.gso.uri.edu/">Rhode Island Sea Grant</a> and
-          the
-          <a href="https://web.uri.edu/rinsfepscor/welcome/"
+          <ExternalLink href="https://seagrant.gso.uri.edu"
+            >Rhode Island Sea Grant</ExternalLink
+          >
+          and the
+          <ExternalLink href="https://web.uri.edu/rinsfepscor/welcome/"
             >Rhode Island Consortium for Coastal Ecology Assessment, Innovation,
-            and Modeling (RI C-AIM)</a
+            and Modeling (RI C-AIM)</ExternalLink
           >.
         </div>
 
@@ -62,7 +64,7 @@
       variables and QC data below!
     </template>
     <template #content>
-      <div class="is-size-4 pl-4">
+      <div class="is-size-5 pl-4">
         <span>{{ formattedDate }}</span>
       </div>
       <table class="table mx-auto is-striped is-narrow-mobile">
@@ -140,23 +142,23 @@
         </div>
         <p>
           Learn more about the
-          <a href="https://web.uri.edu/rinsfepscor/research/"
-            >NSF-funded RI-C-AIM program</a
+          <ExternalLink href="https://web.uri.edu/rinsfepscor/research/"
+            >NSF-funded RI-C-AIM program</ExternalLink
           >.
         </p>
         <p>
           The full dataset used to power this app is available on
-          <a
+          <ExternalLink
             href="https://pricaimcit.services.brown.edu/erddap/search/index.html?page=1&itemsPerPage=1000&searchFor=Buoy+Telemetry"
-            >ERDDAP</a
+            >ERDDAP</ExternalLink
           >.
         </p>
         <p>
           Additional information about the data variables and QC tests can be
           found in the
-          <a
+          <ExternalLink
             href="https://pricaimcit.services.brown.edu/erddap/info/buoy_telemetry_0ffe_2dc0_916e/index.html"
-            >ERDDAP dataset info page</a
+            >ERDDAP dataset info page</ExternalLink
           >.
         </p>
       </div>
@@ -176,6 +178,7 @@ import BuoyMap from "@/components/buoy-telemetry/BuoyMap.vue";
 
 import { formatVariable } from "../../../utils/utils";
 import { BuoyStore } from "../../../store/buoy";
+import ExternalLink from "../../../components/base/ExternalLink.vue";
 
 const store = inject("store") as BuoyStore;
 
@@ -233,6 +236,7 @@ const selectedSamples = computed(() => {
           sample.value !== null
         );
       });
+
       if (foundSample) {
         res.push(foundSample);
         return;

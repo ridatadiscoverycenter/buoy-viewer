@@ -22,11 +22,9 @@
     <template #learn-more>
       The Ocean State Ocean Model is an ongoing project, learn more about its
       history, current status, publications, and how to use the data with the
-      <a
+      <ExternalLink
         href="https://riddc-jupyter-book.web.app/notebooks/fox-kemper/osom_intro.html"
-        target="_blank"
-        rel="noreferrer noopener"
-        >RIDDC Data Articles</a
+        >RIDDC Data Articles</ExternalLink
       >.
     </template>
   </BuoyDashboard>
@@ -39,6 +37,7 @@ import VariableHeatmap from "@/components/buoy/VariableHeatmap.vue";
 import BuoyDashboard from "@/components/buoy/SummaryDashboard.vue";
 
 import { BuoyStore } from "../../../store/buoy";
+import ExternalLink from "../../../components/base/ExternalLink.vue";
 const store = inject("store") as BuoyStore;
 
 const scenarios = [
