@@ -44,25 +44,21 @@ const props = defineProps<{
   variable: string;
 }>();
 
-const varDomain = {
-  chlorophyllDomain: [0, 45],
-  // add other vars here as needed
-};
-const sizeRange = {
-  chlorophyllSizeRange: [0.2, 0.65],
-};
-const colorRange = {
-  chlorophyllColorRange: ["#93C572", "#32CD32", "#355E3B"],
+const config = {
+  chlorophyll: {
+    varDomain: [0, 45],
+    markerSize: [0.25, 0.65],
+    markerColors: ["#93C572", "#32CD32", "#355E3B"], // pistachio, lime green, hunter green
+  },
 };
 
 const annotatedSamples = computed(() => {
-  const domain = varDomain.chlorophyllDomain;
-  const sqrtScale = scaleSqrt()
-    .domain(domain)
-    .range(sizeRange.chlorophyllSizeRange);
+  const { varDomain, markerSize, markerColors } = config.chlorophyll;
+  const domain = varDomain;
+  const sqrtScale = scaleSqrt().domain(domain).range(markerSize);
   const colorScale = scaleLinear()
     .domain(domain)
-    .range(colorRange.chlorophyllColorRange) // pistachio, lime green, hunter green
+    .range(markerColors)
     .clamp(true);
   return props.samples
     .filter((row) => row.variable === props.variable)
