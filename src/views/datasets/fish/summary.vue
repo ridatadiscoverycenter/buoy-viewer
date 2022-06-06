@@ -28,6 +28,7 @@
             id="station"
             v-model="station"
             class="multiselect"
+            :allow-empty="false"
             :options="store.stations"
           ></multiselect>
         </div>
@@ -56,31 +57,23 @@
     <template #subtitle
       ><p>
         The data available on this site has been compiled from the
-        <a
-          href="https://web.uri.edu/gso/research/fish-trawl/"
-          target="_blank"
-          rel="noreferrer noopener"
+        <ExternalLink href="https://web.uri.edu/gso/research/fish-trawl/"
           >University of Rhode Island Graduate School of Oceanography Fish Trawl
-          Survey</a
+          Survey</ExternalLink
         >.
       </p>
       <p>
         <strong>To cite this data</strong>:
-        <a
-          href="https://web.uri.edu/gso/research/fish-trawl/data/"
-          target="_blank"
-          rel="noreferrer noopener"
-          >Fish Trawl Data Page</a
+        <ExternalLink href="https://web.uri.edu/gso/research/fish-trawl/data/"
+          >Fish Trawl Data Page</ExternalLink
         >
       </p>
       <br />
       <p>
         The data has also been made available on
-        <a
+        <ExternalLink
           href="https://pricaimcit.services.brown.edu/erddap/search/index.html?page=1&itemsPerPage=1000&searchFor=Fish+Trawl"
-          target="_blank"
-          rel="noreferrer noopener"
-          >ERDDAP</a
+          >ERDDAP</ExternalLink
         >.
       </p>
     </template>
@@ -97,6 +90,7 @@ import FishHeatMap from "@/components/fish/FishHeatMap.vue";
 import FishExploreForm from "@/components/fish/FishExploreForm.vue";
 
 import { useFishStore } from "../../../store/fish";
+import ExternalLink from "../../../components/base/ExternalLink.vue";
 const store = useFishStore();
 
 const station = ref(store.stations[0]);

@@ -19,37 +19,21 @@
     <template #learn-more>
       <p>
         The historical data available on this site has been compiled from the
-        <a
-          href="https://web.uri.edu/plankton/"
-          target="_blank"
-          rel="noreferrer noopener"
-          >Narragansett Bay Time Series</a
+        <ExternalLink href="https://web.uri.edu/plankton/"
+          >Narragansett Bay Time Series</ExternalLink
         >
         and
-        <a
-          href="http://www.nabats.org/"
-          target="_blank"
-          rel="noreferrer noopener"
-          >NABATS.org</a
-        >.
+        <ExternalLink href="http://www.nabats.org/">NABATS.org</ExternalLink>.
       </p>
       <p>
         <strong>To cite this data</strong>:
-        <a
-          href="https://web.uri.edu/gso/research/plankton/data/"
-          target="_blank"
-          rel="noreferrer noopener"
-          >Plankton Time Data Page</a
+        <ExternalLink href="https://web.uri.edu/gso/research/plankton/data/"
+          >Plankton Time Data Page</ExternalLink
         >, and for data prior to 1999: please honor the contributions of Prof.
         Smayda by properly citing the 1959 to 1997 NABATS data as: "Smayda, T.J.
         &amp; the Bunker C community (1959-1997). Narragansett Bay Plankton Time
         Series. Graduate School of Oceanography, URI. Data available at:
-        <a
-          href="http://www.nabats.org/"
-          target="_blank"
-          rel="noreferrer noopener"
-          >NABATS.org</a
-        >
+        <ExternalLink href="http://www.nabats.org/">NABATS.org</ExternalLink>
       </p>
     </template>
   </BuoyDashboard>
@@ -62,6 +46,7 @@ import VariableHeatmap from "@/components/buoy/VariableHeatmap.vue";
 import BuoyDashboard from "@/components/buoy/SummaryDashboard.vue";
 
 import { BuoyStore } from "../../../store/buoy";
+import ExternalLink from "../../../components/base/ExternalLink.vue";
 const store = inject("store") as BuoyStore;
 
 const scenarios = [

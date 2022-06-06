@@ -121,6 +121,11 @@ const DATASETS = [
     available: true,
   },
   {
+    name: "Real Time Buoy Data",
+    route: "buoy-telemetry",
+    available: true,
+  },
+  {
     name: "Ocean State Ocean Model",
     route: "osom",
     available: true,

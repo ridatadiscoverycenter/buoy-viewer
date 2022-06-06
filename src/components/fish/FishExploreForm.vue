@@ -8,6 +8,7 @@
           v-model="selectedSpecies"
           class="multiselect"
           :options="store.species"
+          :allow-empty="false"
         ></multiselect>
       </div>
     </template>

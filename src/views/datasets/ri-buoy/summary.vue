@@ -3,41 +3,25 @@
     <template #available-data>
       This dataset spans from {{ store.minDate.slice(0, 4) }} to
       {{ store.maxDate.slice(0, 4) }} and was collected by the
-      <a
+      <ExternalLink
         href="http://www.dem.ri.gov/programs/emergencyresponse/bart/stations.php"
-        target="_blank"
-        rel="noreferrer noopener"
-        >Narragansett Bay Fixed Station Monitoring Network (NBFSMN)</a
+        >Narragansett Bay Fixed Station Monitoring Network
+        (NBFSMN)</ExternalLink
       >
       with
-      <a
-        href="http://www.dem.ri.gov/programs/water/"
-        target="_blank"
-        rel="noreferrer noopener"
-        >RIDEM-OWR</a
+      <ExternalLink href="http://www.dem.ri.gov/programs/water/"
+        >RIDEM-OWR</ExternalLink
       >
       as the lead agency. Agencies involved in collection and maintenance of the
       data are: RIDEM-OWR,
-      <a
+      <ExternalLink
         href="https://web.uri.edu/gso/research/marine-ecosystems-research-laboratory/"
-        target="_blank"
-        rel="noreferrer noopener"
-        >URI/GSO MERL</a
-      >,
-      <a
-        href="https://www.narrabay.com/"
-        target="_blank"
-        rel="noreferrer noopener"
-        >NBC</a
-      >,
-      <a href="http://nbnerr.org/" target="_blank" rel="noreferrer noopener"
-        >NBNERR</a
-      >, and
-      <a
+        >URI/GSO MERL</ExternalLink
+      >, <ExternalLink href="https://www.narrabay.com/">NBC</ExternalLink>,
+      <ExternalLink href="http://nbnerr.org/">NBNERR</ExternalLink>, and
+      <ExternalLink
         href="https://www.mass.gov/orgs/massachusetts-department-of-environmental-protection"
-        target="_blank"
-        rel="noreferrer noopener"
-        >MassDEP</a
+        >MassDEP</ExternalLink
       >. The heatmap below summarizes the number of observations collected for
       each month for different variables. Use this heatmap to help you decide
       what data you want to visualize or download. When you have an idea, go
@@ -52,11 +36,9 @@
 
     <template #learn-more>
       The historical data available on this site has been compiled from the
-      <a
+      <ExternalLink
         href="http://www.dem.ri.gov/programs/emergencyresponse/bart/stations.php"
-        target="_blank"
-        rel="noreferrer noopener"
-        >Narragansett Bay Fixed-Site Monitoring Network</a
+        >Narragansett Bay Fixed-Site Monitoring Network</ExternalLink
       >. See <a href="/nbfsmn_disclaimer.pdf">the disclaimer</a> for more
       information on the data as well as how to cite it.
     </template>
@@ -70,6 +52,7 @@ import StationHeatmap from "@/components/buoy/StationHeatmap.vue";
 import BuoyDashboard from "@/components/buoy/SummaryDashboard.vue";
 
 import { BuoyStore } from "../../../store/buoy";
+import ExternalLink from "../../../components/base/ExternalLink.vue";
 const store = inject("store") as BuoyStore;
 
 const scenarios = [

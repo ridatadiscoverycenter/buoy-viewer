@@ -19,18 +19,12 @@ $primary-color: $link;
   flex-direction: column;
 }
 
-// utility to isolate stacks
-.is-isolated {
-  isolation: isolate;
-}
-
 /* used by download form and explore form fields */
 .control-item {
   @extend .py-2;
   @extend .px-2;
   width: 100%;
   flex-grow: 1;
-  min-width: 250px;
 }
 
 // have buttons wrap lines - this is overwriting bulma

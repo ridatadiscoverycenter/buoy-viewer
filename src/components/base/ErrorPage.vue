@@ -1,5 +1,5 @@
 <template>
-  <main class="error-container is-isolated">
+  <main class="error-container">
     <div class="error-content">
       <i class="fas fa-life-ring mr-2 has-text-danger" />
       <p>{{ message }}</p>
@@ -49,7 +49,6 @@ const goBack = () => {
   top: 0;
   left: 0;
   background: white;
-  z-index: 2;
 }
 .error-content {
   font-size: 3rem;

@@ -1,8 +1,5 @@
 <template>
-  <div
-    :class="[collapsed ? 'dashboard-grid-collapsed' : 'dashboard-grid']"
-    class="is-isolated"
-  >
+  <div :class="[collapsed ? 'dashboard-grid-collapsed' : 'dashboard-grid']">
     <aside class="sidebar">
       <SideBar @toggle="collapsed = !collapsed" />
     </aside>
