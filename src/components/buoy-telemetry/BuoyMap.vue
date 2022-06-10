@@ -13,13 +13,7 @@
   <img
     ref="imageEl"
     :src="BuoyMarker"
-    style="
-      visibility: hidden;
-      height: 15px;
-      width: 15px;
-      position: absolute;
-      top: 0;
-    "
+    style="visibility: hidden; position: absolute; top: 0"
   />
 </template>
 
