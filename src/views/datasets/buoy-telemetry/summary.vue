@@ -126,7 +126,27 @@
     </template>
   </DashboardCard>
 
-  <DashboardCard width="one-third" :height="1">
+  <DashboardCard :scenarios="scenarios" width="one-third" :height="1">
+    <template #title> Not sure what to explore? </template>
+    <template #subtitle>
+      Here are a few pre-selected scenarios for you. Just pick one and start
+      exploring.
+    </template>
+    <template #content>
+      <div class="is-flex-column">
+        <router-link
+          v-for="(scenario, key) in scenarios"
+          :key="key"
+          class="button is-primary my-1"
+          :to="generateQuery(scenario.query)"
+        >
+          {{ scenario.name }}
+        </router-link>
+      </div>
+    </template>
+  </DashboardCard>
+
+  <DashboardCard width="full" :height="1">
     <template #title>Learn more</template>
 
     <template #content>
@@ -182,8 +202,46 @@ import ExternalLink from "../../../components/base/ExternalLink.vue";
 
 const store = inject("store") as BuoyStore;
 
+const generateQuery = (query) => {
+  const queryParams = Object.entries(query)
+    .map(([key, val]) => `${key}=${val}`)
+    .join("&");
+  return `/dataset/${store.name}/dashboard?${queryParams}`;
+};
+
 const endDate = store.maxDateRaw;
 const startDate = new Date(endDate.valueOf() - 5 * 24 * 60 * 60 * 1000);
+const monthDate = new Date(endDate.valueOf() - 30 * 24 * 60 * 60 * 1000);
+
+const scenarios = [
+  {
+    name: "Phospate and Nitrate, past month",
+    query: {
+      ids: "Buoy-620,Buoy-720",
+      variables: "PhosphateSurface,NitrateNSurface",
+      end: endDate.toISOString(),
+      start: monthDate.toISOString(),
+    },
+  },
+  {
+    name: "Sea Water Turbidity and Salinity, past month",
+    query: {
+      ids: "Buoy-620,Buoy-720",
+      variables: "TurbiditySurface, SalinitySurface",
+      end: endDate.toISOString(),
+      start: monthDate.toISOString(),
+    },
+  },
+  {
+    name: "Dissolved Oxygen and Specific Conductivity, past month",
+    query: {
+      ids: "Buoy-620,Buoy-720",
+      variables: "O2Surface,SpCondSurface",
+      end: endDate.toISOString(),
+      start: monthDate.toISOString(),
+    },
+  },
+];
 
 const variableStr = [
   "ChlorophyllSurface",
