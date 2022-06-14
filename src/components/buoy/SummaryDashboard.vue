@@ -26,8 +26,8 @@
   <DashboardCard width="half" :height="1">
     <template #title> Not sure what to explore? </template>
     <template #subtitle>
-      Here are a few pre-selected scenarios for you. Just pick one and start
-      exploring.
+      Here are a few pre-selected scenarios for you. Pick one to start exploring
+      and then play with additional variables and date ranges on the next page.
     </template>
     <template #content>
       <div class="is-flex-column">
