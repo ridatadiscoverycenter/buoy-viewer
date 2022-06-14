@@ -42,7 +42,7 @@ const legendSpec = computed(() =>
     ? [
         {
           title: "Buoys",
-          orient: "bottom-left",
+          orient: "bottom",
           type: "symbol",
           symbolType: "circle",
           fill: "color",
