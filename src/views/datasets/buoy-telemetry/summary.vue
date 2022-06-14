@@ -129,8 +129,8 @@
   <DashboardCard :scenarios="scenarios" width="one-third" :height="1">
     <template #title> Not sure what to explore? </template>
     <template #subtitle>
-      Here are a few pre-selected scenarios for you. Just pick one and start
-      exploring.
+      Here are a few pre-selected scenarios for you. Pick one to start exploring
+      and then play with additional variables and date ranges.
     </template>
     <template #content>
       <div class="is-flex-column">
@@ -215,7 +215,7 @@ const monthDate = new Date(endDate.valueOf() - 30 * 24 * 60 * 60 * 1000);
 
 const scenarios = [
   {
-    name: "Phospate and Nitrate, past month",
+    name: "Changes in Phospate and Nitrate levels over the last 30 days",
     query: {
       ids: "Buoy-620,Buoy-720",
       variables: "PhosphateSurface,NitrateNSurface",
@@ -224,7 +224,7 @@ const scenarios = [
     },
   },
   {
-    name: "Sea Water Turbidity and Salinity, past month",
+    name: "Changes in Sea Water Turbidity and Salinity over the last 30 days",
     query: {
       ids: "Buoy-620,Buoy-720",
       variables: "TurbiditySurface, SalinitySurface",
@@ -233,7 +233,7 @@ const scenarios = [
     },
   },
   {
-    name: "Dissolved Oxygen and Specific Conductivity, past month",
+    name: "Changes in Dissolved Oxygen levels and Specific Conductivity over the last 30 days",
     query: {
       ids: "Buoy-620,Buoy-720",
       variables: "O2Surface,SpCondSurface",

@@ -57,7 +57,7 @@ const store = inject("store") as BuoyStore;
 
 const scenarios = [
   {
-    name: "N. Prudence and Conimicut Pt, Water Temperature, 2010-2011",
+    name: "Changes in Water Temperature at N. Prudence and Conimicut Pt. from 2010-2011",
     query: {
       ids: "bid2,bid3",
       variables: "WaterTempSurface,WaterTempBottom",
@@ -66,7 +66,7 @@ const scenarios = [
     },
   },
   {
-    name: "Greenwich Bay and GSO Dock, Depth, 2008-2009",
+    name: "Changes in Depth at Greenwich Bay and GSO Dock from 2008-2009",
     query: {
       ids: "bid15,bid17",
       variables: "depth",

@@ -74,7 +74,7 @@ const store = inject("store") as BuoyStore;
 
 const scenarios = [
   {
-    name: "Cole and Taunton, Depth, 2017",
+    name: "Changes in Depth at Cole and Taunton in 2017",
     query: {
       ids: "bid101,bid102",
       variables: "depth",
@@ -83,7 +83,7 @@ const scenarios = [
     },
   },
   {
-    name: "Cole and Taunton, Water Temperature, 2018",
+    name: "Changes in Water Temperature at Cole and Taunton in 2018",
     query: {
       ids: "bid101,bid102",
       variables: "WaterTempSurface,WaterTempBottom",

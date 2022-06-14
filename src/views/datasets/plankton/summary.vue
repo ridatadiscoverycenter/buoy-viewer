@@ -51,7 +51,7 @@ const store = inject("store") as BuoyStore;
 
 const scenarios = [
   {
-    name: "Water Temperature, 2017-2018",
+    name: "Changes in Water Temperature from 2017-2018",
     query: {
       ids: "bid21",
       variables: "WaterTempSurface,WaterTempBottom",
@@ -60,7 +60,7 @@ const scenarios = [
     },
   },
   {
-    name: "Silica, 2003-2009",
+    name: "Changes in Silica levels from 2003-2009",
     query: {
       ids: "bid21",
       variables: "SilicaBottom,SilicaSurface",
