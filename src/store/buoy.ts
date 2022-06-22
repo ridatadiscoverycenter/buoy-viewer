@@ -15,6 +15,7 @@ const MODEL_LINEWIDTH = 0.8;
 const MEASUREMENT_LINEWIDTH = 1.8;
 
 const CONFIG = {
+  // data from 2003-2019
   "ri-buoy": {
     name: "ri-buoy",
     route: "buoy",
