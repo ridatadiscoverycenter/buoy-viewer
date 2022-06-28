@@ -227,7 +227,7 @@ const scenarios = [
     name: "Changes in Dissolved Oxygen and Salinity levels over the last 30 days",
     query: {
       ids: "Buoy-620,Buoy-720",
-      variables: "O2Surface, SalinitySurface",
+      variables: "O2Surface,SalinitySurface",
       end: endDate.toISOString(),
       start: monthDate.toISOString(),
     },
