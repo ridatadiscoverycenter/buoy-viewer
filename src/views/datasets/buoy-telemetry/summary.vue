@@ -224,19 +224,19 @@ const scenarios = [
     },
   },
   {
-    name: "Changes in Sea Water Turbidity and Salinity over the last 30 days",
+    name: "Changes in Dissolved Oxygen and Salinity levels over the last 30 days",
     query: {
       ids: "Buoy-620,Buoy-720",
-      variables: "TurbiditySurface, SalinitySurface",
+      variables: "O2Surface, SalinitySurface",
       end: endDate.toISOString(),
       start: monthDate.toISOString(),
     },
   },
   {
-    name: "Changes in Dissolved Oxygen levels and Specific Conductivity over the last 30 days",
+    name: "Changes in Dissolved Oxygen and Nitrate levels over the last 30 days",
     query: {
       ids: "Buoy-620,Buoy-720",
-      variables: "O2Surface,SpCondSurface",
+      variables: "O2Surface,NitrateNSurface",
       end: endDate.toISOString(),
       start: monthDate.toISOString(),
     },
