@@ -212,10 +212,12 @@ const generateQuery = (query) => {
 const endDate = store.maxDateRaw;
 const startDate = new Date(endDate.valueOf() - 5 * 24 * 60 * 60 * 1000);
 const monthDate = new Date(endDate.valueOf() - 30 * 24 * 60 * 60 * 1000);
+const twomonthDate = new Date(endDate.valueOf() - 60 * 24 * 60 * 60 * 1000);
+const threemonthDate = new Date(endDate.valueOf() - 90 * 24 * 60 * 60 * 1000);
 
 const scenarios = [
   {
-    name: "Changes in Phospate and Nitrate levels over the last 30 days",
+    name: "Changes in Phospate and Nitrate levels over the last month",
     query: {
       ids: "Buoy-620,Buoy-720",
       variables: "PhosphateSurface,NitrateNSurface",
@@ -224,21 +226,21 @@ const scenarios = [
     },
   },
   {
-    name: "Changes in Dissolved Oxygen and Salinity levels over the last 30 days",
+    name: "Changes in Dissolved Oxygen and Salinity levels over the last two months",
     query: {
       ids: "Buoy-620,Buoy-720",
       variables: "O2Surface,SalinitySurface",
       end: endDate.toISOString(),
-      start: monthDate.toISOString(),
+      start: twomonthDate.toISOString(),
     },
   },
   {
-    name: "Changes in Dissolved Oxygen and Nitrate levels over the last 30 days",
+    name: "Changes in Dissolved Oxygen and Nitrate levels over the last three months",
     query: {
       ids: "Buoy-620,Buoy-720",
       variables: "O2Surface,NitrateNSurface",
       end: endDate.toISOString(),
-      start: monthDate.toISOString(),
+      start: threemonthDate.toISOString(),
     },
   },
 ];
