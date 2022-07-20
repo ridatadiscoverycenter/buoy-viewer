@@ -17,6 +17,13 @@
   />
 </template>
 
+<template>
+  <div id="app" class="p-10 text-xl">
+    <!-- <BaseIcon name="zero" class="text-blue-500" /> Home
+    <BaseIcon name="one" class="text-blue-500" /> Profile -->
+  </div>
+</template>
+
 <script setup lang="ts">
 import { computed, inject, onMounted, ref, watch } from "vue";
 import mapboxgl from "mapbox-gl";
