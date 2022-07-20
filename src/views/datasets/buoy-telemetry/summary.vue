@@ -189,6 +189,7 @@
 <script setup lang="ts">
 import { computed, inject, ref } from "vue";
 import { scaleLinear } from "d3-scale";
+import { subMonths } from "date-fns";
 
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import DownloadForm from "@/components/buoy/DownloadForm.vue";
@@ -211,9 +212,9 @@ const generateQuery = (query) => {
 
 const endDate = store.maxDateRaw;
 const startDate = new Date(endDate.valueOf() - 5 * 24 * 60 * 60 * 1000);
-const monthDate = new Date(endDate.valueOf() - 30 * 24 * 60 * 60 * 1000);
-const twomonthDate = new Date(endDate.valueOf() - 60 * 24 * 60 * 60 * 1000);
-const threemonthDate = new Date(endDate.valueOf() - 90 * 24 * 60 * 60 * 1000);
+const monthDate = subMonths(endDate, 1);
+const twoMonthDate = subMonths(endDate, 2);
+const threeMonthDate = subMonths(endDate, 3);
 
 const scenarios = [
   {
@@ -231,7 +232,7 @@ const scenarios = [
       ids: "Buoy-620,Buoy-720",
       variables: "O2Surface,SalinitySurface",
       end: endDate.toISOString(),
-      start: twomonthDate.toISOString(),
+      start: twoMonthDate.toISOString(),
     },
   },
   {
@@ -240,7 +241,7 @@ const scenarios = [
       ids: "Buoy-620,Buoy-720",
       variables: "O2Surface,NitrateNSurface",
       end: endDate.toISOString(),
-      start: threemonthDate.toISOString(),
+      start: threeMonthDate.toISOString(),
     },
   },
 ];
