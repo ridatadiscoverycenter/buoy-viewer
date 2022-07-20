@@ -189,6 +189,7 @@
 <script setup lang="ts">
 import { computed, inject, ref } from "vue";
 import { scaleLinear } from "d3-scale";
+import { subMonths } from "date-fns";
 
 import DashboardCard from "@/components/base/DashboardCard.vue";
 import DownloadForm from "@/components/buoy/DownloadForm.vue";
@@ -211,11 +212,13 @@ const generateQuery = (query) => {
 
 const endDate = store.maxDateRaw;
 const startDate = new Date(endDate.valueOf() - 5 * 24 * 60 * 60 * 1000);
-const monthDate = new Date(endDate.valueOf() - 30 * 24 * 60 * 60 * 1000);
+const monthDate = subMonths(endDate, 1);
+const twoMonthDate = subMonths(endDate, 2);
+const threeMonthDate = subMonths(endDate, 3);
 
 const scenarios = [
   {
-    name: "Changes in Phospate and Nitrate levels over the last 30 days",
+    name: "Changes in Phospate and Nitrate levels over the last month",
     query: {
       ids: "Buoy-620,Buoy-720",
       variables: "PhosphateSurface,NitrateNSurface",
@@ -224,21 +227,21 @@ const scenarios = [
     },
   },
   {
-    name: "Changes in Sea Water Turbidity and Salinity over the last 30 days",
+    name: "Changes in Dissolved Oxygen and Salinity levels over the last two months",
     query: {
       ids: "Buoy-620,Buoy-720",
-      variables: "TurbiditySurface, SalinitySurface",
+      variables: "O2Surface,SalinitySurface",
       end: endDate.toISOString(),
-      start: monthDate.toISOString(),
+      start: twoMonthDate.toISOString(),
     },
   },
   {
-    name: "Changes in Dissolved Oxygen levels and Specific Conductivity over the last 30 days",
+    name: "Changes in Dissolved Oxygen and Nitrate levels over the last three months",
     query: {
       ids: "Buoy-620,Buoy-720",
-      variables: "O2Surface,SpCondSurface",
+      variables: "O2Surface,NitrateNSurface",
       end: endDate.toISOString(),
-      start: monthDate.toISOString(),
+      start: threeMonthDate.toISOString(),
     },
   },
 ];
