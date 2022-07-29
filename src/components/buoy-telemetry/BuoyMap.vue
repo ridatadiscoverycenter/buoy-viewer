@@ -15,13 +15,13 @@
     :src="BuoyMarker"
     style="visibility: hidden; position: absolute; top: 0"
   />
-</template>
 
-<template>
-  <div id="app" class="p-10 text-xl">
-    <!-- <BaseIcon name="zero" class="text-blue-500" /> Home
-    <BaseIcon name="one" class="text-blue-500" /> Profile -->
-  </div>
+  <img
+    ref="windSpeed1Image"
+    :src="WindSpeed1"
+    style="visibility: hidden; position: absolute; top: 0"
+  />
+  <!-- add all WS here -->
 </template>
 
 <script setup lang="ts">
@@ -30,6 +30,17 @@ import mapboxgl from "mapbox-gl";
 import { scaleSqrt, scaleLinear } from "d3-scale";
 
 import BuoyMarker from "@/assets/illustrations/buoy-marker.svg";
+import WindSpeed1 from "@/assets/illustrations/wind_speed_01.svg";
+import WindSpeed2 from "@/assets/illustrations/wind_speed_02.svg";
+import WindSpeed3 from "@/assets/illustrations/wind_speed_03.svg";
+import WindSpeed4 from "@/assets/illustrations/wind_speed_04.svg";
+import WindSpeed5 from "@/assets/illustrations/wind_speed_05.svg";
+import WindSpeed6 from "@/assets/illustrations/wind_speed_06.svg";
+import WindSpeed7 from "@/assets/illustrations/wind_speed_07.svg";
+import WindSpeed8 from "@/assets/illustrations/wind_speed_08.svg";
+import WindSpeed9 from "@/assets/illustrations/wind_speed_09.svg";
+import WindSpeed10 from "@/assets/illustrations/wind_speed_10.svg";
+
 import { Data } from "../../utils/erddap";
 import { BuoyStore } from "../../store/buoy";
 
@@ -42,7 +53,8 @@ const store = inject("store") as BuoyStore;
 const props = defineProps<{
   samples: Sample[];
   formattedDate: string;
-  variable: string;
+  showChlorophyll?: boolean;
+  showWind?: boolean;
 }>();
 
 const config = {
@@ -53,27 +65,107 @@ const config = {
   },
 };
 
-const annotatedSamples = computed(() => {
-  const { varDomain, markerSize, markerColors } = config.chlorophyll;
-  const domain = varDomain;
-  const sqrtScale = scaleSqrt().domain(domain).range(markerSize);
-  const colorScale = scaleLinear()
-    .domain(domain)
-    .range(markerColors)
-    .clamp(true);
-  return props.samples
-    .filter((row) => row.variable === props.variable)
-    .map((row) => {
-      return {
-        ...row,
-        color: colorScale(row.value),
-        size: sqrtScale(row.value),
-      };
-    });
+const windSpeedBins = [
+  {
+    name: "bin01",
+    lower: 1.54,
+    upper: 3.85,
+    svgfile: WindSpeed1,
+  },
+  {
+    name: "bin02",
+    lower: 3.85,
+    upper: 5.92,
+    svgfile: WindSpeed2,
+  },
+  {
+    name: "bin03",
+    lower: 5.92,
+    upper: 8.49,
+    svgfile: WindSpeed3,
+  },
+  {
+    name: "bin04",
+    lower: 8.49,
+    upper: 11.06,
+    svgfile: WindSpeed4,
+  },
+  {
+    name: "bin05",
+    lower: 11.06,
+    upper: 13.63,
+    svgfile: WindSpeed5,
+  },
+  {
+    name: "bin06",
+    lower: 13.63,
+    upper: 16.21,
+    svgfile: WindSpeed6,
+  },
+  {
+    name: "bin07",
+    lower: 16.21,
+    upper: 18.78,
+    svgfile: WindSpeed7,
+  },
+  {
+    name: "bin08",
+    lower: 18.78,
+    upper: 21.35,
+    svgfile: WindSpeed8,
+  },
+  {
+    name: "bin09",
+    lower: 21.35,
+    upper: 23.92,
+    svgfile: WindSpeed9,
+  },
+  {
+    name: "bin10",
+    lower: 23.92,
+    upper: 26.49,
+    svgfile: WindSpeed10,
+  },
+];
+
+const annotatedChlorophyllSamples = computed(() => {
+  if (props.showChlorophyll) {
+    const { varDomain, markerSize, markerColors } = config.chlorophyll;
+    const domain = varDomain;
+    const sqrtScale = scaleSqrt().domain(domain).range(markerSize);
+    const colorScale = scaleLinear()
+      .domain(domain)
+      .range(markerColors)
+      .clamp(true);
+    return props.samples
+      .filter((row) => row.variable === "ChlorophyllSurface")
+      .map((row) => {
+        return {
+          ...row,
+          color: colorScale(row.value),
+          size: sqrtScale(row.value),
+        };
+      });
+  } else {
+    return [];
+  }
+});
+
+const annotatedWindSamples = computed(() => {
+  if (props.showWind) {
+    const b = props.samples.filter((row) =>
+      ["WindSpeedAverage"].includes(row.variable)
+    );
+    console.log(b);
+    return b;
+  } else {
+    return [];
+  }
 });
 
 const el = ref<HTMLDivElement>(null);
 const imageEl = ref<HTMLImageElement>(null);
+const windSpeed1Image = ref<HTMLImageElement>(null);
 const map = ref(null);
 onMounted(() => {
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
@@ -108,8 +200,10 @@ onMounted(() => {
   map.value.on("load", function () {
     map.value.resize();
     map.value.addImage("buoy-marker", imageEl.value);
+    map.value.addImage("wind-speed-1", windSpeed1Image.value);
 
     map.value.addSource("points", geoJSON);
+    // map.value.addSource("wind", windSpeedBins);
 
     map.value.addLayer({
       id: "points",
@@ -122,6 +216,16 @@ onMounted(() => {
       },
     });
 
+    map.value.addLayer({
+      id: "svgfile",
+      type: "symbol",
+      source: "points",
+      layout: {
+        "icon-allow-overlap": true,
+        "icon-image": "wind-speed-1",
+        "icon-offset": [0.7, -7], // optically centered
+      },
+    });
     updateMarkers();
   });
 });
@@ -134,7 +238,7 @@ const updateMarkers = () => {
   });
   markers = [];
 
-  annotatedSamples.value.forEach(({ color, size, station_name }) => {
+  annotatedChlorophyllSamples.value.forEach(({ color, size, station_name }) => {
     // create circle elements to display
     const elementSize = `${100 * size}px`;
     const el = document.createElement("div");
