@@ -1,17 +1,46 @@
-<!-- <template> -->
-<!-- <div
-    class="inline-block fill-current"
-    style="height: 1em; width: 1em; vertical-align: -0.125em" -->
-<!-- v-html="require(`../assets/illustrations/wind_speed_${name}.svg`)"/> -->
-<!-- </template> -->
+<!-- <template>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    :width="width"
+    :height="height"
+    viewBox="-48 -33 50 50"
+    :aria-labelledby="iconName"
+    role="presentation"
+  >
+    <title :id="iconName" lang="en">{{ iconName }} icon</title>
+    <g :fill="iconColor">
+      <slot />
+    </g>
+  </svg>
+</template>
 
-<!-- <script lang="ts">
+<script lang="ts" scoped>
 export default {
   props: {
-    name: {
+    iconName: {
       type: String,
-      required: true,
+      default: "box",
     },
+    width: {
+      type: [Number, String],
+      default: 50,
+    },
+    height: {
+      type: [Number, String],
+      default: 50,
+    },
+    // iconColor: {
+    //   type: String,
+    //   default: 'currentColor'
+    // }
   },
 };
-</script> -->
+</script>
+
+<style scoped>
+svg {
+  display: inline-block;
+  vertical-align: baseline;
+  margin-bottom: -2px;
+}
+</style> -->

@@ -30,16 +30,18 @@ import mapboxgl from "mapbox-gl";
 import { scaleSqrt, scaleLinear } from "d3-scale";
 
 import BuoyMarker from "@/assets/illustrations/buoy-marker.svg";
+
+import WindIcons from "../../components/buoy-telemetry/WindIcons.vue";
 import WindSpeed1 from "@/assets/illustrations/wind_speed_01.svg";
-import WindSpeed2 from "@/assets/illustrations/wind_speed_02.svg";
-import WindSpeed3 from "@/assets/illustrations/wind_speed_03.svg";
-import WindSpeed4 from "@/assets/illustrations/wind_speed_04.svg";
-import WindSpeed5 from "@/assets/illustrations/wind_speed_05.svg";
-import WindSpeed6 from "@/assets/illustrations/wind_speed_06.svg";
-import WindSpeed7 from "@/assets/illustrations/wind_speed_07.svg";
-import WindSpeed8 from "@/assets/illustrations/wind_speed_08.svg";
-import WindSpeed9 from "@/assets/illustrations/wind_speed_09.svg";
-import WindSpeed10 from "@/assets/illustrations/wind_speed_10.svg";
+// import WindSpeed2 from "@/assets/illustrations/WindSpeed2.vue";
+// import WindSpeed3 from "@/assets/illustrations/WindSpeed3.vue";
+// import WindSpeed4 from "@/assets/illustrations/WindSpeed4.vue";
+// import WindSpeed5 from "@/assets/illustrations/WindSpeed5.vue";
+// import WindSpeed6 from "@/assets/illustrations/WindSpeed6.vue";
+// import WindSpeed7 from "@/assets/illustrations/WindSpeed7.vue";
+// import WindSpeed8 from "@/assets/illustrations/WindSpeed8.vue";
+// import WindSpeed9 from "@/assets/illustrations/WindSpeed9.vue";
+// import WindSpeed10 from "@/assets/illustrations/WindSpeed10.vue";
 
 import { Data } from "../../utils/erddap";
 import { BuoyStore } from "../../store/buoy";
@@ -67,65 +69,55 @@ const config = {
 
 const windSpeedBins = [
   {
-    name: "bin01",
     lower: 1.54,
     upper: 3.85,
     svgfile: WindSpeed1,
   },
-  {
-    name: "bin02",
-    lower: 3.85,
-    upper: 5.92,
-    svgfile: WindSpeed2,
-  },
-  {
-    name: "bin03",
-    lower: 5.92,
-    upper: 8.49,
-    svgfile: WindSpeed3,
-  },
-  {
-    name: "bin04",
-    lower: 8.49,
-    upper: 11.06,
-    svgfile: WindSpeed4,
-  },
-  {
-    name: "bin05",
-    lower: 11.06,
-    upper: 13.63,
-    svgfile: WindSpeed5,
-  },
-  {
-    name: "bin06",
-    lower: 13.63,
-    upper: 16.21,
-    svgfile: WindSpeed6,
-  },
-  {
-    name: "bin07",
-    lower: 16.21,
-    upper: 18.78,
-    svgfile: WindSpeed7,
-  },
-  {
-    name: "bin08",
-    lower: 18.78,
-    upper: 21.35,
-    svgfile: WindSpeed8,
-  },
-  {
-    name: "bin09",
-    lower: 21.35,
-    upper: 23.92,
-    svgfile: WindSpeed9,
-  },
-  {
-    name: "bin10",
-    lower: 23.92,
-    upper: 26.49,
-    svgfile: WindSpeed10,
-  },
+  // {
+  //   lower: 3.85,
+  //   upper: 5.92,
+  //   svgfile: WindSpeed2,
+  // },
+  // {
+  //   lower: 5.92,
+  //   upper: 8.49,
+  //   svgfile: WindSpeed3,
+  // },
+  // {
+  //   lower: 8.49,
+  //   upper: 11.06,
+  //   svgfile: WindSpeed4,
+  // },
+  // {
+  //   lower: 11.06,
+  //   upper: 13.63,
+  //   svgfile: WindSpeed5,
+  // },
+  // {
+  //   lower: 13.63,
+  //   upper: 16.21,
+  //   svgfile: WindSpeed6,
+  // },
+  // {
+  //   lower: 16.21,
+  //   upper: 18.78,
+  //   svgfile: WindSpeed7,
+  // },
+  // {
+  //   lower: 18.78,
+  //   upper: 21.35,
+  //   svgfile: WindSpeed8,
+  // },
+  // {
+  //   lower: 21.35,
+  //   upper: 23.92,
+  //   svgfile: WindSpeed9,
+  // },
+  // {
+  //   lower: 23.92,
+  //   upper: 26.49,
+  //   svgfile: WindSpeed10,
+  // },
 ];
 
 const annotatedChlorophyllSamples = computed(() => {
@@ -166,6 +158,16 @@ const annotatedWindSamples = computed(() => {
 const el = ref<HTMLDivElement>(null);
 const imageEl = ref<HTMLImageElement>(null);
 const windSpeed1Image = ref<HTMLImageElement>(null);
+const windSpeed2Image = ref<HTMLImageElement>(null);
+const windSpeed3Image = ref<HTMLImageElement>(null);
+const windSpeed4Image = ref<HTMLImageElement>(null);
+const windSpeed5Image = ref<HTMLImageElement>(null);
+const windSpeed6Image = ref<HTMLImageElement>(null);
+const windSpeed7Image = ref<HTMLImageElement>(null);
+const windSpeed8Image = ref<HTMLImageElement>(null);
+const windSpeed9Image = ref<HTMLImageElement>(null);
+const windSpeed10Image = ref<HTMLImageElement>(null);
+
 const map = ref(null);
 onMounted(() => {
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
@@ -201,9 +203,17 @@ onMounted(() => {
     map.value.resize();
     map.value.addImage("buoy-marker", imageEl.value);
     map.value.addImage("wind-speed-1", windSpeed1Image.value);
+    // map.value.addImage("wind-speed-2", windSpeed2Image.value);
+    // map.value.addImage("wind-speed-3", windSpeed3Image.value);
+    // map.value.addImage("wind-speed-4", windSpeed4Image.value);
+    // map.value.addImage("wind-speed-5", windSpeed5Image.value);
+    // map.value.addImage("wind-speed-6", windSpeed6Image.value);
+    // map.value.addImage("wind-speed-7", windSpeed7Image.value);
+    // map.value.addImage("wind-speed-8", windSpeed8Image.value);
+    // map.value.addImage("wind-speed-9", windSpeed9Image.value);
+    // map.value.addImage("wind-speed-10", windSpeed10Image.value);
 
     map.value.addSource("points", geoJSON);
-    // map.value.addSource("wind", windSpeedBins);
 
     map.value.addLayer({
       id: "points",
@@ -223,7 +233,8 @@ onMounted(() => {
       layout: {
         "icon-allow-overlap": true,
         "icon-image": "wind-speed-1",
-        "icon-offset": [0.7, -7], // optically centered
+        "icon-offset": [-100, -40], // optically centered
+        "icon-size": 0.25,
       },
     });
     updateMarkers();
@@ -291,11 +302,11 @@ watch(() => props.formattedDate, updateMarkers);
 }
 </style>
 
-<style lang="scss">
+<!-- <style lang="scss">
 .mapboxgl-marker {
   height: 1.2rem;
   path {
     fill: hsla(0deg, 0%, 20%, 80%);
   }
 }
-</style>
+</style> -->
