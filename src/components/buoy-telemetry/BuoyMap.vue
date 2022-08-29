@@ -201,6 +201,7 @@ const annotatedChlorophyllSamples = computed(() => {
 });
 
 const annotatedWindSpeed = computed(() => {
+  console.log("here");
   if (props.showWind) {
     const b = props.samples.filter((row) =>
       ["WindSpeedAverage"].includes(row.variable)
@@ -212,17 +213,17 @@ const annotatedWindSpeed = computed(() => {
   }
 });
 
-const annotatedWindDir = computed(() => {
-  if (props.showWind) {
-    const b = props.samples.filter((row) =>
-      ["WindDirectionFrom"].includes(row.variable)
-    );
-    console.log(b);
-    return b;
-  } else {
-    return [];
-  }
-});
+// const annotatedWindDir = computed(() => {
+//   if (props.showWind) {
+//     const b = props.samples.filter((row) =>
+//       ["WindDirectionFrom"].includes(row.variable)
+//     );
+//     console.log(b);
+//     return b;
+//   } else {
+//     return [];
+//   }
+// });
 
 const el = ref<HTMLDivElement>(null);
 const imageEl = ref<HTMLImageElement>(null);
@@ -251,25 +252,32 @@ onMounted(() => {
     scrollZoom: false,
   });
 
-  const geoJSON = {
-    type: "geojson",
-    data: {
-      id: "buoy",
-      type: "FeatureCollection",
-      features: store.coordinates.map(({ latitude, longitude }) => {
-        return {
-          type: "Feature",
-          geometry: {
-            type: "Point",
-            coordinates: [longitude, latitude],
-          },
-          properties: {
-            windSpeed: 14.3 * knotsPerMS,
-          },
-        };
-      }),
-    },
-  };
+  const geoJSON = computed(() => {
+    return {
+      type: "geojson",
+      data: {
+        id: "buoy",
+        type: "FeatureCollection",
+        features: store.coordinates.map(
+          ({ latitude, longitude, station_name }) => {
+            return {
+              type: "Feature",
+              geometry: {
+                type: "Point",
+                coordinates: [longitude, latitude],
+              },
+              properties: {
+                windSpeed:
+                  annotatedWindSpeed.value.find((w) => {
+                    return w.station_name === station_name;
+                  }).value * knotsPerMS,
+              },
+            };
+          }
+        ),
+      },
+    };
+  });
 
   map.value.on("load", function () {
     map.value.resize();
@@ -285,7 +293,7 @@ onMounted(() => {
     map.value.addImage("wind-speed-9", windSpeed9Image.value);
     map.value.addImage("wind-speed-10", windSpeed10Image.value);
 
-    map.value.addSource("points", geoJSON);
+    map.value.addSource("points", geoJSON.value);
 
     map.value.addLayer({
       id: "points",
