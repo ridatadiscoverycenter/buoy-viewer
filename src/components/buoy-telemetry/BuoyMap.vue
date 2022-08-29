@@ -21,7 +21,60 @@
     :src="WindSpeed1"
     style="visibility: hidden; position: absolute; top: 0"
   />
-  <!-- add all WS here -->
+
+  <img
+    ref="windSpeed2Image"
+    :src="WindSpeed2"
+    style="visibility: hidden; position: absolute; top: 0"
+  />
+
+  <img
+    ref="windSpeed3Image"
+    :src="WindSpeed3"
+    style="visibility: hidden; position: absolute; top: 0"
+  />
+
+  <img
+    ref="windSpeed4Image"
+    :src="WindSpeed4"
+    style="visibility: hidden; position: absolute; top: 0"
+  />
+
+  <img
+    ref="windSpeed5Image"
+    :src="WindSpeed5"
+    style="visibility: hidden; position: absolute; top: 0"
+  />
+
+  <img
+    ref="windSpeed6Image"
+    :src="WindSpeed6"
+    style="visibility: hidden; position: absolute; top: 0"
+  />
+
+  <img
+    ref="windSpeed7Image"
+    :src="WindSpeed7"
+    style="visibility: hidden; position: absolute; top: 0"
+  />
+
+  <img
+    ref="windSpeed8Image"
+    :src="WindSpeed8"
+    style="visibility: hidden; position: absolute; top: 0"
+  />
+
+  <img
+    ref="windSpeed9Image"
+    :src="WindSpeed9"
+    style="visibility: hidden; position: absolute; top: 0"
+  />
+
+  <img
+    ref="windSpeed10Image"
+    :src="WindSpeed10"
+    style="visibility: hidden; position: absolute; top: 0"
+  />
 </template>
 
 <script setup lang="ts">
@@ -31,17 +84,17 @@ import { scaleSqrt, scaleLinear } from "d3-scale";
 
 import BuoyMarker from "@/assets/illustrations/buoy-marker.svg";
 
-import WindIcons from "../../components/buoy-telemetry/WindIcons.vue";
+// import WindIcons from "../../components/buoy-telemetry/WindIcons.vue";
 import WindSpeed1 from "@/assets/illustrations/wind_speed_01.svg";
-// import WindSpeed2 from "@/assets/illustrations/WindSpeed2.vue";
-// import WindSpeed3 from "@/assets/illustrations/WindSpeed3.vue";
-// import WindSpeed4 from "@/assets/illustrations/WindSpeed4.vue";
-// import WindSpeed5 from "@/assets/illustrations/WindSpeed5.vue";
-// import WindSpeed6 from "@/assets/illustrations/WindSpeed6.vue";
-// import WindSpeed7 from "@/assets/illustrations/WindSpeed7.vue";
-// import WindSpeed8 from "@/assets/illustrations/WindSpeed8.vue";
-// import WindSpeed9 from "@/assets/illustrations/WindSpeed9.vue";
-// import WindSpeed10 from "@/assets/illustrations/WindSpeed10.vue";
+import WindSpeed2 from "@/assets/illustrations/wind_speed_02.svg";
+import WindSpeed3 from "@/assets/illustrations/wind_speed_03.svg";
+import WindSpeed4 from "@/assets/illustrations/wind_speed_04.svg";
+import WindSpeed5 from "@/assets/illustrations/wind_speed_05.svg";
+import WindSpeed6 from "@/assets/illustrations/wind_speed_06.svg";
+import WindSpeed7 from "@/assets/illustrations/wind_speed_07.svg";
+import WindSpeed8 from "@/assets/illustrations/wind_speed_08.svg";
+import WindSpeed9 from "@/assets/illustrations/wind_speed_09.svg";
+import WindSpeed10 from "@/assets/illustrations/wind_speed_10.svg";
 
 import { Data } from "../../utils/erddap";
 import { BuoyStore } from "../../store/buoy";
@@ -67,58 +120,62 @@ const config = {
   },
 };
 
+const knotsPerMS = 1.94384;
 const windSpeedBins = [
-  {
-    lower: 1.54,
-    upper: 3.85,
-    svgfile: WindSpeed1,
-  },
-  // {
-  //   lower: 3.85,
-  //   upper: 5.92,
-  //   svgfile: WindSpeed2,
-  // },
-  // {
-  //   lower: 5.92,
-  //   upper: 8.49,
-  //   svgfile: WindSpeed3,
-  // },
-  // {
-  //   lower: 8.49,
-  //   upper: 11.06,
-  //   svgfile: WindSpeed4,
-  // },
-  // {
-  //   lower: 11.06,
-  //   upper: 13.63,
-  //   svgfile: WindSpeed5,
-  // },
-  // {
-  //   lower: 13.63,
-  //   upper: 16.21,
-  //   svgfile: WindSpeed6,
-  // },
-  // {
-  //   lower: 16.21,
-  //   upper: 18.78,
-  //   svgfile: WindSpeed7,
-  // },
-  // {
-  //   lower: 18.78,
-  //   upper: 21.35,
-  //   svgfile: WindSpeed8,
-  // },
-  // {
-  //   lower: 21.35,
-  //   upper: 23.92,
-  //   svgfile: WindSpeed9,
-  // },
-  // {
-  //   lower: 23.92,
-  //   upper: 26.49,
-  //   svgfile: WindSpeed10,
-  // },
+  3, 7.5, 11.5, 16.5, 21.5, 26.5, 31.5, 36.5, 41.5, 46.5, 51.5,
 ];
+
+// {
+//   lower: 1.54, // 3 knots
+//   upper: 3.85, // 7.5
+//   svgfile: WindSpeed1,
+// },
+// {
+//   lower: 3.85, // 7.5
+//   upper: 5.92, // 11.5
+//   svgfile: WindSpeed2,
+// },
+// {
+//   lower: 5.92,
+//   upper: 8.49,  // 16.5
+//   svgfile: WindSpeed3,
+// },
+// {
+//   lower: 8.49,
+//   upper: 11.06,   // 21.5
+//   svgfile: WindSpeed4,
+// },
+// {
+//   lower: 11.06,
+//   upper: 13.63,  // 26.5
+//   svgfile: WindSpeed5,
+// },
+// {
+//   lower: 13.63,
+//   upper: 16.21,  // 31.5
+//   svgfile: WindSpeed6,
+// },
+// {
+//   lower: 16.21,
+//   upper: 18.78,  // 36.5
+//   svgfile: WindSpeed7,
+// },
+// {
+//   lower: 18.78,
+//   upper: 21.35, // 41.5
+//   svgfile: WindSpeed8,
+// },
+// {
+//   lower: 21.35,
+//   upper: 23.92,  // 46.5
+//   svgfile: WindSpeed9,
+// },
+// {
+//   lower: 23.92,
+//   upper: 26.49,  // 51.5
+//   svgfile: WindSpeed10,
+// },
+// ];
 
 const annotatedChlorophyllSamples = computed(() => {
   if (props.showChlorophyll) {
@@ -143,10 +200,22 @@ const annotatedChlorophyllSamples = computed(() => {
   }
 });
 
-const annotatedWindSamples = computed(() => {
+const annotatedWindSpeed = computed(() => {
   if (props.showWind) {
     const b = props.samples.filter((row) =>
       ["WindSpeedAverage"].includes(row.variable)
+    );
+    console.log(b);
+    return b;
+  } else {
+    return [];
+  }
+});
+
+const annotatedWindDir = computed(() => {
+  if (props.showWind) {
+    const b = props.samples.filter((row) =>
+      ["WindDirectionFrom"].includes(row.variable)
     );
     console.log(b);
     return b;
@@ -194,6 +263,9 @@ onMounted(() => {
             type: "Point",
             coordinates: [longitude, latitude],
           },
+          properties: {
+            windSpeed: 14.3 * knotsPerMS,
+          },
         };
       }),
     },
@@ -203,15 +275,15 @@ onMounted(() => {
     map.value.resize();
     map.value.addImage("buoy-marker", imageEl.value);
     map.value.addImage("wind-speed-1", windSpeed1Image.value);
-    // map.value.addImage("wind-speed-2", windSpeed2Image.value);
-    // map.value.addImage("wind-speed-3", windSpeed3Image.value);
-    // map.value.addImage("wind-speed-4", windSpeed4Image.value);
-    // map.value.addImage("wind-speed-5", windSpeed5Image.value);
-    // map.value.addImage("wind-speed-6", windSpeed6Image.value);
-    // map.value.addImage("wind-speed-7", windSpeed7Image.value);
-    // map.value.addImage("wind-speed-8", windSpeed8Image.value);
-    // map.value.addImage("wind-speed-9", windSpeed9Image.value);
-    // map.value.addImage("wind-speed-10", windSpeed10Image.value);
+    map.value.addImage("wind-speed-2", windSpeed2Image.value);
+    map.value.addImage("wind-speed-3", windSpeed3Image.value);
+    map.value.addImage("wind-speed-4", windSpeed4Image.value);
+    map.value.addImage("wind-speed-5", windSpeed5Image.value);
+    map.value.addImage("wind-speed-6", windSpeed6Image.value);
+    map.value.addImage("wind-speed-7", windSpeed7Image.value);
+    map.value.addImage("wind-speed-8", windSpeed8Image.value);
+    map.value.addImage("wind-speed-9", windSpeed9Image.value);
+    map.value.addImage("wind-speed-10", windSpeed10Image.value);
 
     map.value.addSource("points", geoJSON);
 
@@ -226,17 +298,31 @@ onMounted(() => {
       },
     });
 
-    map.value.addLayer({
-      id: "svgfile",
-      type: "symbol",
-      source: "points",
-      layout: {
-        "icon-allow-overlap": true,
-        "icon-image": "wind-speed-1",
-        "icon-offset": [-100, -40], // optically centered
-        "icon-size": 0.25,
-      },
-    });
+    for (var b = 0; b < windSpeedBins.length - 1; b++) {
+      map.value.addLayer({
+        //add for loop
+        id: "svgfile" + b,
+        type: "symbol",
+        filter: [
+          "all",
+          [">=", "windSpeed", windSpeedBins[b]],
+          ["<", "windSpeed", windSpeedBins[b + 1]],
+        ],
+        source: "points", // points.filter(annotatedwind)?
+        layout: {
+          "icon-allow-overlap": true,
+          "icon-image": `wind-speed-${b + 1}`, //mapped value of wind
+          "icon-offset": [-100, -40], // optically centered
+          "icon-size": 0.25,
+          // "icon-rotate-alignment": 'map',
+          // "icon-rotate":{
+          // 'property':annotatedWindDir,
+          // 'stops':[[0,90],[360,450]]
+          // }
+          // "rotation": 30, //update
+        },
+      });
+    }
     updateMarkers();
   });
 });
