@@ -17,6 +17,12 @@
   />
 
   <img
+    ref="windSpeed0Image"
+    :src="WindSpeed0"
+    style="visibility: hidden; position: absolute; top: 0"
+  />
+
+  <img
     ref="windSpeed1Image"
     :src="WindSpeed1"
     style="visibility: hidden; position: absolute; top: 0"
@@ -84,7 +90,7 @@ import { scaleSqrt, scaleLinear } from "d3-scale";
 
 import BuoyMarker from "@/assets/illustrations/buoy-marker.svg";
 
-// import WindIcons from "../../components/buoy-telemetry/WindIcons.vue";
+import WindSpeed0 from "@/assets/illustrations/wind_speed_00.svg";
 import WindSpeed1 from "@/assets/illustrations/wind_speed_01.svg";
 import WindSpeed2 from "@/assets/illustrations/wind_speed_02.svg";
 import WindSpeed3 from "@/assets/illustrations/wind_speed_03.svg";
@@ -122,7 +128,19 @@ const config = {
 
 const knotsPerMS = 1.94384;
 const windSpeedBins = [
-  3, 7.5, 11.5, 16.5, 21.5, 26.5, 31.5, 36.5, 41.5, 46.5, 51.5,
+  0,
+  0,
+  2.5,
+  7.5,
+  12.5,
+  17.5,
+  22.5,
+  27.5,
+  32.5,
+  37.5,
+  42.5,
+  47.5,
+  52.5, // cutoffs in knots
 ];
 
 const annotatedChlorophyllSamples = computed(() => {
@@ -179,6 +197,7 @@ const annotatedWindDir = computed(() => {
 
 const el = ref<HTMLDivElement>(null);
 const imageEl = ref<HTMLImageElement>(null);
+const windSpeed0Image = ref<HTMLImageElement>(null);
 const windSpeed1Image = ref<HTMLImageElement>(null);
 const windSpeed2Image = ref<HTMLImageElement>(null);
 const windSpeed3Image = ref<HTMLImageElement>(null);
@@ -222,7 +241,7 @@ onMounted(() => {
                 windSpeed:
                   annotatedWindSpeed.value.find((w) => {
                     return w.station_name === station_name;
-                  }).value * knotsPerMS,
+                  }).value / knotsPerMS,
                 windDirection: annotatedWindDir.value.find((w) => {
                   return w.station_name === station_name;
                 }).value,
@@ -237,6 +256,7 @@ onMounted(() => {
   map.value.on("load", function () {
     map.value.resize();
     map.value.addImage("buoy-marker", imageEl.value);
+    map.value.addImage("wind-speed-0", windSpeed0Image.value);
     map.value.addImage("wind-speed-1", windSpeed1Image.value);
     map.value.addImage("wind-speed-2", windSpeed2Image.value);
     map.value.addImage("wind-speed-3", windSpeed3Image.value);

@@ -43,7 +43,11 @@
       Use the date slider to look back in 15 minute intervals for the past 5
       days. After clicking on the slider, use left/right arrow keys to move
       between intervals. Color markers indicate Chlorophyll levels at buoys,
-      with values ranging from light to dark green (0&ndash;60 ug L-1).
+      with values ranging from light to dark green (0&ndash;60 ug L-1). Wind
+      indicators follow
+      <ExternalLink href="https://www.wpc.ncep.noaa.gov/html/stationplot.shtml"
+        >NOAA conventions.
+      </ExternalLink>
     </template>
     <template #content>
       <div class="map-app-container">
