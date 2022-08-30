@@ -9,7 +9,7 @@
     <div ref="el" class="mapbox-container" />
   </div>
 
-  <!-- reference image for mapbox to pull from -->
+  <!-- reference images for mapbox to pull from -->
   <img
     ref="imageEl"
     :src="BuoyMarker"
@@ -115,7 +115,7 @@ const props = defineProps<{
 const config = {
   chlorophyll: {
     varDomain: [0, 45],
-    markerSize: [0.25, 0.65],
+    markerSize: [0.2, 0.85],
     markerColors: ["#93C572", "#32CD32", "#355E3B"], // pistachio, lime green, hunter green
   },
 };
@@ -124,58 +124,6 @@ const knotsPerMS = 1.94384;
 const windSpeedBins = [
   3, 7.5, 11.5, 16.5, 21.5, 26.5, 31.5, 36.5, 41.5, 46.5, 51.5,
 ];
-
-// {
-//   lower: 1.54, // 3 knots
-//   upper: 3.85, // 7.5
-//   svgfile: WindSpeed1,
-// },
-// {
-//   lower: 3.85, // 7.5
-//   upper: 5.92, // 11.5
-//   svgfile: WindSpeed2,
-// },
-// {
-//   lower: 5.92,
-//   upper: 8.49,  // 16.5
-//   svgfile: WindSpeed3,
-// },
-// {
-//   lower: 8.49,
-//   upper: 11.06,   // 21.5
-//   svgfile: WindSpeed4,
-// },
-// {
-//   lower: 11.06,
-//   upper: 13.63,  // 26.5
-//   svgfile: WindSpeed5,
-// },
-// {
-//   lower: 13.63,
-//   upper: 16.21,  // 31.5
-//   svgfile: WindSpeed6,
-// },
-// {
-//   lower: 16.21,
-//   upper: 18.78,  // 36.5
-//   svgfile: WindSpeed7,
-// },
-// {
-//   lower: 18.78,
-//   upper: 21.35, // 41.5
-//   svgfile: WindSpeed8,
-// },
-// {
-//   lower: 21.35,
-//   upper: 23.92,  // 46.5
-//   svgfile: WindSpeed9,
-// },
-// {
-//   lower: 23.92,
-//   upper: 26.49,  // 51.5
-//   svgfile: WindSpeed10,
-// },
-// ];
 
 const annotatedChlorophyllSamples = computed(() => {
   if (props.showChlorophyll) {
@@ -203,27 +151,31 @@ const annotatedChlorophyllSamples = computed(() => {
 const annotatedWindSpeed = computed(() => {
   console.log("here");
   if (props.showWind) {
-    const b = props.samples.filter((row) =>
-      ["WindSpeedAverage"].includes(row.variable)
-    );
-    console.log(b);
-    return b;
+    return props.samples
+      .filter((row) => row.variable === "WindSpeedAverage")
+      .map((row) => {
+        return {
+          ...row,
+        };
+      });
   } else {
     return [];
   }
 });
 
-// const annotatedWindDir = computed(() => {
-//   if (props.showWind) {
-//     const b = props.samples.filter((row) =>
-//       ["WindDirectionFrom"].includes(row.variable)
-//     );
-//     console.log(b);
-//     return b;
-//   } else {
-//     return [];
-//   }
-// });
+const annotatedWindDir = computed(() => {
+  if (props.showWind) {
+    return props.samples
+      .filter((row) => row.variable === "WindDirectionFrom")
+      .map((row) => {
+        return {
+          ...row,
+        };
+      });
+  } else {
+    return [];
+  }
+});
 
 const el = ref<HTMLDivElement>(null);
 const imageEl = ref<HTMLImageElement>(null);
@@ -271,6 +223,9 @@ onMounted(() => {
                   annotatedWindSpeed.value.find((w) => {
                     return w.station_name === station_name;
                   }).value * knotsPerMS,
+                windDirection: annotatedWindDir.value.find((w) => {
+                  return w.station_name === station_name;
+                }).value,
               },
             };
           }
@@ -308,7 +263,6 @@ onMounted(() => {
 
     for (var b = 0; b < windSpeedBins.length - 1; b++) {
       map.value.addLayer({
-        //add for loop
         id: "svgfile" + b,
         type: "symbol",
         filter: [
@@ -321,13 +275,14 @@ onMounted(() => {
           "icon-allow-overlap": true,
           "icon-image": `wind-speed-${b + 1}`, //mapped value of wind
           "icon-offset": [-100, -40], // optically centered
-          "icon-size": 0.25,
-          // "icon-rotate-alignment": 'map',
-          // "icon-rotate":{
-          // 'property':annotatedWindDir,
-          // 'stops':[[0,90],[360,450]]
-          // }
-          // "rotation": 30, //update
+          "icon-size": 0.3,
+          "icon-rotate": {
+            property: "windDirection",
+            stops: [
+              [0, 90],
+              [270, 360],
+            ],
+          },
         },
       });
     }
@@ -361,6 +316,7 @@ const updateMarkers = () => {
         .addTo(map.value)
     );
   });
+  // annotatedWindSpeed.value.forEach(({ station_name }))
 };
 watch(() => props.formattedDate, updateMarkers);
 </script>
@@ -395,12 +351,3 @@ watch(() => props.formattedDate, updateMarkers);
   height: 100%;
 }
 </style>
-
-<!-- <style lang="scss">
-.mapboxgl-marker {
-  height: 1.2rem;
-  path {
-    fill: hsla(0deg, 0%, 20%, 80%);
-  }
-}
-</style> -->
