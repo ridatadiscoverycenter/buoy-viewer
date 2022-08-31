@@ -120,28 +120,16 @@ const props = defineProps<{
 
 const config = {
   chlorophyll: {
-    varDomain: [0, 45],
-    markerSize: [0.2, 0.85],
-    markerColors: ["#93C572", "#32CD32", "#355E3B"], // pistachio, lime green, hunter green
+    varDomain: [0, 10],
+    markerSize: [0.2, 0.75],
+    markerColors: ["#32CD32", "#355E3B"], // lime green, hunter green
   },
 };
 
 const knotsPerMS = 1.94384;
 const windSpeedBins = [
-  0,
-  0,
-  2.5,
-  7.5,
-  12.5,
-  17.5,
-  22.5,
-  27.5,
-  32.5,
-  37.5,
-  42.5,
-  47.5,
-  52.5, // cutoffs in knots
-];
+  0, 0, 2.5, 7.5, 12.5, 17.5, 22.5, 27.5, 32.5, 37.5, 42.5, 47.5, 52.5,
+]; // cutoffs in knots
 
 const annotatedChlorophyllSamples = computed(() => {
   if (props.showChlorophyll) {
@@ -277,7 +265,8 @@ onMounted(() => {
       layout: {
         "icon-allow-overlap": true,
         "icon-image": "buoy-marker",
-        "icon-offset": [0.5, -7], // optically centered
+        "icon-size": 1.2,
+        "icon-offset": [0.8, -4], // optically centered
       },
     });
 
