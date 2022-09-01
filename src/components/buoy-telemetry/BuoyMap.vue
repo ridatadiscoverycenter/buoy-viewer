@@ -198,6 +198,35 @@ const windSpeed9Image = ref<HTMLImageElement>(null);
 const windSpeed10Image = ref<HTMLImageElement>(null);
 
 const map = ref(null);
+const geoJSON = computed(() => {
+  return {
+    type: "geojson",
+    data: {
+      id: "buoy",
+      type: "FeatureCollection",
+      features: store.coordinates.map(
+        ({ latitude, longitude, station_name }) => {
+          return {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [longitude, latitude],
+            },
+            properties: {
+              windSpeed:
+                annotatedWindSpeed.value.find((w) => {
+                  return w.station_name === station_name;
+                }).value / knotsPerMS,
+              windDirection: annotatedWindDir.value.find((w) => {
+                return w.station_name === station_name;
+              }).value,
+            },
+          };
+        }
+      ),
+    },
+  };
+});
 onMounted(() => {
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -209,36 +238,6 @@ onMounted(() => {
     // centered with anticipation of the third buoy south of Newport
     doubleClickZoom: false,
     scrollZoom: false,
-  });
-
-  const geoJSON = computed(() => {
-    return {
-      type: "geojson",
-      data: {
-        id: "buoy",
-        type: "FeatureCollection",
-        features: store.coordinates.map(
-          ({ latitude, longitude, station_name }) => {
-            return {
-              type: "Feature",
-              geometry: {
-                type: "Point",
-                coordinates: [longitude, latitude],
-              },
-              properties: {
-                windSpeed:
-                  annotatedWindSpeed.value.find((w) => {
-                    return w.station_name === station_name;
-                  }).value / knotsPerMS,
-                windDirection: annotatedWindDir.value.find((w) => {
-                  return w.station_name === station_name;
-                }).value,
-              },
-            };
-          }
-        ),
-      },
-    };
   });
 
   map.value.on("load", function () {
@@ -258,49 +257,60 @@ onMounted(() => {
 
     map.value.addSource("points", geoJSON.value);
 
-    map.value.addLayer({
-      id: "points",
-      type: "symbol",
-      source: "points",
-      layout: {
-        "icon-allow-overlap": true,
-        "icon-image": "buoy-marker",
-        "icon-size": 1.2,
-        "icon-offset": [0.8, -4], // optically centered
-      },
-    });
-
-    for (var b = 0; b < windSpeedBins.length - 1; b++) {
-      map.value.addLayer({
-        id: "svgfile" + b,
-        type: "symbol",
-        filter: [
-          "all",
-          [">=", "windSpeed", windSpeedBins[b]],
-          ["<", "windSpeed", windSpeedBins[b + 1]],
-        ],
-        source: "points", // points.filter(annotatedwind)?
-        layout: {
-          "icon-allow-overlap": true,
-          "icon-image": `wind-speed-${b + 1}`, //mapped value of wind
-          "icon-offset": [-100, -40], // optically centered
-          "icon-size": 0.3,
-          "icon-rotate": {
-            property: "windDirection",
-            stops: [
-              [0, 90],
-              [270, 360],
-            ],
-          },
-        },
-      });
-    }
-    updateMarkers();
+    updateMap();
   });
 });
 
 let markers = [];
-const updateMarkers = () => {
+const updateMap = () => {
+  for (var b = 0; b < windSpeedBins.length - 1; b++) {
+    if (map.value.getLayer("svgfile" + b)) {
+      map.value.removeLayer("svgfile" + b);
+    }
+  }
+  if (map.value.getLayer("points")) {
+    map.value.removeLayer("points");
+  }
+  if (map.value.getSource("points")) {
+    map.value.removeSource("points");
+    map.value.addSource("points", geoJSON.value);
+  }
+  map.value.addLayer({
+    id: "points",
+    type: "symbol",
+    source: "points",
+    layout: {
+      "icon-allow-overlap": true,
+      "icon-image": "buoy-marker",
+      "icon-size": 1.2,
+      "icon-offset": [0.8, -4], // optically centered
+    },
+  });
+  for (var b = 0; b < windSpeedBins.length - 1; b++) {
+    map.value.addLayer({
+      id: "svgfile" + b,
+      type: "symbol",
+      filter: [
+        "all",
+        [">=", "windSpeed", windSpeedBins[b]],
+        ["<", "windSpeed", windSpeedBins[b + 1]],
+      ],
+      source: "points", // points.filter(annotatedwind)?
+      layout: {
+        "icon-allow-overlap": true,
+        "icon-image": `wind-speed-${b + 1}`, //mapped value of wind
+        "icon-offset": [-100, -40], // optically centered
+        "icon-size": 0.3,
+        "icon-rotate": {
+          property: "windDirection",
+          stops: [
+            [0, 90],
+            [270, 360],
+          ],
+        },
+      },
+    });
+  }
   markers.forEach((marker) => {
     marker._element.remove();
     marker.remove();
@@ -327,7 +337,7 @@ const updateMarkers = () => {
   });
   // annotatedWindSpeed.value.forEach(({ station_name }))
 };
-watch(() => props.formattedDate, updateMarkers);
+watch(() => props.formattedDate, updateMap);
 </script>
 
 <style lang="scss" scoped>
