@@ -227,6 +227,7 @@ const geoJSON = computed(() => {
     },
   };
 });
+
 onMounted(() => {
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
@@ -295,7 +296,7 @@ const updateMap = () => {
         [">=", "windSpeed", windSpeedBins[b]],
         ["<", "windSpeed", windSpeedBins[b + 1]],
       ],
-      source: "points", // points.filter(annotatedwind)?
+      source: "points",
       layout: {
         "icon-allow-overlap": true,
         "icon-image": `wind-speed-${b + 1}`, //mapped value of wind
@@ -335,7 +336,6 @@ const updateMap = () => {
         .addTo(map.value)
     );
   });
-  // annotatedWindSpeed.value.forEach(({ station_name }))
 };
 watch(() => props.formattedDate, updateMap);
 </script>
