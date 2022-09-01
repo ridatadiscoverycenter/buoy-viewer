@@ -128,7 +128,7 @@ const config = {
 
 const knotsPerMS = 1.94384;
 const windSpeedBins = [
-  0, 0, 2.5, 7.5, 12.5, 17.5, 22.5, 27.5, 32.5, 37.5, 42.5, 47.5, 52.5,
+  0, 2.5, 7.5, 12.5, 17.5, 22.5, 27.5, 32.5, 37.5, 42.5, 47.5, 52.5,
 ]; // cutoffs in knots
 
 const annotatedChlorophyllSamples = computed(() => {
