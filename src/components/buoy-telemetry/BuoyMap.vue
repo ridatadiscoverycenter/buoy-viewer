@@ -127,7 +127,7 @@ const config = {
 };
 
 const knotsPerMS = 1.94384;
-const windSpeedBins = [
+const windSpeedBinsKnots = [
   0, 2.5, 7.5, 12.5, 17.5, 22.5, 27.5, 32.5, 37.5, 42.5, 47.5, 52.5,
 ]; // cutoffs in knots
 
@@ -154,15 +154,9 @@ const annotatedChlorophyllSamples = computed(() => {
   }
 });
 
-const annotatedWindSpeed = computed(() => {
+const annotatedWindSpeedms = computed(() => {
   if (props.showWind) {
-    return props.samples
-      .filter((row) => row.variable === "WindSpeedAverage")
-      .map((row) => {
-        return {
-          ...row,
-        };
-      });
+    return props.samples.filter((row) => row.variable === "WindSpeedAverage");
   } else {
     return [];
   }
@@ -170,13 +164,7 @@ const annotatedWindSpeed = computed(() => {
 
 const annotatedWindDir = computed(() => {
   if (props.showWind) {
-    return props.samples
-      .filter((row) => row.variable === "WindDirectionFrom")
-      .map((row) => {
-        return {
-          ...row,
-        };
-      });
+    return props.samples.filter((row) => row.variable === "WindDirectionFrom");
   } else {
     return [];
   }
@@ -213,7 +201,7 @@ const geoJSON = computed(() => {
             },
             properties: {
               windSpeed:
-                annotatedWindSpeed.value.find((w) => {
+                annotatedWindSpeedms.value.find((w) => {
                   return w.station_name === station_name;
                 }).value / knotsPerMS,
               windDirection: annotatedWindDir.value.find((w) => {
@@ -262,7 +250,7 @@ onMounted(() => {
 
 let markers = [];
 const updateMap = () => {
-  for (var b = 0; b < windSpeedBins.length - 1; b++) {
+  for (var b = 0; b < windSpeedBinsKnots.length - 1; b++) {
     if (map.value.getLayer("svgfile" + b)) {
       map.value.removeLayer("svgfile" + b);
     }
@@ -272,8 +260,8 @@ const updateMap = () => {
   }
   if (map.value.getSource("points")) {
     map.value.removeSource("points");
-    map.value.addSource("points", geoJSON.value);
   }
+  map.value.addSource("points", geoJSON.value);
   map.value.addLayer({
     id: "points",
     type: "symbol",
@@ -285,14 +273,14 @@ const updateMap = () => {
       "icon-offset": [0.8, -4], // optically centered
     },
   });
-  for (var b = 0; b < windSpeedBins.length - 1; b++) {
+  for (var b = 0; b < windSpeedBinsKnots.length - 1; b++) {
     map.value.addLayer({
       id: "svgfile" + b,
       type: "symbol",
       filter: [
         "all",
-        [">=", "windSpeed", windSpeedBins[b]],
-        ["<", "windSpeed", windSpeedBins[b + 1]],
+        [">=", "windSpeed", windSpeedBinsKnots[b]],
+        ["<", "windSpeed", windSpeedBinsKnots[b + 1]],
       ],
       source: "points",
       layout: {
