@@ -242,8 +242,6 @@ onMounted(() => {
     map.value.addImage("wind-speed-9", windSpeed9Image.value);
     map.value.addImage("wind-speed-10", windSpeed10Image.value);
 
-    map.value.addSource("points", geoJSON.value);
-
     updateMap();
   });
 });
