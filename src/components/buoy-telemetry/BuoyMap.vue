@@ -155,7 +155,6 @@ const annotatedChlorophyllSamples = computed(() => {
 });
 
 const annotatedWindSpeed = computed(() => {
-  console.log("here");
   if (props.showWind) {
     return props.samples
       .filter((row) => row.variable === "WindSpeedAverage")
@@ -230,7 +229,6 @@ const geoJSON = computed(() => {
 
 onMounted(() => {
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
-
   map.value = new mapboxgl.Map({
     container: el.value,
     style: "mapbox://styles/ccv-bot/ckmxra8oi0rsw17mzcbqrktzi",
