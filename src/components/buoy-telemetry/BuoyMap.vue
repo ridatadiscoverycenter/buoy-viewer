@@ -267,7 +267,7 @@ const updateMap = () => {
     layout: {
       "icon-allow-overlap": true,
       "icon-image": "buoy-marker",
-      "icon-size": 1.2,
+      "icon-size": 0.9,
       "icon-offset": [0.8, -4], // optically centered
     },
   });
@@ -310,7 +310,7 @@ const updateMap = () => {
     el.style.width = elementSize;
     el.style.height = elementSize;
     el.style.backgroundColor = color;
-    el.style.opacity = "0.5";
+    el.style.opacity = "0.6";
     el.style.borderRadius = "100%";
 
     markers.push(
