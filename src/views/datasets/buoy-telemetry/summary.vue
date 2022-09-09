@@ -1,5 +1,5 @@
 <template>
-  <DashboardCard width="full">
+  <DashboardCard width="two-thirds">
     <template #title>Current Conditions</template>
     <template #subtitle>
       <div class="content-container">
@@ -21,10 +21,17 @@
             and Modeling (RI C-AIM)</ExternalLink
           >.
         </div>
+      </div>
+    </template>
+  </DashboardCard>
 
+  <DashboardCard width="one-third">
+    <template #content>
+      <div class="content-container">
         <img
           src="/images/buoy-image.png"
           alt="Buoy deployment in Narragansett Bay"
+          width="195"
         />
       </div>
     </template>
@@ -36,14 +43,19 @@
       Use the date slider to look back in 15 minute intervals for the past 5
       days. After clicking on the slider, use left/right arrow keys to move
       between intervals. Color markers indicate Chlorophyll levels at buoys,
-      with values ranging from light to dark green (0&ndash;60 ug L-1).
+      with values ranging from light to dark green (0&ndash;60 ug L-1). Wind
+      indicators follow
+      <ExternalLink href="https://www.wpc.ncep.noaa.gov/html/stationplot.shtml"
+        >NOAA conventions.
+      </ExternalLink>
     </template>
     <template #content>
       <div class="map-app-container">
         <BuoyMap
           :samples="selectedSamples"
           :formatted-date="formattedDate"
-          variable="ChlorophyllSurface"
+          :show-chlorophyll="true"
+          :show-wind="true"
         />
         <DateSlider
           :start-date="startDate"
@@ -373,6 +385,7 @@ const selectedSamples = computed(() => {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    margin-block-start: -30px;
   }
 }
 .video-wrapper {
