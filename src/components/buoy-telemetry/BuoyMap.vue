@@ -8,7 +8,7 @@
     </div>
     <div ref="el" class="mapbox-container" />
   </div>
-
+  <div id="legend" class="map-overlay"></div>
   <!-- reference images for mapbox to pull from -->
   <img
     ref="imageEl"
@@ -87,6 +87,8 @@
 import { computed, inject, onMounted, ref, watch } from "vue";
 import mapboxgl from "mapbox-gl";
 import { scaleSqrt, scaleLinear } from "d3-scale";
+// import legend from "d3-svg-legend";
+// import { select, selectAll } from "d3-selection";
 
 import BuoyMarker from "@/assets/illustrations/buoy-marker.svg";
 
@@ -120,9 +122,9 @@ const props = defineProps<{
 
 const config = {
   chlorophyll: {
-    varDomain: [0, 10],
+    varDomain: [0, 5, 15, 30],
     markerSize: [0.2, 0.75],
-    markerColors: ["#32CD32", "#355E3B"], // lime green, hunter green
+    markerColors: ["#7CFC00", "#4CBB17", "#008000", "#355E3B"], // grass green, kelly green, green, hunter green
   },
 };
 
@@ -243,6 +245,23 @@ onMounted(() => {
     map.value.addImage("wind-speed-10", windSpeed10Image.value);
 
     updateMap();
+
+    const legend = document.getElementById("legend");
+    const legendClasses = ["0 - 5", "5 - 15", "15 - 30", "> 30"];
+    const legendColors = ["#7CFC00", "#4CBB17", "#008000", "#355E3B"];
+    legendClasses.forEach((legendClasses, i) => {
+      const color = legendColors[i];
+      const item = document.createElement("div");
+      const key = document.createElement("span");
+      key.className = "legend-key";
+      // key.style.backgroundColor = color;
+
+      const value = document.createElement("span");
+      value.innerHTML = `${legendClasses}`;
+      item.appendChild(key);
+      item.appendChild(value);
+      legend.appendChild(item);
+    });
   });
 });
 
@@ -352,5 +371,35 @@ watch(() => props.formattedDate, updateMap);
 }
 .mapbox-container {
   height: 100%;
+}
+
+.map-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #fff;
+  opacity: 0.65;
+  margin-right: 20px;
+  font-family: Arial, sans-serif;
+  overflow: auto;
+  border-radius: 3px;
+}
+
+#legend {
+  padding: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.75);
+  line-height: 24px;
+  height: 150px;
+  margin-bottom: 40px;
+  width: 150px;
+}
+
+.legend-key {
+  display: inline-block;
+  border-radius: 20%;
+  width: 50px;
+  height: 50px;
+  margin-right: 5px;
+  background: #853;
 }
 </style>
