@@ -245,12 +245,20 @@ onMounted(() => {
     updateMap();
 
     const legend = document.getElementById("legend");
-    let legendClasses=[]
-      for (let i = 0; i < config.chlorophyll.varDomain.length -1; i++) { 
-        legendClasses.push(`${config.chlorophyll.varDomain[i]} - ${config.chlorophyll.varDomain[i+1]}`)
-        }
-    legendClasses.push(`> ${config.chlorophyll.varDomain[config.chlorophyll.varDomain.length -1]}`)
-    // const legendClasses = [`${config.chlorophyll.varDomain[0]} - ${config.chlorophyll.varDomain[1]}`, '${varDomain[1]} - ${varDomain[2]}', '${varDomain[2]} - ${varDomain[3]}', '${varDomain[4]}']; 
+    let legendClasses = [];
+    for (let i = 0; i < config.chlorophyll.varDomain.length - 1; i++) {
+      legendClasses.push(
+        `${config.chlorophyll.varDomain[i]} - ${
+          config.chlorophyll.varDomain[i + 1]
+        }`
+      );
+    }
+    legendClasses.push(
+      `> ${
+        config.chlorophyll.varDomain[config.chlorophyll.varDomain.length - 1]
+      }`
+    );
+    // const legendClasses = [`${config.chlorophyll.varDomain[0]} - ${config.chlorophyll.varDomain[1]}`, '${varDomain[1]} - ${varDomain[2]}', '${varDomain[2]} - ${varDomain[3]}', '${varDomain[4]}'];
     const legendColors = config.chlorophyll.markerColors;
     // ["#7CFC00", "#4CBB17", "#008000", "#355E3B"]; ["0 - 5", "5 - 15", "15 - 30", "> 30"];
     legendClasses.forEach((legendClasses, i) => {
