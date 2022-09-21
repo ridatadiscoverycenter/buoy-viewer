@@ -88,7 +88,7 @@
 <script setup lang="ts">
 import { computed, inject, onMounted, ref, watch } from "vue";
 import mapboxgl from "mapbox-gl";
-import { scaleSqrt, scaleLog } from "d3-scale";
+import { scaleLog } from "d3-scale";
 
 import BuoyMarker from "@/assets/illustrations/buoy-marker.svg";
 
