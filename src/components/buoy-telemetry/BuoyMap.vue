@@ -87,8 +87,6 @@
 import { computed, inject, onMounted, ref, watch } from "vue";
 import mapboxgl from "mapbox-gl";
 import { scaleSqrt, scaleLinear } from "d3-scale";
-// import legend from "d3-svg-legend";
-// import { select, selectAll } from "d3-selection";
 
 import BuoyMarker from "@/assets/illustrations/buoy-marker.svg";
 
@@ -386,20 +384,19 @@ watch(() => props.formattedDate, updateMap);
 }
 
 #legend {
-  padding: 20px;
+  padding: 15px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.75);
   line-height: 28px;
-  height: 150px;
+  height: 140px;
   margin-bottom: 20px;
-  width: 150px;
+  width: 120px;
 }
 
 .legend-key {
   display: inline-block;
   border-radius: 20%;
-  width: 50px;
-  height: 50px;
+  width: 10px;
+  height: 10px;
   margin-left: 50px;
-  // background-color: rgb(201, 115, 58);
 }
 </style>
