@@ -254,7 +254,6 @@ onMounted(() => {
       const item = document.createElement("div");
       const key = document.createElement("span");
       key.className = "legend-key";
-      // key.style.backgroundColor = color;
 
       const value = document.createElement("span");
       value.innerHTML = `${legendClasses}`;
@@ -391,15 +390,14 @@ watch(() => props.formattedDate, updateMap);
   line-height: 24px;
   height: 150px;
   margin-bottom: 40px;
-  width: 150px;
+  width: 120px;
 }
-
-.legend-key {
+/* prettier-ignore */
+:deep(.legend-key){
   display: inline-block;
   border-radius: 20%;
-  width: 50px;
-  height: 50px;
+  width: 10px;
+  height: 10px;
   margin-right: 5px;
-  background: #853;
 }
 </style>
