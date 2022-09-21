@@ -254,7 +254,7 @@ onMounted(() => {
       const item = document.createElement("div");
       const key = document.createElement("span");
       key.className = "legend-key";
-      // key.style.backgroundColor = color;
+      key.style.backgroundColor = color;
 
       const value = document.createElement("span");
       value.innerHTML = `${legendClasses}`;
@@ -379,18 +379,18 @@ watch(() => props.formattedDate, updateMap);
   left: 0;
   background: #fff;
   opacity: 0.65;
-  margin-right: 20px;
-  font-family: Arial, sans-serif;
+  margin-top: 5px;
+  margin-left: 5px;
   overflow: auto;
   border-radius: 3px;
 }
 
 #legend {
-  padding: 10px;
+  padding: 20px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.75);
-  line-height: 24px;
+  line-height: 28px;
   height: 150px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   width: 150px;
 }
 
@@ -399,7 +399,7 @@ watch(() => props.formattedDate, updateMap);
   border-radius: 20%;
   width: 50px;
   height: 50px;
-  margin-right: 5px;
-  background: #853;
+  margin-left: 50px;
+  // background-color: rgb(201, 115, 58);
 }
 </style>
