@@ -254,6 +254,7 @@ onMounted(() => {
       const item = document.createElement("div");
       const key = document.createElement("span");
       key.className = "legend-key";
+      key.style.backgroundColor = color;
 
       const value = document.createElement("span");
       value.innerHTML = `${legendClasses}`;
