@@ -144,7 +144,7 @@ const annotatedChlorophyllSamples = computed(() => {
   if (props.showChlorophyll) {
     const { varDomain, markerSize, markerColors } = config.chlorophyll;
     const domain = varDomain;
-    const LogScale = scaleLog().domain(domain).range(markerSize);
+    const logScale = scaleLog().domain(domain).range(markerSize);
     const colorScale = scaleLog()
       .domain(domain)
       .range(markerColors)
@@ -155,7 +155,7 @@ const annotatedChlorophyllSamples = computed(() => {
         return {
           ...row,
           color: colorScale(row.value),
-          size: LogScale(row.value),
+          size: logScale(row.value),
         };
       });
   } else {
