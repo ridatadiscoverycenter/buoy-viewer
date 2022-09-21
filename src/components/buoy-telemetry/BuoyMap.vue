@@ -379,20 +379,21 @@ watch(() => props.formattedDate, updateMap);
   left: 0;
   background: #fff;
   opacity: 0.65;
-  margin-right: 20px;
-  font-family: Arial, sans-serif;
+  margin-top: 5px;
+  margin-left: 5px;
   overflow: auto;
   border-radius: 3px;
 }
 
 #legend {
-  padding: 10px;
+  padding: 20px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.75);
-  line-height: 24px;
+  line-height: 28px;
   height: 150px;
   margin-bottom: 40px;
   width: 120px;
 }
+
 /* prettier-ignore */
 :deep(.legend-key){
   display: inline-block;
