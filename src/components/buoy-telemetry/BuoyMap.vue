@@ -392,11 +392,12 @@ watch(() => props.formattedDate, updateMap);
   width: 120px;
 }
 
-.legend-key {
+/* prettier-ignore */
+:deep(.legend-key){
   display: inline-block;
   border-radius: 20%;
   width: 10px;
   height: 10px;
-  margin-left: 50px;
+  margin-right: 5px;
 }
 </style>
