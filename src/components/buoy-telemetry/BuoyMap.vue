@@ -8,7 +8,9 @@
     </div>
     <div ref="el" class="mapbox-container" />
   </div>
-  <div id="legend" class="map-overlay"></div>
+  <div id="legend" class="map-overlay is-size-7">
+    <strong class="is-size-6">Chlorophyll (log10)</strong>
+  </div>
   <!-- reference images for mapbox to pull from -->
   <img
     ref="imageEl"
@@ -86,7 +88,7 @@
 <script setup lang="ts">
 import { computed, inject, onMounted, ref, watch } from "vue";
 import mapboxgl from "mapbox-gl";
-import { scaleSqrt, scaleLinear } from "d3-scale";
+import { scaleSqrt, scaleLog } from "d3-scale";
 
 import BuoyMarker from "@/assets/illustrations/buoy-marker.svg";
 
@@ -120,9 +122,16 @@ const props = defineProps<{
 
 const config = {
   chlorophyll: {
-    varDomain: [0, 5, 15, 30],
-    markerSize: [0.2, 0.75],
-    markerColors: ["#7CFC00", "#4CBB17", "#008000", "#355E3B"], // grass green, kelly green, green, hunter green
+    varDomain: [0.1, 1, 10, 100, 1000, 10000],
+    markerSize: [0.1, 0.5],
+    markerColors: [
+      "#98FB98",
+      "#93C572",
+      "#4CBB17",
+      "#008000",
+      "#5F8575",
+      "#355E3B",
+    ], // mint green, pistachio, kelly green, green, eucalyptus, hunter green
   },
 };
 
@@ -135,8 +144,8 @@ const annotatedChlorophyllSamples = computed(() => {
   if (props.showChlorophyll) {
     const { varDomain, markerSize, markerColors } = config.chlorophyll;
     const domain = varDomain;
-    const sqrtScale = scaleSqrt().domain(domain).range(markerSize);
-    const colorScale = scaleLinear()
+    const LogScale = scaleLog().domain(domain).range(markerSize);
+    const colorScale = scaleLog()
       .domain(domain)
       .range(markerColors)
       .clamp(true);
@@ -146,7 +155,7 @@ const annotatedChlorophyllSamples = computed(() => {
         return {
           ...row,
           color: colorScale(row.value),
-          size: sqrtScale(row.value),
+          size: LogScale(row.value),
         };
       });
   } else {
@@ -258,9 +267,7 @@ onMounted(() => {
         config.chlorophyll.varDomain[config.chlorophyll.varDomain.length - 1]
       }`
     );
-    // const legendClasses = [`${config.chlorophyll.varDomain[0]} - ${config.chlorophyll.varDomain[1]}`, '${varDomain[1]} - ${varDomain[2]}', '${varDomain[2]} - ${varDomain[3]}', '${varDomain[4]}'];
     const legendColors = config.chlorophyll.markerColors;
-    // ["#7CFC00", "#4CBB17", "#008000", "#355E3B"]; ["0 - 5", "5 - 15", "15 - 30", "> 30"];
     legendClasses.forEach((legendClasses, i) => {
       const color = legendColors[i];
       const item = document.createElement("div");
@@ -390,7 +397,7 @@ watch(() => props.formattedDate, updateMap);
   top: 0;
   left: 0;
   background: #fff;
-  opacity: 0.65;
+  opacity: 0.75;
   margin-top: 5px;
   margin-left: 5px;
   overflow: auto;
@@ -398,12 +405,12 @@ watch(() => props.formattedDate, updateMap);
 }
 
 #legend {
-  padding: 15px;
+  padding: 10px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.75);
   line-height: 28px;
-  height: 140px;
-  margin-bottom: 20px;
-  width: 120px;
+  height: 250px;
+  margin-bottom: 10px;
+  width: 115px;
 }
 
 /* prettier-ignore */
