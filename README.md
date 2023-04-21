@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/271652303.svg)](https://zenodo.org/badge/latestdoi/271652303)
 
-> Explore data from the [RI Data Discovery Center](https://ridatadiscovery.org) about the Narragansett Bay.
+> Explore data from the [RI Data Discovery Center](https://riddc.brown.edu) about the Narragansett Bay.
 
 A web app to explore data about the Narragansett bay.  Built using Vue 3 + Typescript.  Uses the buoy-api as a backend.
 
