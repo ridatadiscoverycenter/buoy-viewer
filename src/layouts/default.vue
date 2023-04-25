@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <a class="logo-container" href="https://ridatadiscovery.org">
+    <a class="logo-container" href="https://riddc.brown.edu">
       <span class="brand-title">Rhode Island Data Discovery Center</span>
       <BaseLogo />
     </a>
