@@ -9,6 +9,6 @@
 </template>
 
 <script setup lang="ts">
-import DashboardLayout from "@/layouts/dashboard.vue";
+import DashboardLayout from "@/layouts/mainDashboard.vue";
 import SuspenseComponent from "@/components/base/SuspenseComponent.vue";
 </script>
