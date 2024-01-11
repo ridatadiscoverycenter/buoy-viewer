@@ -1,4 +1,4 @@
-// set variables used by imports then import styles
+/* set variables used by imports then import styles */
 
 $body-size: 1rem;
 $primary: rgb(89, 81, 139);
@@ -13,7 +13,7 @@ $slider-track-background: $primary;
 $primary-color: $link;
 @import '../../../node_modules/vue-datepicker-next/scss/index.scss';
 
-// widely used utility classes
+/* widely used utility classes */
 .is-flex-column {
   @extend .is-flex;
   flex-direction: column;
@@ -27,19 +27,19 @@ $primary-color: $link;
   flex-grow: 1;
 }
 
-// have buttons wrap lines - this is overwriting bulma
+/* have buttons wrap lines - this is overwriting bulma */
 .button {
   white-space: normal;
   overflow-wrap: break-word;
   height: revert;
 }
 
-// make vue datepicker input width 100%
+/* make vue datepicker input width 100% */
 .mx-datepicker-range {
   width: 100%;
 }
 
-// make vue-multiselect colors match theme
+/* make vue-multiselect colors match theme */
 .multiselect__tag {
   background: $link;
 }
