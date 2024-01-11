@@ -47,17 +47,20 @@ const getBuoyDatasetRoutes = (
   return [
     {
       path: dataset,
-      component: () => import(`./views/datasets/${dataset}/${dataset}Index.vue`),
+      component: () =>
+        import(`./views/datasets/${dataset}/${dataset}Index.vue`),
       children: [
         {
           path: "summary",
           name: `${title} - Summary`,
-          component: () => import(`./views/datasets/${dataset}/${dataset}Summary.vue`),
+          component: () =>
+            import(`./views/datasets/${dataset}/${dataset}Summary.vue`),
         },
         {
           path: "dashboard",
           name: `${title} - Dashboard`,
-          component: () => import(`./views/datasets/${dataset}/${dataset}Dashboard.vue`),
+          component: () =>
+            import(`./views/datasets/${dataset}/${dataset}Dashboard.vue`),
           beforeEnter: [updateQueryParams],
         },
         {
@@ -132,7 +135,8 @@ const routes: RouteRecordRaw[] = [
       {
         path: "domoic-acid",
         name: "Domoic Acid",
-        component: () => import("./views/datasets/domoic-acid/domoic-acidIndex.vue"),
+        component: () =>
+          import("./views/datasets/domoic-acid/domoic-acidIndex.vue"),
       },
     ],
   },
