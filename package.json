@@ -33,7 +33,7 @@
     "vega-lite": "^5.2.0",
     "vue": "^3.2.26",
     "vue-datepicker-next": "^1.0.2",
-    "vue-multiselect": "^3.0.0-alpha.2",
+    "vue-multiselect": "^2.1.8",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
