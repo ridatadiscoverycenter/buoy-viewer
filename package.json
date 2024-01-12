@@ -35,7 +35,7 @@
     "lodash": "^4.17.21",
     "mapbox-gl": "^3.0.1",
     "object-hash": "^3.0.0",
-    "pinia": "^2.0.9",
+    "pinia": "^2.1.7",
     "vega": "^5.22.1",
     "vega-embed": "^6.20.8",
     "vega-lite": "^5.2.0",
