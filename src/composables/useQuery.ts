@@ -30,10 +30,10 @@ export function useQuery(store, routePath: string) {
     });
 
     query.variables = store.variables.filter((v) =>
-      copyQuery.variables.includes(v.name)
+      copyQuery.variables.includes(v.name),
     );
     query.coordinates = store.coordinates.filter((c) =>
-      copyQuery.ids.includes(c.buoyId)
+      copyQuery.ids.includes(c.buoyId),
     );
 
     query.startDate = copyQuery.start;

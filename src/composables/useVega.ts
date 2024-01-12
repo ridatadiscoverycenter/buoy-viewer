@@ -41,8 +41,8 @@ export function useVega({
         maxWidth.value,
         Math.max(
           minWidth.value,
-          Math.min(el.value.parentElement.clientWidth, window.innerWidth)
-        ) - actionsWidth.value
+          Math.min(el.value.parentElement.clientWidth, window.innerWidth),
+        ) - actionsWidth.value,
       );
     }
     return minWidth.value;

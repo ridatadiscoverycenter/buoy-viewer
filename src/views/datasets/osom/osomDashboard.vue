@@ -27,7 +27,7 @@ const { query, updateQuery } = useQuery(store, route.path);
 updateQuery(route.query, route.path);
 watch(
   () => route.query,
-  (val) => updateQuery(val, route.path)
+  (val) => updateQuery(val, route.path),
 );
 
 // set up the comparison dataset - create combined store with keys that are used

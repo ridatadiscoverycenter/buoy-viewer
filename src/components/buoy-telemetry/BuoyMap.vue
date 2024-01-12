@@ -209,7 +209,7 @@ const geoJSON = computed(() => {
               }).value,
             },
           };
-        }
+        },
       ),
     },
   };
@@ -317,7 +317,7 @@ const updateMap = () => {
       new mapboxgl.Marker({ element: el })
         .setLngLat(store.siteCoordinates(station_name))
         .setPopup(new mapboxgl.Popup().setText(station_name))
-        .addTo(map.value)
+        .addTo(map.value),
     );
   });
 };

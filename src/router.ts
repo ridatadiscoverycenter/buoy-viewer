@@ -33,7 +33,7 @@ const updateQueryParams = ({ path, query }) => {
 const getBuoyDatasetRoutes = (
   dataset: Dataset,
   title: string,
-  oldPath?: string
+  oldPath?: string,
 ): RouteRecordRaw[] => {
   const redirectChildren = oldPath
     ? [
@@ -102,14 +102,14 @@ const routes: RouteRecordRaw[] = [
       ...getBuoyDatasetRoutes(
         "ma-buoy",
         "Historical MA Buoy Data",
-        "ma-buoy-data"
+        "ma-buoy-data",
       ),
       ...getBuoyDatasetRoutes("osom", "Ocean State Ocean Model", "osom-data"),
       ...getBuoyDatasetRoutes("plankton", "Plankton Time Series"),
       ...getBuoyDatasetRoutes(
         "ri-buoy",
         "Historical RI Buoy Data",
-        "historical-buoy-data"
+        "historical-buoy-data",
       ),
       ...getBuoyDatasetRoutes("buoy-telemetry", "Real Time Buoys"),
       {

@@ -49,7 +49,7 @@ export default {
         .from(this.summary)
         .fold(
           this.variables.map((v) => v.name),
-          { as: ["variable", "count"] }
+          { as: ["variable", "count"] },
         )
         .objects();
     },

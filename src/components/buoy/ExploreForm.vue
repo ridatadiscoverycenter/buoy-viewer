@@ -99,7 +99,7 @@ const selectedVariables = ref([...props.initVariables]);
 const dateRange = ref(
   props.initDateRange.map((date) => {
     return localISODateToUTC(date);
-  })
+  }),
 );
 
 const disabled = computed(
@@ -107,7 +107,7 @@ const disabled = computed(
     selectedVariables.value.length > 4 ||
     selectedVariables.value.length === 0 ||
     dateRange.value.length !== 2 ||
-    selectedBuoys.value.length === 0
+    selectedBuoys.value.length === 0,
 );
 
 const selectedDates = computed(() => {
@@ -120,7 +120,7 @@ const selectedDates = computed(() => {
 });
 
 const selectedVariablesString = computed(() =>
-  selectedVariables.value.map((v) => v.name).join(",")
+  selectedVariables.value.map((v) => v.name).join(","),
 );
 
 const selectedBuoysString = computed(() => {
