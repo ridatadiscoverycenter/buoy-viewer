@@ -14,7 +14,7 @@ VITE_MAPBOX_ACCESS_TOKEN=
 ```
 The mapbox token can be found by logging in as ccv-bot on mapbox (credentials in lastpass).
 
-Node version: 14+
+Node version: 20+
 
 ```bash
 # install dependencies
