@@ -151,7 +151,7 @@ const RESOURCES = [
   {
     title: "Rhode Island Data Discovery Center Home",
     initials: "RIDDC",
-    link: "https://ridatadiscovery.org",
+    link: "https://riddc.brown.edu",
     icon: "fa-water",
   },
   {

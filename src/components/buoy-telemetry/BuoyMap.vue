@@ -8,7 +8,9 @@
     </div>
     <div ref="el" class="mapbox-container" />
   </div>
-
+  <div id="legend" class="map-overlay is-size-7">
+    <strong class="is-size-6">Chlorophyll (log10)</strong>
+  </div>
   <!-- reference images for mapbox to pull from -->
   <img
     ref="imageEl"
@@ -86,7 +88,7 @@
 <script setup lang="ts">
 import { computed, inject, onMounted, ref, watch } from "vue";
 import mapboxgl from "mapbox-gl";
-import { scaleSqrt, scaleLinear } from "d3-scale";
+import { scaleLog } from "d3-scale";
 
 import BuoyMarker from "@/assets/illustrations/buoy-marker.svg";
 
@@ -120,9 +122,16 @@ const props = defineProps<{
 
 const config = {
   chlorophyll: {
-    varDomain: [0, 10],
-    markerSize: [0.2, 0.75],
-    markerColors: ["#32CD32", "#355E3B"], // lime green, hunter green
+    varDomain: [0.1, 1, 10, 100, 1000, 10000],
+    markerSize: [0.1, 0.5],
+    markerColors: [
+      "#98FB98",
+      "#93C572",
+      "#4CBB17",
+      "#008000",
+      "#5F8575",
+      "#355E3B",
+    ], // mint green, pistachio, kelly green, green, eucalyptus, hunter green
   },
 };
 
@@ -135,8 +144,8 @@ const annotatedChlorophyllSamples = computed(() => {
   if (props.showChlorophyll) {
     const { varDomain, markerSize, markerColors } = config.chlorophyll;
     const domain = varDomain;
-    const sqrtScale = scaleSqrt().domain(domain).range(markerSize);
-    const colorScale = scaleLinear()
+    const logScale = scaleLog().domain(domain).range(markerSize);
+    const colorScale = scaleLog()
       .domain(domain)
       .range(markerColors)
       .clamp(true);
@@ -146,7 +155,7 @@ const annotatedChlorophyllSamples = computed(() => {
         return {
           ...row,
           color: colorScale(row.value),
-          size: sqrtScale(row.value),
+          size: logScale(row.value),
         };
       });
   } else {
@@ -243,6 +252,35 @@ onMounted(() => {
     map.value.addImage("wind-speed-10", windSpeed10Image.value);
 
     updateMap();
+
+    const legend = document.getElementById("legend");
+    let legendClasses = [];
+    for (let i = 0; i < config.chlorophyll.varDomain.length - 1; i++) {
+      legendClasses.push(
+        `${config.chlorophyll.varDomain[i]} - ${
+          config.chlorophyll.varDomain[i + 1]
+        }`,
+      );
+    }
+    legendClasses.push(
+      `> ${
+        config.chlorophyll.varDomain[config.chlorophyll.varDomain.length - 1]
+      }`,
+    );
+    const legendColors = config.chlorophyll.markerColors;
+    legendClasses.forEach((legendClasses, i) => {
+      const color = legendColors[i];
+      const item = document.createElement("div");
+      const key = document.createElement("span");
+      key.className = "legend-key";
+      key.style.backgroundColor = color;
+
+      const value = document.createElement("span");
+      value.innerHTML = `${legendClasses}`;
+      item.appendChild(key);
+      item.appendChild(value);
+      legend.appendChild(item);
+    });
   });
 });
 
@@ -352,5 +390,35 @@ watch(() => props.formattedDate, updateMap);
 }
 .mapbox-container {
   height: 100%;
+}
+
+.map-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #fff;
+  opacity: 0.75;
+  margin-top: 5px;
+  margin-left: 5px;
+  overflow: auto;
+  border-radius: 3px;
+}
+
+#legend {
+  padding: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.75);
+  line-height: 28px;
+  height: 250px;
+  margin-bottom: 10px;
+  width: 115px;
+}
+
+/* prettier-ignore */
+:deep(.legend-key){
+  display: inline-block;
+  border-radius: 20%;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
 }
 </style>
