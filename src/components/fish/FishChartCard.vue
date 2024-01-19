@@ -72,7 +72,7 @@ import { useFishStore, Info } from "../../store/fish";
 const store = useFishStore();
 
 const data = computed(() =>
-  store.samples.filter(({ title }) => title === props.species)
+  store.samples.filter(({ title }) => title === props.species),
 );
 const info = ref<Info>({});
 
@@ -89,7 +89,7 @@ import { useColorMap } from "../../store/colorMap";
 const colorMap = useColorMap();
 
 const colorRange = computed(() =>
-  store.stations.map((v) => colorMap.colors[v])
+  store.stations.map((v) => colorMap.colors[v]),
 );
 </script>
 

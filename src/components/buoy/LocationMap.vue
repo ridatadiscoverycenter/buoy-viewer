@@ -40,10 +40,10 @@ const props = withDefaults(defineProps<Props>(), {
 const colorMap = useColorMap();
 
 const colorDomain = computed(() =>
-  props.coordinates.map((v) => v.station_name)
+  props.coordinates.map((v) => v.station_name),
 );
 
 const colorRange = computed(() =>
-  colorDomain.value.map((v) => colorMap.colors[v])
+  colorDomain.value.map((v) => colorMap.colors[v]),
 );
 </script>

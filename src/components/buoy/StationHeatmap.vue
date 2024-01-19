@@ -46,10 +46,10 @@ const props = withDefaults(
   {
     xUnit: "month",
     xTitle: "Month/Year",
-  }
+  },
 );
 
 const variable = ref(
-  props.variables[0] ?? { name: "WaterTempSurface", units: "°C" }
+  props.variables[0] ?? { name: "WaterTempSurface", units: "°C" },
 );
 </script>

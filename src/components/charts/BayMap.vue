@@ -49,7 +49,7 @@ const legendSpec = computed(() =>
           columns: 2,
         },
       ]
-    : []
+    : [],
 );
 
 const spec = computed(() => {

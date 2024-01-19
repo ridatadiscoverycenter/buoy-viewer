@@ -5,7 +5,7 @@ import { isEqual } from "lodash/lang";
 import HomePage from "@/views/HomePage.vue";
 import AboutPage from "@/views/AboutPage.vue";
 import GlossaryPage from "@/views/GlossaryPage.vue";
-import DatasetPage from "@/views/datasets/index.vue";
+import DatasetPage from "@/views/datasets/datasetIndex.vue";
 
 type Dataset =
   | "fish"
@@ -33,7 +33,7 @@ const updateQueryParams = ({ path, query }) => {
 const getBuoyDatasetRoutes = (
   dataset: Dataset,
   title: string,
-  oldPath?: string
+  oldPath?: string,
 ): RouteRecordRaw[] => {
   const redirectChildren = oldPath
     ? [
@@ -47,17 +47,20 @@ const getBuoyDatasetRoutes = (
   return [
     {
       path: dataset,
-      component: () => import(`./views/datasets/${dataset}/index.vue`),
+      component: () =>
+        import(`./views/datasets/${dataset}/${dataset}Index.vue`),
       children: [
         {
           path: "summary",
           name: `${title} - Summary`,
-          component: () => import(`./views/datasets/${dataset}/summary.vue`),
+          component: () =>
+            import(`./views/datasets/${dataset}/${dataset}Summary.vue`),
         },
         {
           path: "dashboard",
           name: `${title} - Dashboard`,
-          component: () => import(`./views/datasets/${dataset}/dashboard.vue`),
+          component: () =>
+            import(`./views/datasets/${dataset}/${dataset}Dashboard.vue`),
           beforeEnter: [updateQueryParams],
         },
         {
@@ -99,29 +102,29 @@ const routes: RouteRecordRaw[] = [
       ...getBuoyDatasetRoutes(
         "ma-buoy",
         "Historical MA Buoy Data",
-        "ma-buoy-data"
+        "ma-buoy-data",
       ),
       ...getBuoyDatasetRoutes("osom", "Ocean State Ocean Model", "osom-data"),
       ...getBuoyDatasetRoutes("plankton", "Plankton Time Series"),
       ...getBuoyDatasetRoutes(
         "ri-buoy",
         "Historical RI Buoy Data",
-        "historical-buoy-data"
+        "historical-buoy-data",
       ),
       ...getBuoyDatasetRoutes("buoy-telemetry", "Real Time Buoys"),
       {
         path: "fish",
-        component: () => import(`./views/datasets/fish/index.vue`),
+        component: () => import(`./views/datasets/fish/fishIndex.vue`),
         children: [
           {
             path: "summary",
             name: `Fish Trawl Survey - Summary`,
-            component: () => import(`./views/datasets/fish/summary.vue`),
+            component: () => import(`./views/datasets/fish/fishSummary.vue`),
           },
           {
             path: "dashboard",
             name: `Fish Trawl Survey - Dashboard`,
-            component: () => import(`./views/datasets/fish/dashboard.vue`),
+            component: () => import(`./views/datasets/fish/fishDashboard.vue`),
           },
           {
             path: "",
@@ -132,7 +135,8 @@ const routes: RouteRecordRaw[] = [
       {
         path: "domoic-acid",
         name: "Domoic Acid",
-        component: () => import("./views/datasets/domoic-acid/index.vue"),
+        component: () =>
+          import("./views/datasets/domoic-acid/domoic-acidIndex.vue"),
       },
     ],
   },

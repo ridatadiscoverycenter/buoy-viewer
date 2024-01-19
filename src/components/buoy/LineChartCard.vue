@@ -108,19 +108,19 @@ import { useColorMap } from "../../store/colorMap";
 
 const colorMap = useColorMap();
 const colorDomain = computed(() =>
-  props.query.coordinates.map((c) => c.station_name)
+  props.query.coordinates.map((c) => c.station_name),
 );
 
 const colorRange = computed(() =>
-  colorDomain.value.map((c) => colorMap.colors[c])
+  colorDomain.value.map((c) => colorMap.colors[c]),
 );
 
 // split variables into plottable and non-plottable
 const plottableVariables = computed(() =>
-  props.query.variables.filter((v) => !v.name.endsWith("Qualifiers"))
+  props.query.variables.filter((v) => !v.name.endsWith("Qualifiers")),
 );
 const nonPlottableVariables = computed(() =>
-  props.query.variables.filter((v) => v.name.endsWith("Qualifiers"))
+  props.query.variables.filter((v) => v.name.endsWith("Qualifiers")),
 );
 
 // fetch the data
@@ -160,6 +160,6 @@ watch(
   () => ({ ...props.query }),
   () => {
     fetchData();
-  }
+  },
 );
 </script>

@@ -105,7 +105,7 @@
                   .find(
                     (sample) =>
                       sample.variable === variable &&
-                      sample.station_name === buoy.station_name
+                      sample.station_name === buoy.station_name,
                   )
                   ?.value.toFixed(1) ?? "NA"
               }}
@@ -351,7 +351,7 @@ const selectedSamples = computed(() => {
 
       const interpolator = scaleLinear(
         [prevSample.date.valueOf(), nextSample.date.valueOf()],
-        [prevSample.value, nextSample.value]
+        [prevSample.value, nextSample.value],
       );
 
       const newValue = interpolator(selectedDate.value.valueOf());

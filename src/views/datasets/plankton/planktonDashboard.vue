@@ -1,12 +1,7 @@
 <template>
   <LineChartDashboard :query="query" :exclude-nulls="true">
     <template #summary-heatmap>
-      <StationHeatmap
-        :summary="store.summary"
-        :variables="store.variables"
-        x-title="Date"
-        x-unit="day"
-      />
+      <VariableHeatmap :summary="store.summary" :variables="store.variables" />
     </template>
   </LineChartDashboard>
 </template>
@@ -16,7 +11,7 @@ import { inject, provide, watch } from "vue";
 import { useRoute } from "vue-router";
 
 import LineChartDashboard from "@/components/buoy/LineChartDashboard.vue";
-import StationHeatmap from "@/components/buoy/StationHeatmap.vue";
+import VariableHeatmap from "@/components/buoy/VariableHeatmap.vue";
 
 import { BuoyStore } from "../../../store/buoy";
 const store = inject("store") as BuoyStore;
@@ -27,7 +22,7 @@ const { query, updateQuery } = useQuery(store, route.path);
 updateQuery(route.query, route.path);
 watch(
   () => route.query,
-  (val) => updateQuery(val, route.path)
+  (val) => updateQuery(val, route.path),
 );
 
 // set up the comparison dataset

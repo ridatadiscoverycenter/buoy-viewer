@@ -31,7 +31,7 @@ const el = ref(null);
 
 const updatedDate = computed(() => {
   const selectedDate = new Date(
-    store.startDate.valueOf() + value.value * 1000 * 60 * 60 * 24
+    store.startDate.valueOf() + value.value * 1000 * 60 * 60 * 24,
   );
 
   return store.dates.find((d) => d >= selectedDate);

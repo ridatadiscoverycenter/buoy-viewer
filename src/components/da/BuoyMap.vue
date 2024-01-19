@@ -109,7 +109,7 @@ const updateMarkers = () => {
       new mapboxgl.Marker({ element: el })
         .setLngLat(store.siteCoordinates(station_name))
         .setPopup(new mapboxgl.Popup().setText(station_name))
-        .addTo(map.value)
+        .addTo(map.value),
     );
   });
 };
@@ -117,7 +117,7 @@ const updateMarkers = () => {
 watch(() => store.selectedDate, updateMarkers);
 
 const formattedDate = computed(() =>
-  store.selectedDate.toLocaleDateString("sv")
+  store.selectedDate.toLocaleDateString("sv"),
 );
 
 // when the parent element size changes, resize the map

@@ -63,7 +63,7 @@ export const useDAStore = defineStore("domoic-acid", {
     siteCoordinates() {
       return function (site: string) {
         const match = this.coordinates.find(
-          ({ station_name }) => station_name === site
+          ({ station_name }) => station_name === site,
         );
         if (match) {
           return [match.longitude, match.latitude];
@@ -75,7 +75,7 @@ export const useDAStore = defineStore("domoic-acid", {
     activeCoordinates(): Coordinate[] {
       const activeSites = this.samples.map(({ station_name }) => station_name);
       return this.coordinates.filter(({ station_name }) =>
-        activeSites.includes(station_name)
+        activeSites.includes(station_name),
       );
     },
     maxDA() {
@@ -83,7 +83,7 @@ export const useDAStore = defineStore("domoic-acid", {
     },
     selectedSamples() {
       const daySamples = this.samples.filter(
-        ({ date }) => date - this.selectedDate === 0
+        ({ date }) => date - this.selectedDate === 0,
       );
 
       const domain = [0, this.maxDA];

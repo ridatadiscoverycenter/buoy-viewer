@@ -5,7 +5,7 @@ import { onMounted, onUnmounted, Ref } from "vue";
 export function useResizeObserver(
   el: Ref<HTMLDivElement | null>,
   callback: () => void,
-  debounceDuration = 100
+  debounceDuration = 100,
 ) {
   let timeout: number;
 
@@ -19,12 +19,12 @@ export function useResizeObserver(
 
   onMounted(
     () =>
-      el.value?.parentElement && resizeObserver.observe(el.value.parentElement)
+      el.value?.parentElement && resizeObserver.observe(el.value.parentElement),
   );
 
   onUnmounted(
     () =>
       el.value?.parentElement &&
-      resizeObserver.unobserve(el.value.parentElement)
+      resizeObserver.unobserve(el.value.parentElement),
   );
 }

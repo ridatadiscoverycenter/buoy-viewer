@@ -38,7 +38,7 @@ const lineDashes = computed(() => DASHES.slice(0, props.variables.length));
 const yTitle = computed(() =>
   props.variables.length === 1
     ? formatVariable(props.variables[0])
-    : "Variables"
+    : "Variables",
 );
 
 const legends = computed(() => {

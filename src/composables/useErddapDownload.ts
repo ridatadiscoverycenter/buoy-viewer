@@ -41,7 +41,7 @@ export function useErddapDownload({
     }?${variables.value
       .map((v) => v.name)
       .join(
-        ","
+        ",",
       )},time,latitude,longitude,station_name&station_name=~"(${ids})"${
       startDate?.value ? "&time>=" + startDate.value : ""
     }${endDate?.value ? "&time<=" + endDate.value : ""}`;

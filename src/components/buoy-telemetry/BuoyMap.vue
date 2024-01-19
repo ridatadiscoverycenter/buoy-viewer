@@ -218,7 +218,7 @@ const geoJSON = computed(() => {
               }).value,
             },
           };
-        }
+        },
       ),
     },
   };
@@ -259,13 +259,13 @@ onMounted(() => {
       legendClasses.push(
         `${config.chlorophyll.varDomain[i]} - ${
           config.chlorophyll.varDomain[i + 1]
-        }`
+        }`,
       );
     }
     legendClasses.push(
       `> ${
         config.chlorophyll.varDomain[config.chlorophyll.varDomain.length - 1]
-      }`
+      }`,
     );
     const legendColors = config.chlorophyll.markerColors;
     legendClasses.forEach((legendClasses, i) => {
@@ -355,7 +355,7 @@ const updateMap = () => {
       new mapboxgl.Marker({ element: el })
         .setLngLat(store.siteCoordinates(station_name))
         .setPopup(new mapboxgl.Popup().setText(station_name))
-        .addTo(map.value)
+        .addTo(map.value),
     );
   });
 };

@@ -53,10 +53,10 @@ const model = buoyStores["osom"].useStore();
 const colorMap = useColorMap();
 
 const colorDomain = computed(() =>
-  model.coordinates.map((c) => c.station_name)
+  model.coordinates.map((c) => c.station_name),
 );
 const colorRange = computed(() =>
-  colorDomain.value.map((c) => colorMap.colors[c])
+  colorDomain.value.map((c) => colorMap.colors[c]),
 );
 
 if (model.coordinates.length === 0) {

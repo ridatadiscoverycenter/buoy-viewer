@@ -63,7 +63,7 @@ const generateAxis = () => {
 const changeDate = (event) => {
   const interval = event.target.value;
   const newDate = new Date(
-    props.startDate.valueOf() + interval * FIFTEEN_MINUTE
+    props.startDate.valueOf() + interval * FIFTEEN_MINUTE,
   );
   emit("new-selected-date", newDate);
 };

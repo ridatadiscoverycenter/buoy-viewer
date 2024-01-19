@@ -86,7 +86,7 @@ const createStore = (config: BuoyConfig, bustCache = false) => {
       async fetchSummaryData() {
         // assign to intermediate variable for performance while updating date/time data
         const summary = await erddapGet(
-          `/${route}/summary${bustCache ? "?cacheBust=" + Math.random() : ""}`
+          `/${route}/summary${bustCache ? "?cacheBust=" + Math.random() : ""}`,
         );
         this.summary = summary.map((d) => ({ date: new Date(d.time), ...d }));
       },
@@ -96,7 +96,7 @@ const createStore = (config: BuoyConfig, bustCache = false) => {
         const startDate = start || this.minDate;
         const endDate = end || this.maxDate;
         return await erddapGet(
-          `/${route}/query?ids=${ids}&variables=${variables}&start=${startDate}&end=${endDate}`
+          `/${route}/query?ids=${ids}&variables=${variables}&start=${startDate}&end=${endDate}`,
         );
       },
 
@@ -115,7 +115,7 @@ const createStore = (config: BuoyConfig, bustCache = false) => {
       async fetchBuoyVariables(): Promise<void> {
         const variables = await erddapGet(`/${route}/variables`);
         variables.sort((a, b) =>
-          a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
+          a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1,
         );
         this.variables = variables;
       },
@@ -149,7 +149,7 @@ const createStore = (config: BuoyConfig, bustCache = false) => {
       siteCoordinates() {
         return function (site: string) {
           const match = this.coordinates.find(
-            ({ station_name }) => station_name === site
+            ({ station_name }) => station_name === site,
           );
           if (match) {
             return [match.longitude, match.latitude];

@@ -80,6 +80,6 @@
 </template>
 
 <script setup lang="ts">
-import DashboardLayout from "@/layouts/dashboard.vue";
+import DashboardLayout from "@/layouts/mainDashboard.vue";
 import DashboardCard from "@/components/base/DashboardCard.vue";
 </script>

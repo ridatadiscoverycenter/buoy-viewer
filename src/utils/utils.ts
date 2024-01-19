@@ -27,7 +27,7 @@ export const localISODateToUTC = (d: string) =>
   new Date(
     parseInt(d.slice(0, 4)),
     parseInt(d.slice(5, 7)) - 1,
-    parseInt(d.slice(8, 10))
+    parseInt(d.slice(8, 10)),
   );
 
 export const sortByProperty = (property) => (a, b) => {
