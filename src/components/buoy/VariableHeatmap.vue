@@ -14,7 +14,7 @@
   />
 </template>
 
-<script>
+<script lang="ts">
 import * as aq from "arquero";
 
 import Heatmap from "@/components/charts/HeatMap.vue";
