@@ -13,7 +13,7 @@ import { useRoute } from "vue-router";
 import LineChartDashboard from "@/components/buoy/LineChartDashboard.vue";
 import VariableHeatmap from "@/components/buoy/VariableHeatmap.vue";
 
-import { BuoyStore } from "../../../store/buoy";
+import { type BuoyStore } from "../../../store/buoy";
 const store = inject("store") as BuoyStore;
 const route = useRoute();
 import { useQuery } from "../../../composables/useQuery";

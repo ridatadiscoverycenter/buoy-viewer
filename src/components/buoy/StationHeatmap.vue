@@ -34,7 +34,7 @@ import Multiselect from "vue-multiselect";
 import HeatMap from "@/components/charts/HeatMap.vue";
 
 import { formatVariable } from "../../utils/utils";
-import { Summary, Variable } from "../../utils/erddap";
+import { type Summary, type Variable } from "../../utils/erddap";
 
 const props = withDefaults(
   defineProps<{

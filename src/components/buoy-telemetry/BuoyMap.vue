@@ -104,8 +104,8 @@ import WindSpeed8 from "@/assets/illustrations/wind_speed_08.svg";
 import WindSpeed9 from "@/assets/illustrations/wind_speed_09.svg";
 import WindSpeed10 from "@/assets/illustrations/wind_speed_10.svg";
 
-import { Data } from "../../utils/erddap";
-import { BuoyStore } from "../../store/buoy";
+import { type Data } from "../../utils/erddap";
+import { type BuoyStore } from "../../store/buoy";
 
 interface Sample extends Data {
   date: Date;

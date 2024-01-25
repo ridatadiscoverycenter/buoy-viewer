@@ -1,8 +1,8 @@
 import {
   ref,
-  Ref,
+  type Ref,
   computed,
-  ComputedRef,
+  type ComputedRef,
   onMounted,
   onUnmounted,
   watch,

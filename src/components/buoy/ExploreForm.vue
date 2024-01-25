@@ -71,7 +71,7 @@ import DatePicker from "vue-datepicker-next";
 
 import BaseForm from "@/components/base/BaseForm.vue";
 
-import { Coordinate, Variable } from "../../utils/erddap";
+import { type Coordinate, type Variable } from "../../utils/erddap";
 import {
   formatCoordinate,
   formatVariable,
@@ -91,7 +91,7 @@ const props = withDefaults(defineProps<Props>(), {
   initDateRange: () => [],
 });
 
-import { BuoyStore } from "../../store/buoy";
+import { type BuoyStore } from "../../store/buoy";
 const store = inject("store") as BuoyStore;
 
 const selectedBuoys = ref([...props.initBuoys]);

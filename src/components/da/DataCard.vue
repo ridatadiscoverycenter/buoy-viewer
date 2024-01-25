@@ -29,9 +29,9 @@ const store = useDAStore();
 const sampleText = (site) => {
   const match = store.selectedSamples.find((s) => s.station_name === site);
   if (match !== undefined) {
-    return match === 0
+    return match.pDA === 0
       ? "DA not detected"
-      : `${parseInt(match.pDA)}ng of DA / L of seawater`;
+      : `${match.pDA}ng of DA / L of seawater`;
   } else {
     return "No sample";
   }

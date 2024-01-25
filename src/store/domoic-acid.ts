@@ -60,9 +60,9 @@ export const useDAStore = defineStore("domoic-acid", {
         .filter((v, i, a) => a.indexOf(v) === i)
         .sort((f, s) => f.valueOf() - s.valueOf());
     },
-    siteCoordinates() {
-      return function (site: string) {
-        const match = this.coordinates.find(
+    siteCoordinates: (state) => {
+      return (site: string) => {
+        const match = state.coordinates.find(
           ({ station_name }) => station_name === site,
         );
         if (match) {
@@ -78,15 +78,14 @@ export const useDAStore = defineStore("domoic-acid", {
         activeSites.includes(station_name),
       );
     },
-    maxDA() {
-      return Math.max(...this.samples.map(({ pDA }) => pDA));
-    },
-    selectedSamples() {
-      const daySamples = this.samples.filter(
-        ({ date }) => date - this.selectedDate === 0,
+    selectedSamples: (state: State) => {
+      const daySamples: Sample[] = state.samples.filter(
+        ({ date }: { date: Date }) =>
+          date.valueOf() - state.selectedDate.valueOf() === 0,
       );
 
-      const domain = [0, this.maxDA];
+      const maxDA = Math.max(...state.samples.map(({ pDA }) => pDA));
+      const domain = [0, maxDA];
       const sqrtScale = scaleSqrt().domain(domain).range([0.2, 1]);
 
       const colorScale = scaleDiverging()
@@ -106,14 +105,20 @@ export const useDAStore = defineStore("domoic-acid", {
         };
       });
     },
-    startDate() {
-      return this.dates[0];
+    startDate(): Date {
+      return this.dates.length > 0 ? this.dates[0] : undefined;
     },
-    endDate() {
-      return this.dates.slice(-1)[0];
+    endDate(): Date {
+      return this.dates.length > 0 ? this.dates.slice(-1)[0] : undefined;
     },
-    dateLength() {
-      return (this.endDate - this.startDate) / 1000 / 60 / 60 / 24;
+    dateLength(): number {
+      return (
+        (this.endDate.valueOf() - this.startDate.valueOf()) /
+        1000 /
+        60 /
+        60 /
+        24
+      );
     },
   },
 });

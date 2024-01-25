@@ -89,7 +89,7 @@ defineProps<{
   scenarios: Scenario[];
 }>();
 
-import { BuoyStore } from "../../store/buoy";
+import { type BuoyStore } from "../../store/buoy";
 const store = inject("store") as BuoyStore;
 
 const generateQuery = (query: Query) => {

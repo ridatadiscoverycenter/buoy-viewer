@@ -210,7 +210,7 @@ import DateSlider from "@/components/buoy-telemetry/DateSlider.vue";
 import BuoyMap from "@/components/buoy-telemetry/BuoyMap.vue";
 
 import { formatVariable } from "../../../utils/utils";
-import { BuoyStore } from "../../../store/buoy";
+import { type BuoyStore } from "../../../store/buoy";
 import ExternalLink from "../../../components/base/ExternalLink.vue";
 
 const store = inject("store") as BuoyStore;

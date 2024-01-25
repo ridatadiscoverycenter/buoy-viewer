@@ -4,12 +4,12 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { Legend } from "vega";
+import { type Legend } from "vega";
 
 import { useVega } from "../../composables/useVega";
 
 import { formatVariable } from "../../utils/utils";
-import { Variable, Data } from "../../utils/erddap";
+import { type Variable, type Data } from "../../utils/erddap";
 
 const props = defineProps<{
   variables: Variable[];

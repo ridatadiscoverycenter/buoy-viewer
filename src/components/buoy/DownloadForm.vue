@@ -66,7 +66,7 @@ import BaseForm from "@/components/base/BaseForm.vue";
 
 import { formatVariable, formatCoordinate } from "../../utils/utils";
 import { useErddapDownload } from "../../composables/useErddapDownload";
-import { BuoyStore } from "../../store/buoy";
+import { type BuoyStore } from "../../store/buoy";
 
 const store = inject("store") as BuoyStore;
 

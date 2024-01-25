@@ -1,7 +1,7 @@
 import { reactive } from "vue";
 import hash from "object-hash";
 
-import { Coordinate, Variable } from "../utils/erddap";
+import { type Coordinate, type Variable } from "../utils/erddap";
 
 interface Query {
   variables: Variable[];

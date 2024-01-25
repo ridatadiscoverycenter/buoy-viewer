@@ -1,6 +1,6 @@
-import { Ref, computed } from "vue";
+import { type Ref, computed } from "vue";
 
-import { Coordinate, Variable } from "../utils/erddap";
+import { type Coordinate, type Variable } from "../utils/erddap";
 
 interface DownloadParams {
   variables: Ref<Variable[]>;
