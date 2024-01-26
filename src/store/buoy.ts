@@ -2,10 +2,10 @@ import { defineStore } from "pinia";
 
 import {
   erddapGet,
-  Summary,
-  Variable,
-  Coordinate,
-  Dataset,
+  type Summary,
+  type Variable,
+  type Coordinate,
+  type Dataset,
 } from "../utils/erddap";
 
 import { useColorMap } from "./colorMap";
@@ -147,7 +147,7 @@ const createStore = (config: BuoyConfig, bustCache = false) => {
         return localISODate(this.maxDateRaw);
       },
       siteCoordinates() {
-        return function (site: string) {
+        return (site: string) => {
           const match = this.coordinates.find(
             ({ station_name }) => station_name === site,
           );

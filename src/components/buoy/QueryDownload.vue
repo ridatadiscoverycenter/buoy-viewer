@@ -42,10 +42,10 @@ import DashboardCard from "@/components/base/DashboardCard.vue";
 import BaseForm from "@/components/base/BaseForm.vue";
 
 import { formatVariable } from "../../utils/utils";
-import { Variable, Coordinate } from "../../utils/erddap";
+import { type Variable, type Coordinate } from "../../utils/erddap";
 import { useErddapDownload } from "../../composables/useErddapDownload";
 
-import { BuoyStore } from "../../store/buoy";
+import { type BuoyStore } from "../../store/buoy";
 const store = inject("store") as BuoyStore;
 
 const props = defineProps<{

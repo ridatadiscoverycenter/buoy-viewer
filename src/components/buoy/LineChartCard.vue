@@ -125,7 +125,7 @@ const nonPlottableVariables = computed(() =>
 
 // fetch the data
 import { fetchWeather } from "../../utils/weather";
-import { BuoyStore } from "../../store/buoy";
+import { type BuoyStore } from "../../store/buoy";
 
 const compareStore = inject("compareStore") as BuoyStore;
 const compareDataset = ref([]);

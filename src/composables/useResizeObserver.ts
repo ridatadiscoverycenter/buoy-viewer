@@ -1,4 +1,4 @@
-import { onMounted, onUnmounted, Ref } from "vue";
+import { onMounted, onUnmounted, type Ref } from "vue";
 
 // given an element, resize it using the callback when its parent size changes.  The resize
 // callback isn't called until the debounceDuration has passed.

@@ -68,7 +68,7 @@ const props = defineProps({
   },
 });
 
-import { useFishStore, Info } from "../../store/fish";
+import { useFishStore, type Info } from "../../store/fish";
 const store = useFishStore();
 
 const data = computed(() =>

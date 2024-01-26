@@ -20,7 +20,7 @@
 <script setup lang="ts">
 import { computed, withDefaults } from "vue";
 
-import { Coordinate } from "../../utils/erddap";
+import { type Coordinate } from "../../utils/erddap";
 import { useColorMap } from "../../store/colorMap";
 
 import DashboardCard from "@/components/base/DashboardCard.vue";

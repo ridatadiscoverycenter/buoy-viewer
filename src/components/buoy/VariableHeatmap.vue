@@ -14,10 +14,12 @@
   />
 </template>
 
-<script>
+<script lang="ts">
 import * as aq from "arquero";
 
 import Heatmap from "@/components/charts/HeatMap.vue";
+import { type Variable } from "../../utils/erddap";
+import { type PropType } from "vue";
 
 export default {
   components: {
@@ -29,7 +31,7 @@ export default {
       required: true,
     },
     variables: {
-      type: Array,
+      type: Array as PropType<Array<Variable>>,
       required: true,
     },
     xTitle: {
@@ -48,7 +50,7 @@ export default {
       return aq
         .from(this.summary)
         .fold(
-          this.variables.map((v) => v.name),
+          this.variables.map((v: Variable) => v.name),
           { as: ["variable", "count"] },
         )
         .objects();
