@@ -40,7 +40,7 @@
   <DashboardCard width="half">
     <template #title>Current Conditions &mdash; Summary Map</template>
     <template #subtitle>
-      Use the date slider to look back in 30 minute intervals for the past 30
+      Use the date slider to look back in 15 minute intervals for the past 30
       days. After clicking on the slider, use left/right arrow keys to move
       between intervals. Color markers indicate Surface Water Temperature at
       real-time buoys, with values ranging from cool blue to warm orange
