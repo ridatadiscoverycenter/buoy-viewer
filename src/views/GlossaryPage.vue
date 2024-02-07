@@ -83,6 +83,18 @@ const agencyAcronyms = [
     acronym: "NERACOOS",
     name: "Northeast Regional Association Coastal Ocean Observing Systems",
   },
+  {
+    acronym: "GoMRI",
+    name: "Gulf of Maine Research Institute",
+  },
+  {
+    acronym: "RIC",
+    name: "Rhode Island College",
+  },
+  {
+    acronym: "UNH",
+    name: "University of New Hampshire",
+  },
 ];
 
 const modelAcronyms = [
