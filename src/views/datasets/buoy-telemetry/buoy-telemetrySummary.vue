@@ -40,11 +40,11 @@
   <DashboardCard width="half">
     <template #title>Current Conditions &mdash; Summary Map</template>
     <template #subtitle>
-      Use the date slider to look back in 15 minute intervals for the past 5
+      Use the date slider to look back in 30 minute intervals for the past 30
       days. After clicking on the slider, use left/right arrow keys to move
-      between intervals. Color markers indicate Chlorophyll levels at buoys,
-      with values ranging from light to dark green (0&ndash;60 ug L-1). Wind
-      indicators follow
+      between intervals. Color markers indicate Surface Water Temperature at
+      real-time buoys, with values ranging from cool blue to warm orange
+      (2.17&ndash;13.52 &deg;C). Wind indicators follow
       <ExternalLink href="https://www.wpc.ncep.noaa.gov/html/stationplot.shtml"
         >NOAA conventions.
       </ExternalLink>
@@ -54,7 +54,7 @@
         <BuoyMap
           :samples="selectedSamples"
           :formatted-date="formattedDate"
-          :show-chlorophyll="true"
+          :show-water-temp="true"
           :show-wind="true"
         />
         <DateSlider
@@ -223,7 +223,7 @@ const generateQuery = (query) => {
 };
 
 const endDate = store.maxDateRaw;
-const startDate = new Date(endDate.valueOf() - 5 * 24 * 60 * 60 * 1000);
+const startDate = new Date(endDate.valueOf() - 30 * 24 * 60 * 60 * 1000);
 const monthDate = subMonths(endDate, 1);
 const twoMonthDate = subMonths(endDate, 2);
 const threeMonthDate = subMonths(endDate, 3);

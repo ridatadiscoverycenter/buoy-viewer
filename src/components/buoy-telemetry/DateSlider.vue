@@ -23,7 +23,7 @@ import { axisBottom } from "d3-axis";
 
 const timeout = ref(null);
 
-const FIFTEEN_MINUTE = 1000 * 60 * 15;
+const FIFTEEN_MINUTE = 1000 * 120 * 15;
 
 const props = defineProps<{
   endDate: Date;
