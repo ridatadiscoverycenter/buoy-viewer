@@ -132,14 +132,7 @@ const config = {
       "#F88017",
       // warmer temps = red, cooler temps = blue
       // azure blue, midday blue, blue lagoon, golden yellow, carrot orange
-
-      //"#98FB98",
-      //"#93C572",
-      //"#4CBB17",
-      //"#008000",
-      //"#5F8575",
-      //"#355E3B",
-    ], // mint green, pistachio, kelly green, green, eucalyptus, hunter green
+    ],
   },
 };
 
