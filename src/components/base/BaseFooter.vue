@@ -5,14 +5,15 @@
         <img src="@/assets/illustrations/ricaim-logo-name.svg" />
       </div>
       <div class="logo-container">
-        <img src="@/assets/illustrations/3crs.svg" />
-      </div>
-      <div class="logo-container">
         <img
           src="@/assets/illustrations/uri-logo.svg"
           class="uri logo-container"
         />
       </div>
+      <div class="logo-container">
+        <img src="@/assets/illustrations/3crs.svg" />
+      </div>
+
       <div class="logo-container">
         <img
           src="@/assets/illustrations/brown-logo.svg"
