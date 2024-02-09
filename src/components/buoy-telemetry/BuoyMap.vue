@@ -9,7 +9,7 @@
     <div ref="el" class="mapbox-container" />
   </div>
   <div id="legend" class="map-overlay is-size-7">
-    <strong class="is-size-6">Chlorophyll (log10)</strong>
+    <strong class="is-size-6">Water Temp (&deg;C)</strong>
   </div>
   <!-- reference images for mapbox to pull from -->
   <img
@@ -116,22 +116,23 @@ const store = inject("store") as BuoyStore;
 const props = defineProps<{
   samples: Sample[];
   formattedDate: string;
-  showChlorophyll?: boolean;
+  showWaterTemp?: boolean;
   showWind?: boolean;
 }>();
 
 const config = {
-  chlorophyll: {
-    varDomain: [0.1, 1, 10, 100, 1000, 10000],
-    markerSize: [0.1, 0.5],
+  waterTemp: {
+    varDomain: [2.17, 5.0, 7.85, 10.65, 13.52], //[0.1, 1, 10, 100, 1000, 10000],
+    markerSize: [0.05, 0.4],
     markerColors: [
-      "#98FB98",
-      "#93C572",
-      "#4CBB17",
-      "#008000",
-      "#5F8575",
-      "#355E3B",
-    ], // mint green, pistachio, kelly green, green, eucalyptus, hunter green
+      "#4863A0",
+      "#3BB9FF",
+      "#8EEBEC",
+      "#FFDF00",
+      "#F88017",
+      // warmer temps = red, cooler temps = blue
+      // azure blue, midday blue, blue lagoon, golden yellow, carrot orange
+    ],
   },
 };
 
@@ -140,9 +141,9 @@ const windSpeedBinsKnots = [
   0, 2.5, 7.5, 12.5, 17.5, 22.5, 27.5, 32.5, 37.5, 42.5, 47.5, 52.5,
 ]; // cutoffs in knots
 
-const annotatedChlorophyllSamples = computed(() => {
-  if (props.showChlorophyll) {
-    const { varDomain, markerSize, markerColors } = config.chlorophyll;
+const annotatedWaterTempSamples = computed(() => {
+  if (props.showWaterTemp) {
+    const { varDomain, markerSize, markerColors } = config.waterTemp;
     const domain = varDomain;
     const logScale = scaleLog().domain(domain).range(markerSize);
     const colorScale = scaleLog()
@@ -150,7 +151,7 @@ const annotatedChlorophyllSamples = computed(() => {
       .range(markerColors)
       .clamp(true);
     return props.samples
-      .filter((row) => row.variable === "ChlorophyllSurface")
+      .filter((row) => row.variable === "WaterTempSurface")
       .map((row) => {
         return {
           ...row,
@@ -255,19 +256,17 @@ onMounted(() => {
 
     const legend = document.getElementById("legend");
     let legendClasses = [];
-    for (let i = 0; i < config.chlorophyll.varDomain.length - 1; i++) {
+    for (let i = 0; i < config.waterTemp.varDomain.length - 1; i++) {
       legendClasses.push(
-        `${config.chlorophyll.varDomain[i]} - ${
-          config.chlorophyll.varDomain[i + 1]
+        `${config.waterTemp.varDomain[i]} - ${
+          config.waterTemp.varDomain[i + 1]
         }`,
       );
     }
     legendClasses.push(
-      `> ${
-        config.chlorophyll.varDomain[config.chlorophyll.varDomain.length - 1]
-      }`,
+      `> ${config.waterTemp.varDomain[config.waterTemp.varDomain.length - 1]}`,
     );
-    const legendColors = config.chlorophyll.markerColors;
+    const legendColors = config.waterTemp.markerColors;
     legendClasses.forEach((legendClasses, i) => {
       const color = legendColors[i];
       const item = document.createElement("div");
@@ -340,7 +339,7 @@ const updateMap = () => {
   });
   markers = [];
 
-  annotatedChlorophyllSamples.value.forEach(({ color, size, station_name }) => {
+  annotatedWaterTempSamples.value.forEach(({ color, size, station_name }) => {
     // create circle elements to display
     const elementSize = `${100 * size}px`;
     const el = document.createElement("div");
@@ -398,7 +397,7 @@ watch(() => props.formattedDate, updateMap);
   left: 0;
   background: #fff;
   opacity: 0.75;
-  margin-top: 5px;
+  margin-top: 4px;
   margin-left: 5px;
   overflow: auto;
   border-radius: 3px;
@@ -408,7 +407,7 @@ watch(() => props.formattedDate, updateMap);
   padding: 10px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.75);
   line-height: 28px;
-  height: 250px;
+  height: 220px;
   margin-bottom: 10px;
   width: 115px;
 }
