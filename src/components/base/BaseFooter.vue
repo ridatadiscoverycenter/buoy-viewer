@@ -11,6 +11,10 @@
         />
       </div>
       <div class="logo-container">
+        <img src="@/assets/illustrations/3crs.svg" />
+      </div>
+
+      <div class="logo-container">
         <img
           src="@/assets/illustrations/brown-logo.svg"
           class="brown logo-container"
