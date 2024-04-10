@@ -213,10 +213,10 @@ const geoJSON = computed(() => {
               windSpeed:
                 annotatedWindSpeedms.value.find((w) => {
                   return w.station_name === station_name;
-                }).value / knotsPerMS,
+                })?.value / knotsPerMS,
               windDirection: annotatedWindDir.value.find((w) => {
                 return w.station_name === station_name;
-              }).value,
+              })?.value,
             },
           };
         },

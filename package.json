@@ -53,6 +53,7 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "@brown-ccv/prettier-config": "^0.3.0",
     "@tsconfig/node20": "^20.1.2",
     "@types/lodash": "^4.14.202",
     "@typescript-eslint/eslint-plugin": "^6.19.1",

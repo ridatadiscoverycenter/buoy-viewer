@@ -2,9 +2,9 @@ module.exports = {
   extends: [
     // add more generic rulesets here, such as:
     // 'eslint:recommended',
-    'plugin:vue/vue3-recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
+    "plugin:vue/vue3-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
   ],
   rules: {
     // override/add rules settings here, such as:
@@ -15,5 +15,5 @@ module.exports = {
     parser: "@typescript-eslint/parser",
     ecmaVersion: "latest",
     sourceType: "module",
-  }
-}
+  },
+};
