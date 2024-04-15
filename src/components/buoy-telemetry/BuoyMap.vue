@@ -218,7 +218,7 @@ const windspeedGeoJSON = computed(() => {
             windSpeed:
               annotatedWindSpeedms.value.find((w) => {
                 return w.station_name === station_name;
-              })?.value / KNOTS_PER_MS,
+              })?.value * KNOTS_PER_MS,
             windDirection: annotatedWindDir.value.find((w) => {
               return w.station_name === station_name;
             })?.value,
