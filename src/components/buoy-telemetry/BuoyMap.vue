@@ -8,8 +8,11 @@
     </div>
     <div ref="el" class="mapbox-container" />
   </div>
-  <div id="legend" class="map-overlay is-size-7">
-    <strong class="is-size-6">Water Temp (&deg;C)</strong>
+  <MapLegend>
+    <template #title>
+      <strong class="is-size-6">Water Temp (&deg;C)</strong>
+    </template>
+
     <div v-for="(temp, i) in config.waterTemp.varDomain" :key="temp">
       <span
         class="legend-key"
@@ -18,7 +21,7 @@
       <span v-if="i === config.waterTemp.varDomain.length - 1">> {{ temp }}</span>
       <span v-else>{{ temp }} - {{ config.waterTemp.varDomain[i + 1] }}</span>
     </div>
-  </div>
+  </MapLegend>
   <!-- reference images for mapbox to pull from -->
   <img ref="imageEl" :src="BuoyMarker" style="visibility: hidden; position: absolute; top: 0" />
   <template v-if="map !== null">
@@ -35,6 +38,7 @@ import { WINDSPEED_MARKERS } from "./windspeedMarkers";
 
 import BuoyMarker from "@/assets/illustrations/buoy-marker.svg";
 import MapImage from "../map/MapImage.vue";
+import MapLegend from "../map/MapLegend.vue";
 
 import { type Data } from "../../utils/erddap";
 import { type BuoyStore } from "../../store/buoy";
@@ -265,27 +269,6 @@ watch(() => props.formattedDate, updateMap);
 }
 .mapbox-container {
   height: 100%;
-}
-
-.map-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: #fff;
-  opacity: 0.75;
-  margin-top: 4px;
-  margin-left: 5px;
-  overflow: auto;
-  border-radius: 3px;
-}
-
-#legend {
-  padding: 10px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.75);
-  line-height: 28px;
-  height: 220px;
-  margin-bottom: 10px;
-  width: 115px;
 }
 
 /* prettier-ignore */
