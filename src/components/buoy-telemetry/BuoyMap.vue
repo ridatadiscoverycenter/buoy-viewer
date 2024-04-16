@@ -10,99 +10,31 @@
   </div>
   <div id="legend" class="map-overlay is-size-7">
     <strong class="is-size-6">Water Temp (&deg;C)</strong>
+    <div v-for="(temp, i) in config.waterTemp.varDomain" :key="temp">
+      <span
+        class="legend-key"
+        :style="{ backgroundColor: config.waterTemp.markerColors[i] }"
+      ></span>
+      <span v-if="i === config.waterTemp.varDomain.length - 1">> {{ temp }}</span>
+      <span v-else>{{ temp }} - {{ config.waterTemp.varDomain[i + 1] }}</span>
+    </div>
   </div>
   <!-- reference images for mapbox to pull from -->
-  <img
-    ref="imageEl"
-    :src="BuoyMarker"
-    style="visibility: hidden; position: absolute; top: 0"
-  />
-
-  <img
-    ref="windSpeed0Image"
-    :src="WindSpeed0"
-    style="visibility: hidden; position: absolute; top: 0"
-  />
-
-  <img
-    ref="windSpeed1Image"
-    :src="WindSpeed1"
-    style="visibility: hidden; position: absolute; top: 0"
-  />
-
-  <img
-    ref="windSpeed2Image"
-    :src="WindSpeed2"
-    style="visibility: hidden; position: absolute; top: 0"
-  />
-
-  <img
-    ref="windSpeed3Image"
-    :src="WindSpeed3"
-    style="visibility: hidden; position: absolute; top: 0"
-  />
-
-  <img
-    ref="windSpeed4Image"
-    :src="WindSpeed4"
-    style="visibility: hidden; position: absolute; top: 0"
-  />
-
-  <img
-    ref="windSpeed5Image"
-    :src="WindSpeed5"
-    style="visibility: hidden; position: absolute; top: 0"
-  />
-
-  <img
-    ref="windSpeed6Image"
-    :src="WindSpeed6"
-    style="visibility: hidden; position: absolute; top: 0"
-  />
-
-  <img
-    ref="windSpeed7Image"
-    :src="WindSpeed7"
-    style="visibility: hidden; position: absolute; top: 0"
-  />
-
-  <img
-    ref="windSpeed8Image"
-    :src="WindSpeed8"
-    style="visibility: hidden; position: absolute; top: 0"
-  />
-
-  <img
-    ref="windSpeed9Image"
-    :src="WindSpeed9"
-    style="visibility: hidden; position: absolute; top: 0"
-  />
-
-  <img
-    ref="windSpeed10Image"
-    :src="WindSpeed10"
-    style="visibility: hidden; position: absolute; top: 0"
-  />
+  <img ref="imageEl" :src="BuoyMarker" style="visibility: hidden; position: absolute; top: 0" />
+  <template v-if="map !== null">
+    <MapImage :map name="buoy-marker" :src="BuoyMarker" />
+    <MapImage v-for="{ name, src } in WINDSPEED_MARKERS" :key="name" :map :name="name" :src="src" />
+  </template>
 </template>
 
 <script setup lang="ts">
 import { computed, inject, onMounted, ref, watch } from "vue";
 import mapboxgl from "mapbox-gl";
 import { scaleLog } from "d3-scale";
+import { WINDSPEED_MARKERS } from "./windspeedMarkers";
 
 import BuoyMarker from "@/assets/illustrations/buoy-marker.svg";
-
-import WindSpeed0 from "@/assets/illustrations/wind_speed_00.svg";
-import WindSpeed1 from "@/assets/illustrations/wind_speed_01.svg";
-import WindSpeed2 from "@/assets/illustrations/wind_speed_02.svg";
-import WindSpeed3 from "@/assets/illustrations/wind_speed_03.svg";
-import WindSpeed4 from "@/assets/illustrations/wind_speed_04.svg";
-import WindSpeed5 from "@/assets/illustrations/wind_speed_05.svg";
-import WindSpeed6 from "@/assets/illustrations/wind_speed_06.svg";
-import WindSpeed7 from "@/assets/illustrations/wind_speed_07.svg";
-import WindSpeed8 from "@/assets/illustrations/wind_speed_08.svg";
-import WindSpeed9 from "@/assets/illustrations/wind_speed_09.svg";
-import WindSpeed10 from "@/assets/illustrations/wind_speed_10.svg";
+import MapImage from "../map/MapImage.vue";
 
 import { type Data } from "../../utils/erddap";
 import { type BuoyStore } from "../../store/buoy";
@@ -137,19 +69,14 @@ const config = {
 };
 
 const knotsPerMS = 1.94384;
-const windSpeedBinsKnots = [
-  0, 2.5, 7.5, 12.5, 17.5, 22.5, 27.5, 32.5, 37.5, 42.5, 47.5, 52.5,
-]; // cutoffs in knots
+const windSpeedBinsKnots = [0, 2.5, 7.5, 12.5, 17.5, 22.5, 27.5, 32.5, 37.5, 42.5, 47.5, 52.5]; // cutoffs in knots
 
 const annotatedWaterTempSamples = computed(() => {
   if (props.showWaterTemp) {
     const { varDomain, markerSize, markerColors } = config.waterTemp;
     const domain = varDomain;
     const logScale = scaleLog().domain(domain).range(markerSize);
-    const colorScale = scaleLog()
-      .domain(domain)
-      .range(markerColors)
-      .clamp(true);
+    const colorScale = scaleLog().domain(domain).range(markerColors).clamp(true);
     return props.samples
       .filter((row) => row.variable === "WaterTempSurface")
       .map((row) => {
@@ -182,17 +109,6 @@ const annotatedWindDir = computed(() => {
 
 const el = ref<HTMLDivElement>(null);
 const imageEl = ref<HTMLImageElement>(null);
-const windSpeed0Image = ref<HTMLImageElement>(null);
-const windSpeed1Image = ref<HTMLImageElement>(null);
-const windSpeed2Image = ref<HTMLImageElement>(null);
-const windSpeed3Image = ref<HTMLImageElement>(null);
-const windSpeed4Image = ref<HTMLImageElement>(null);
-const windSpeed5Image = ref<HTMLImageElement>(null);
-const windSpeed6Image = ref<HTMLImageElement>(null);
-const windSpeed7Image = ref<HTMLImageElement>(null);
-const windSpeed8Image = ref<HTMLImageElement>(null);
-const windSpeed9Image = ref<HTMLImageElement>(null);
-const windSpeed10Image = ref<HTMLImageElement>(null);
 
 const map = ref(null);
 const geoJSON = computed(() => {
@@ -201,26 +117,24 @@ const geoJSON = computed(() => {
     data: {
       id: "buoy",
       type: "FeatureCollection",
-      features: store.coordinates.map(
-        ({ latitude, longitude, station_name }) => {
-          return {
-            type: "Feature",
-            geometry: {
-              type: "Point",
-              coordinates: [longitude, latitude],
-            },
-            properties: {
-              windSpeed:
-                annotatedWindSpeedms.value.find((w) => {
-                  return w.station_name === station_name;
-                })?.value / knotsPerMS,
-              windDirection: annotatedWindDir.value.find((w) => {
+      features: store.coordinates.map(({ latitude, longitude, station_name }) => {
+        return {
+          type: "Feature",
+          geometry: {
+            type: "Point",
+            coordinates: [longitude, latitude],
+          },
+          properties: {
+            windSpeed:
+              annotatedWindSpeedms.value.find((w) => {
                 return w.station_name === station_name;
-              })?.value,
-            },
-          };
-        },
-      ),
+              })?.value / knotsPerMS,
+            windDirection: annotatedWindDir.value.find((w) => {
+              return w.station_name === station_name;
+            })?.value,
+          },
+        };
+      }),
     },
   };
 });
@@ -239,47 +153,9 @@ onMounted(() => {
 
   map.value.on("load", function () {
     map.value.resize();
-    map.value.addImage("buoy-marker", imageEl.value);
-    map.value.addImage("wind-speed-0", windSpeed0Image.value);
-    map.value.addImage("wind-speed-1", windSpeed1Image.value);
-    map.value.addImage("wind-speed-2", windSpeed2Image.value);
-    map.value.addImage("wind-speed-3", windSpeed3Image.value);
-    map.value.addImage("wind-speed-4", windSpeed4Image.value);
-    map.value.addImage("wind-speed-5", windSpeed5Image.value);
-    map.value.addImage("wind-speed-6", windSpeed6Image.value);
-    map.value.addImage("wind-speed-7", windSpeed7Image.value);
-    map.value.addImage("wind-speed-8", windSpeed8Image.value);
-    map.value.addImage("wind-speed-9", windSpeed9Image.value);
-    map.value.addImage("wind-speed-10", windSpeed10Image.value);
+    // map.value.addImage("buoy-marker", imageEl.value);
 
     updateMap();
-
-    const legend = document.getElementById("legend");
-    let legendClasses = [];
-    for (let i = 0; i < config.waterTemp.varDomain.length - 1; i++) {
-      legendClasses.push(
-        `${config.waterTemp.varDomain[i]} - ${
-          config.waterTemp.varDomain[i + 1]
-        }`,
-      );
-    }
-    legendClasses.push(
-      `> ${config.waterTemp.varDomain[config.waterTemp.varDomain.length - 1]}`,
-    );
-    const legendColors = config.waterTemp.markerColors;
-    legendClasses.forEach((legendClasses, i) => {
-      const color = legendColors[i];
-      const item = document.createElement("div");
-      const key = document.createElement("span");
-      key.className = "legend-key";
-      key.style.backgroundColor = color;
-
-      const value = document.createElement("span");
-      value.innerHTML = `${legendClasses}`;
-      item.appendChild(key);
-      item.appendChild(value);
-      legend.appendChild(item);
-    });
   });
 });
 
@@ -320,7 +196,7 @@ const updateMap = () => {
       source: "points",
       layout: {
         "icon-allow-overlap": true,
-        "icon-image": `wind-speed-${b + 1}`, //mapped value of wind
+        "icon-image": `windspeed-${b + 1}`, //mapped value of wind
         "icon-offset": [-100, -40], // optically centered
         "icon-size": 0.3,
         "icon-rotate": {
@@ -354,7 +230,7 @@ const updateMap = () => {
       new mapboxgl.Marker({ element: el })
         .setLngLat(store.siteCoordinates(station_name))
         .setPopup(new mapboxgl.Popup().setText(station_name))
-        .addTo(map.value),
+        .addTo(map.value)
     );
   });
 };

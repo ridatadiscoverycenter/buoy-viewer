@@ -62,26 +62,21 @@ export const useDAStore = defineStore("domoic-acid", {
     },
     siteCoordinates: (state) => {
       return (site: string) => {
-        const match = state.coordinates.find(
-          ({ station_name }) => station_name === site,
-        );
+        const match = state.coordinates.find(({ station_name }) => station_name === site);
         if (match) {
-          return [match.longitude, match.latitude];
+          return [match.longitude, match.latitude] satisfies [number, number];
         } else {
-          return [0, 0];
+          return [0, 0] satisfies [number, number];
         }
       };
     },
     activeCoordinates(): Coordinate[] {
       const activeSites = this.samples.map(({ station_name }) => station_name);
-      return this.coordinates.filter(({ station_name }) =>
-        activeSites.includes(station_name),
-      );
+      return this.coordinates.filter(({ station_name }) => activeSites.includes(station_name));
     },
     selectedSamples: (state: State) => {
       const daySamples: Sample[] = state.samples.filter(
-        ({ date }: { date: Date }) =>
-          date.valueOf() - state.selectedDate.valueOf() === 0,
+        ({ date }: { date: Date }) => date.valueOf() - state.selectedDate.valueOf() === 0
       );
 
       const maxDA = Math.max(...state.samples.map(({ pDA }) => pDA));
@@ -112,13 +107,7 @@ export const useDAStore = defineStore("domoic-acid", {
       return this.dates.length > 0 ? this.dates.slice(-1)[0] : undefined;
     },
     dateLength(): number {
-      return (
-        (this.endDate.valueOf() - this.startDate.valueOf()) /
-        1000 /
-        60 /
-        60 /
-        24
-      );
+      return (this.endDate.valueOf() - this.startDate.valueOf()) / 1000 / 60 / 60 / 24;
     },
   },
 });

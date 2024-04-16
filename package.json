@@ -17,6 +17,7 @@
   "dependencies": {
     "@es-joy/jsdoccomment": "^0.41.0",
     "@johnsoncodehk/html2pug": "^1.0.0",
+    "@types/mapbox-gl": "^3.1.0",
     "@volar/pug-language-service": "^1.0.24",
     "@volar/typescript-language-service": "^1.0.1",
     "@volar/vue-language-service": "^1.6.5",
