@@ -13,14 +13,16 @@
       <strong class="is-size-6">Water Temp (&deg;C)</strong>
     </template>
 
-    <div v-for="(temp, i) in config.waterTemp.varDomain" :key="temp">
-      <span
-        class="legend-key"
-        :style="{ backgroundColor: config.waterTemp.markerColors[i] }"
-      ></span>
-      <span v-if="i === config.waterTemp.varDomain.length - 1">> {{ temp }}</span>
-      <span v-else>{{ temp }} - {{ config.waterTemp.varDomain[i + 1] }}</span>
-    </div>
+    <ul>
+      <li v-for="(temp, i) in config.waterTemp.varDomain" :key="temp">
+        <span
+          class="legend-key"
+          :style="{ backgroundColor: config.waterTemp.markerColors[i] }"
+        ></span>
+        <span v-if="i === config.waterTemp.varDomain.length - 1">> {{ temp }}</span>
+        <span v-else>{{ temp }} - {{ config.waterTemp.varDomain[i + 1] }}</span>
+      </li>
+    </ul>
   </MapLegend>
   <!-- reference images for mapbox to pull from -->
   <img ref="imageEl" :src="BuoyMarker" style="visibility: hidden; position: absolute; top: 0" />
