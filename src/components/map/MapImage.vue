@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import type { Map } from "mapbox-gl";
+import { Map } from "mapbox-gl";
 
 const { map, name, src } = defineProps<{
   map: Map;

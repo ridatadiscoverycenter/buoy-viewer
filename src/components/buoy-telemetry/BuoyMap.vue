@@ -29,18 +29,28 @@
   <template v-if="map !== null">
     <MapImage :map name="buoy-marker" :src="BuoyMarker" />
     <MapImage v-for="{ name, src } in WINDSPEED_MARKERS" :key="name" :map :name="name" :src="src" />
+    <MapMarker
+      v-for="{ color, size, station_name } in annotatedWaterTempSamples"
+      :key="station_name"
+      :map
+      :lng-lat="store.siteCoordinates(station_name)"
+      :size
+      :color
+      :text="station_name"
+    />
   </template>
 </template>
 
 <script setup lang="ts">
 import { computed, inject, onMounted, ref, watch } from "vue";
-import mapboxgl from "mapbox-gl";
+import mapboxgl, { type GeoJSONSourceRaw, Map } from "mapbox-gl";
 import { scaleLog } from "d3-scale";
 import { WINDSPEED_MARKERS } from "./windspeedMarkers";
 
 import BuoyMarker from "@/assets/illustrations/buoy-marker.svg";
 import MapImage from "../map/MapImage.vue";
 import MapLegend from "../map/MapLegend.vue";
+import MapMarker from "../map/MapMarker.vue";
 
 import { type Data } from "../../utils/erddap";
 import { type BuoyStore } from "../../store/buoy";
@@ -116,8 +126,8 @@ const annotatedWindDir = computed(() => {
 const el = ref<HTMLDivElement>(null);
 const imageEl = ref<HTMLImageElement>(null);
 
-const map = ref(null);
-const geoJSON = computed(() => {
+const map = ref<Map>(null);
+const geoJSON = computed<GeoJSONSourceRaw>(() => {
   return {
     type: "geojson",
     data: {
@@ -147,7 +157,7 @@ const geoJSON = computed(() => {
 
 onMounted(() => {
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
-  map.value = new mapboxgl.Map({
+  map.value = new Map({
     container: el.value,
     style: "mapbox://styles/ccv-bot/ckmxra8oi0rsw17mzcbqrktzi",
     center: [-71.35, 41.517],
