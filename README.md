@@ -1,38 +1,36 @@
-# [Narragansett Bay Data Explorer](https://data-explorer.riddc.brown.edu)
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-[![DOI](https://zenodo.org/badge/271652303.svg)](https://zenodo.org/badge/latestdoi/271652303)
+## Getting Started
 
-> Explore data from the [RI Data Discovery Center](https://riddc.brown.edu) about the Narragansett Bay.
-
-A web app to explore data about the Narragansett bay.  Built using Vue 3 + Typescript.  Uses the buoy-api as a backend.
-
-## Build Setup
-
-For the map in the domoic acid page to work, you'll need a .env file with the following keys:
-```
-VITE_MAPBOX_ACCESS_TOKEN=
-```
-The mapbox token can be found by logging in as ccv-bot on mapbox (credentials in lastpass).
-
-Node version: 14+
+First, run the development server:
 
 ```bash
-# install dependencies
-$ npm install
-
-# serve with hot reload at localhost:3000
-$ npm run dev # connect to production api
-$ npm run dev:local # connect to locally running api
-
-# linting
-$ npm run lint # report and fix linting errors
-$ npm run tscheck # check for type errors
-
-# build for production and launch server
-$ npm run build
-$ npm run serve
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## Recommended IDE Setup (very optional)
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
