@@ -8,24 +8,33 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write \"**/*.+(js|jsx|ts|tsx|json)\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "playwright test",
+    "test:show": "npm run test && playright show-report",
+    "scripts:erddap": "tsx scripts/erddapCLI.ts",
+    "scripts:test": "tsx scripts/erddapTest.ts"
   },
   "prettier": "@brown-ccv/prettier-config",
   "dependencies": {
     "next": "14.2.5",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@brown-ccv/eslint-config": "^0.3.0",
     "@brown-ccv/prettier-config": "^0.3.0",
+    "@playwright/test": "^1.46.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/yargs": "^17.0.32",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "husky": "^8.0.0",
     "prettier": "^3.3.3",
-    "typescript": "^5"
+    "tsx": "^4.16.2",
+    "typescript": "^5",
+    "yargs": "^17.7.2"
   }
 }
