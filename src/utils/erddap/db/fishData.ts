@@ -711,6 +711,7 @@ const FISH_DATA = {
 
 export function getDataForSpecies(species: string) {
   if (Object.keys(FISH_DATA).includes(species)) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return FISH_DATA[species as (typeof fishSpecies)[number]] as Map<string, any>;
   }
   throw new Error(`"${species}" is not a valid species`);

@@ -27,9 +27,10 @@ export function extractValues(queryValues: Awaited<ReturnType<typeof queryErddap
 
 // Utility Types
 
-export type Comparators = "=" | ">" | "<" | ">=" | "<=";
-export type Params = string | Array<{ key: string; comparator: Comparators; value: string | number | Date }>;
-
+export type Comparators = '=' | '>' | '<' | '>=' | '<=';
+export type Params =
+  | string
+  | Array<{ key: string; comparator: Comparators; value: string | number | Date }>;
 
 export type ErddapTableData = {
   columnNames: string[];
@@ -90,11 +91,14 @@ function convertErddapTableToObject(table: ErddapTableData) {
 function formatParams(params: Params) {
   if (typeof params === 'string') return params;
   const paramEntries = params.map(
-    ({ key, comparator, value }) => `${key}${comparator}${
-      typeof value === 'string'
-        ? `"${value}"`
-        : value instanceof Date ? value.toISOString() : `${value}` 
-    }`
+    ({ key, comparator, value }) =>
+      `${key}${comparator}${
+        typeof value === 'string'
+          ? `"${value}"`
+          : value instanceof Date
+            ? value.toISOString()
+            : `${value}`
+      }`
   );
   return paramEntries.join('&');
 }

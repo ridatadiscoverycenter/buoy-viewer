@@ -44,11 +44,11 @@ export async function fetchCoordinates() {
 }
 
 /**
- * "Fetches" fish species data. 
- * Note (AM): This is hardcoded in the ERDDAP API. The JSON files used to 
+ * "Fetches" fish species data.
+ * Note (AM): This is hardcoded in the ERDDAP API. The JSON files used to
  *            populate this query have been ported to fishData.ts.
- * @param species 
- * @returns 
+ * @param species
+ * @returns
  */
 export async function fetchInfo(species: string) {
   return Promise.resolve(getDataForSpecies(species));
@@ -100,8 +100,12 @@ async function querySamples(params: SampleParams = '') {
 }
 
 type SampleParams = string | Array<SampleParamYear | SampleParamStation>;
-type SampleParamYear = { key: "Year", comparator: Comparators, value: number };
-type SampleParamStation = { key: "Station", comparator: Comparators, value: "Fox Island" | "Whale Rock" };
+type SampleParamYear = { key: 'Year'; comparator: Comparators; value: number };
+type SampleParamStation = {
+  key: 'Station';
+  comparator: Comparators;
+  value: 'Fox Island' | 'Whale Rock';
+};
 
 /**
  * Queries ERDDAP for Buoy Temperature Data
@@ -118,8 +122,12 @@ async function queryTemperatures(params: TemperatureParams = '') {
 }
 
 type TemperatureParams = string | Array<TemperatureParamsTime | TemperatureParamsStation>;
-type TemperatureParamsTime = { key: "time", comparator: Comparators, value: Date };
-type TemperatureParamsStation = { key: "Station", comparator: Comparators, value: "Fox Island" | "Whale Rock" };
+type TemperatureParamsTime = { key: 'time'; comparator: Comparators; value: Date };
+type TemperatureParamsStation = {
+  key: 'Station';
+  comparator: Comparators;
+  value: 'Fox Island' | 'Whale Rock';
+};
 
 // FORMATTERS
 
