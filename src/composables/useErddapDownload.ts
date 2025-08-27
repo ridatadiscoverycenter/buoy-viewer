@@ -32,7 +32,7 @@ export function useErddapDownload({
     "html",
     "dataTable",
   ];
-  const ERDDAP_BASE_URL = "https://pricaimcit.services.brown.edu/erddap";
+  const ERDDAP_BASE_URL = "https://erddap.riddc.brown.edu/erddap";
 
   const downloadUrl = computed(() => {
     const ids = coordinates.value.map((c) => c.buoyId).join("|");

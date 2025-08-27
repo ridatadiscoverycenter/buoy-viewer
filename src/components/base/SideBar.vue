@@ -157,7 +157,7 @@ const RESOURCES = [
   {
     title: "ERDDAP Server",
     initials: "ES",
-    link: "https://pricaimcit.services.brown.edu/erddap/index.html",
+    link: "https://erddap.riddc.brown.edu/erddap/index.html",
     icon: "fa-database",
   },
 ];
