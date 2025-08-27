@@ -181,7 +181,7 @@
         <p>
           The full dataset used to power this app is available on
           <ExternalLink
-            href="https://pricaimcit.services.brown.edu/erddap/search/index.html?page=1&itemsPerPage=1000&searchFor=Buoy+Telemetry"
+            href="https://erddap.riddc.brown.edu/erddap/search/index.html?page=1&itemsPerPage=1000&searchFor=Buoy+Telemetry"
             >ERDDAP</ExternalLink
           >.
         </p>
@@ -189,7 +189,7 @@
           Additional information about the data variables and QC tests can be
           found in the
           <ExternalLink
-            href="https://pricaimcit.services.brown.edu/erddap/info/buoy_telemetry_0ffe_2dc0_916e/index.html"
+            href="https://erddap.riddc.brown.edu/erddap/info/buoy_telemetry_0ffe_2dc0_916e/index.html"
             >ERDDAP dataset info page</ExternalLink
           >.
         </p>

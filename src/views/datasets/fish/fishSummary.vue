@@ -72,7 +72,7 @@
       <p>
         The data has also been made available on
         <ExternalLink
-          href="https://pricaimcit.services.brown.edu/erddap/search/index.html?page=1&itemsPerPage=1000&searchFor=Fish+Trawl"
+          href="https://erddap.riddc.brown.edu/erddap/search/index.html?page=1&itemsPerPage=1000&searchFor=Fish+Trawl"
           >ERDDAP</ExternalLink
         >.
       </p>

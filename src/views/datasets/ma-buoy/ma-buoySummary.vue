@@ -53,7 +53,7 @@
         <em>Qualifiers</em> column with notes on the data collection and
         adjustments made. See
         <ExternalLink
-          href="https://pricaimcit.services.brown.edu/erddap/tabledap/ma_buoy_data_a6c9_12eb_1ec5.html"
+          href="https://https://erddap.riddc.brown.edu/erddap/tabledap/ma_buoy_data_a6c9_12eb_1ec5.html"
           >ERDDAP</ExternalLink
         >
         for the full dataset with qualifiers.
