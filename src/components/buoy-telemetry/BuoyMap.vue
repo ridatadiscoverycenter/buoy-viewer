@@ -12,11 +12,7 @@
     <strong class="is-size-6">Water Temp (&deg;C)</strong>
   </div>
   <!-- reference images for mapbox to pull from -->
-  <img
-    ref="imageEl"
-    :src="BuoyMarker"
-    style="visibility: hidden; position: absolute; top: 0"
-  />
+  <img ref="imageEl" :src="BuoyMarker" style="visibility: hidden; position: absolute; top: 0" />
 
   <img
     ref="windSpeed0Image"
@@ -122,34 +118,41 @@ const props = defineProps<{
 
 const config = {
   waterTemp: {
+    /** The x-axis increments to display water temp. Used for scaling in visualization. */
     varDomain: [2.17, 5.0, 7.85, 10.65, 13.52], //[0.1, 1, 10, 100, 1000, 10000],
+    /** The range of marker sizes to scale the water temp data within. */
     markerSize: [0.05, 0.4],
+    /** The colors that correspond to water temperatures. Color temperature corresponds to represented temperature. */
     markerColors: [
+      // Azure blue
       "#4863A0",
+      // Midday blue
       "#3BB9FF",
+      // Blue lagoon
       "#8EEBEC",
+      // Golden yellow
       "#FFDF00",
+      // Carrot orange
       "#F88017",
-      // warmer temps = red, cooler temps = blue
-      // azure blue, midday blue, blue lagoon, golden yellow, carrot orange
     ],
   },
 };
 
-const knotsPerMS = 1.94384;
-const windSpeedBinsKnots = [
-  0, 2.5, 7.5, 12.5, 17.5, 22.5, 27.5, 32.5, 37.5, 42.5, 47.5, 52.5,
-]; // cutoffs in knots
+/** The equivalent speed in knots that is 1 m/s. Multiply by m/s to get the number of knots. */
+const KNOTS_PER_MS = 1.94384;
+/** The cutoffs for showing windspeed, i.e., at what windspeed to bump to the next windspeed marker. */
+const WIND_SPEED_BINS_KNOTS = [0, 2.5, 7.5, 12.5, 17.5, 22.5, 27.5, 32.5, 37.5, 42.5, 47.5, 52.5];
 
+/** The given water temperature samples with a logarithmic scale applied to the values. */
 const annotatedWaterTempSamples = computed(() => {
   if (props.showWaterTemp) {
     const { varDomain, markerSize, markerColors } = config.waterTemp;
     const domain = varDomain;
+    // Functions for logarithmically scaling a given water temperature reading within the water
+    // temp domain defined above.
     const logScale = scaleLog().domain(domain).range(markerSize);
-    const colorScale = scaleLog()
-      .domain(domain)
-      .range(markerColors)
-      .clamp(true);
+    const colorScale = scaleLog().domain(domain).range(markerColors).clamp(true);
+    // Apply scaling to each water temp value.
     return props.samples
       .filter((row) => row.variable === "WaterTempSurface")
       .map((row) => {
@@ -164,6 +167,7 @@ const annotatedWaterTempSamples = computed(() => {
   }
 });
 
+/** The windspeed reading in the samples. */
 const annotatedWindSpeedms = computed(() => {
   if (props.showWind) {
     return props.samples.filter((row) => row.variable === "WindSpeedAverage");
@@ -172,6 +176,7 @@ const annotatedWindSpeedms = computed(() => {
   }
 });
 
+/** The wind direction readings in the samples. */
 const annotatedWindDir = computed(() => {
   if (props.showWind) {
     return props.samples.filter((row) => row.variable === "WindDirectionFrom");
@@ -195,32 +200,31 @@ const windSpeed9Image = ref<HTMLImageElement>(null);
 const windSpeed10Image = ref<HTMLImageElement>(null);
 
 const map = ref(null);
-const geoJSON = computed(() => {
+/** The buoy windspeed data as a geo-JSON for rendering on the map. */
+const windspeedGeoJSON = computed(() => {
   return {
     type: "geojson",
     data: {
-      id: "buoy",
+      id: "buoy-windspeed",
       type: "FeatureCollection",
-      features: store.coordinates.map(
-        ({ latitude, longitude, station_name }) => {
-          return {
-            type: "Feature",
-            geometry: {
-              type: "Point",
-              coordinates: [longitude, latitude],
-            },
-            properties: {
-              windSpeed:
-                annotatedWindSpeedms.value.find((w) => {
-                  return w.station_name === station_name;
-                })?.value / knotsPerMS,
-              windDirection: annotatedWindDir.value.find((w) => {
+      features: store.coordinates.map(({ latitude, longitude, station_name }) => {
+        return {
+          type: "Feature",
+          geometry: {
+            type: "Point",
+            coordinates: [longitude, latitude],
+          },
+          properties: {
+            windSpeed:
+              annotatedWindSpeedms.value.find((w) => {
                 return w.station_name === station_name;
-              })?.value,
-            },
-          };
-        },
-      ),
+              })?.value / KNOTS_PER_MS,
+            windDirection: annotatedWindDir.value.find((w) => {
+              return w.station_name === station_name;
+            })?.value,
+          },
+        };
+      }),
     },
   };
 });
@@ -239,6 +243,8 @@ onMounted(() => {
 
   map.value.on("load", function () {
     map.value.resize();
+    // We need to add all the icons to the map so it knows about them
+    // including the windspeed markers that aren't used.
     map.value.addImage("buoy-marker", imageEl.value);
     map.value.addImage("wind-speed-0", windSpeed0Image.value);
     map.value.addImage("wind-speed-1", windSpeed1Image.value);
@@ -257,15 +263,9 @@ onMounted(() => {
     const legend = document.getElementById("legend");
     let legendClasses = [];
     for (let i = 0; i < config.waterTemp.varDomain.length - 1; i++) {
-      legendClasses.push(
-        `${config.waterTemp.varDomain[i]} - ${
-          config.waterTemp.varDomain[i + 1]
-        }`,
-      );
+      legendClasses.push(`${config.waterTemp.varDomain[i]} - ${config.waterTemp.varDomain[i + 1]}`);
     }
-    legendClasses.push(
-      `> ${config.waterTemp.varDomain[config.waterTemp.varDomain.length - 1]}`,
-    );
+    legendClasses.push(`> ${config.waterTemp.varDomain[config.waterTemp.varDomain.length - 1]}`);
     const legendColors = config.waterTemp.markerColors;
     legendClasses.forEach((legendClasses, i) => {
       const color = legendColors[i];
@@ -284,23 +284,28 @@ onMounted(() => {
 });
 
 let markers = [];
+/** Rerender the map with the current data. */
 const updateMap = () => {
-  for (var b = 0; b < windSpeedBinsKnots.length - 1; b++) {
+  // Remove all the windspeed markers if they exist.
+  for (var b = 0; b < WIND_SPEED_BINS_KNOTS.length - 1; b++) {
     if (map.value.getLayer("svgfile" + b)) {
       map.value.removeLayer("svgfile" + b);
     }
   }
-  if (map.value.getLayer("points")) {
-    map.value.removeLayer("points");
+  if (map.value.getLayer("windspeedPoints")) {
+    map.value.removeLayer("windspeedPoints");
   }
-  if (map.value.getSource("points")) {
-    map.value.removeSource("points");
+  if (map.value.getSource("windspeedPoints")) {
+    map.value.removeSource("windspeedPoints");
   }
-  map.value.addSource("points", geoJSON.value);
+  // Add the geo JSON data to the map.
+  map.value.addSource("windspeedPoints", windspeedGeoJSON.value);
+  // Add styles for the geo JSON data.
   map.value.addLayer({
-    id: "points",
+    id: "windspeedPoints",
     type: "symbol",
-    source: "points",
+    source: "windspeedPoints",
+    // For each point in the data, render the buoy marker icon.
     layout: {
       "icon-allow-overlap": true,
       "icon-image": "buoy-marker",
@@ -308,19 +313,25 @@ const updateMap = () => {
       "icon-offset": [0.8, -4], // optically centered
     },
   });
-  for (var b = 0; b < windSpeedBinsKnots.length - 1; b++) {
+  // For each windspeed breakpoint, add styles for rendering the corresponding
+  // windspeed marker.
+  for (
+    let windspeedBreakpointIndex = 0;
+    windspeedBreakpointIndex < WIND_SPEED_BINS_KNOTS.length - 1;
+    windspeedBreakpointIndex++
+  ) {
     map.value.addLayer({
-      id: "svgfile" + b,
+      id: "svgfile" + windspeedBreakpointIndex,
       type: "symbol",
       filter: [
         "all",
-        [">=", "windSpeed", windSpeedBinsKnots[b]],
-        ["<", "windSpeed", windSpeedBinsKnots[b + 1]],
+        [">=", "windSpeed", WIND_SPEED_BINS_KNOTS[windspeedBreakpointIndex]],
+        ["<", "windSpeed", WIND_SPEED_BINS_KNOTS[windspeedBreakpointIndex + 1]],
       ],
-      source: "points",
+      source: "windspeedPoints",
       layout: {
         "icon-allow-overlap": true,
-        "icon-image": `wind-speed-${b + 1}`, //mapped value of wind
+        "icon-image": `wind-speed-${windspeedBreakpointIndex + 1}`, //mapped value of wind
         "icon-offset": [-100, -40], // optically centered
         "icon-size": 0.3,
         "icon-rotate": {
@@ -333,10 +344,12 @@ const updateMap = () => {
       },
     });
   }
+  // Make sure the markers are removed from the DOM
   markers.forEach((marker) => {
     marker._element.remove();
     marker.remove();
   });
+  // Reset the list of markers
   markers = [];
 
   annotatedWaterTempSamples.value.forEach(({ color, size, station_name }) => {
@@ -354,10 +367,12 @@ const updateMap = () => {
       new mapboxgl.Marker({ element: el })
         .setLngLat(store.siteCoordinates(station_name))
         .setPopup(new mapboxgl.Popup().setText(station_name))
-        .addTo(map.value),
+        .addTo(map.value)
     );
   });
 };
+
+// Every time the map data changes, rerender the map
 watch(() => props.formattedDate, updateMap);
 </script>
 
