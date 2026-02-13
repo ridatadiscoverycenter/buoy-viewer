@@ -1,4 +1,6 @@
-# [Narragansett Bay Data Explorer](https://data-explorer.riddc.brown.edu)
+# [Narragansett Bay Data Explorer](https://data-explorer.riddc.brown.edu) ![Static Badge](https://img.shields.io/badge/ARCHIVED-red)
+
+## **Archived February 2026 in favor of the newer [React App](https://github.com/ridatadiscoverycenter/riddc-dashboard)
 
 [![DOI](https://zenodo.org/badge/271652303.svg)](https://zenodo.org/badge/latestdoi/271652303)
 
